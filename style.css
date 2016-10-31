@@ -1,0 +1,17 @@
+.hiddenResultTable {
+  visibility: hidden;
+}
+
+.userInput {
+
+  border: 1px solid red;
+}
+
+.calculationResultContainer {
+  border: 1px dashed blue;
+}
+
+.one, .two {
+  border: 1px solid red;
+  display: inline;
+}
