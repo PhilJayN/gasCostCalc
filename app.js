@@ -4,13 +4,11 @@ function calcButtonClickCounter () {
 clickCount ++;
 }
 
-
 var main = function () {
   "use strict";
 //code below is inside main function:
 //create click handler for calculate button element and run code when it is clicked
 var $calculateButtonEl = $(".calculate");
-console.log ($calculateButtonEl);
 $calculateButtonEl.on("click", function(){
   console.log ('hi');
 
@@ -39,7 +37,6 @@ $calculateButtonEl.on("click", function(){
   console.log('totalCreditWDiscount $:', totalCreditWDiscount);
 
   console.log ('totalCredit', totalCredit);
-
 
   //use jQuery to create elements and put in calculation results:
   // var cash = $("<p>").text('Cost of using cash: $' + totalCash);
