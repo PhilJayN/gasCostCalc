@@ -1,10 +1,9 @@
-var main = function () {
-  "use strict";
 
   var clickCount = 0;
   function calcButtonClickCounter () {
     clickCount ++;
   }
+
 
   function calculateButtonPressed () {
     calcButtonClickCounter();
@@ -84,8 +83,3 @@ var main = function () {
   //kickback points consideration, or other rewards.
   // var hi = 3;
   // console.log (hi);
-
-
-};
-
-$(document).ready(main);
