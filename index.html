@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <title>Welcome to Gas Calc!</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -8,17 +10,20 @@
 
   <main>
     <div class="userInput">
-      Cash Price $ <input type="text" id="cashPrice" value="2.63">
-      </br>
-      Credit Price: $<input type="text" id="creditPrice" value="2.73">
-      </br>
-      Bank Discount %<input type="text" id="bankDiscount" value="1"> </br>
+      <p>
+        Cash Price $ <input type="text" id="cashPrice" value="2.63">
+      </p>
+<p>
+  Credit Price: $<input type="text" id="creditPrice" value="2.73">
+</p>
+
+      Bank Discount %<input type="text" id="bankDiscount" value="1">
       Gallons Needed: <input type="text" id="gallonsNeeded" value="1">
 
       <button class="calculate">Calculate!</button>
     </div>
 
-    <div class='calculationResultContainer'>div container result
+    <div class="calculationResultContainer">div container result
       <!--table is hidden by default, becomes visible when user clicks calculate button. calc result will get created inside it. -->
       <!-- <table class="hiddenResultTable">
 
