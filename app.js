@@ -5,21 +5,42 @@ function calcButtonClickCounter () {
 }
 
 ///testing table creation template
-// function createResultTable () {
-//    var table = $("<table>");
-//   //  var tHeader =  $("<th>");
-//   //   var row = $("<tr>");
-//   //   var data = $("<td>");
-//   table.text('hi!');
-//   $(".calculationResultContainer").append(table);
-// }
+function createResultTable () {
+   var $table = $("<table>"); ///this holds a jQuery obj. (<table> element is created, but dangling)
+    var $row = $("<tr>");
+    var $tableData = $("<td>");
+
+    $("table").append($row);
+    $("tr").append($tableData);
+
+    $tableData.text('tableDataTest');
+
+    $(".calculationResultContainer").append($table);
+
+    //  var tHeader =  $("<th>");
+
+  //   var data = $("<td>");
+  // for (var i = 0; i < 5; i++) {
+  //   table.append($("<td>").text('hifdsaf' + i));
+  // }
+
+  // table.append( $("<tr>").append( $("<td>")) );
+//   var tableRow = table.append( $("<tr>") );
+//   var tableHeader = tableRow.append( $("<th>") );
+//   // tableRow.text('th test');
 //
+// var test = tableHeader.text('hi');
+  // table.append( $("<tr>").text('asdjfkj') );
+  // table.text('hi');
+//
+//
+// console.log (table);
+//   $(".calculationResultContainer").append(table);
+}
+
 var main = function () {
   "use strict";
 //code below is inside main function:
-
-///testing table creation template
-// createResultTable();
 
 //create click handler for calculate button element and run code when it is clicked
 var $calculateButtonEl = $(".calculate");
@@ -28,6 +49,8 @@ $calculateButtonEl.on("click", function(){
 
   //run to keep track to print out num of runs to user (Run #1, run #2, etc...)
   calcButtonClickCounter();
+  ///testing table creation template
+  createResultTable();
 
   //get IDs of elements:
   var cashPrice = document.getElementById("cashPrice").value;
