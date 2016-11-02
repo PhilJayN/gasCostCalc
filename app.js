@@ -8,10 +8,10 @@ var main = function () {
   "use strict";
   console.log("Document ready, js loaded.");
 
-//all code below is inside main function:
+//all code below is inside main function://
   var priceArray = [], tableDataArray = [];
 
-//create click handler for calculate button element and run code when it is clicked
+//create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
   $calculateButtonEl.on("click", function(){
 
@@ -29,6 +29,7 @@ var main = function () {
   var totalCredit = parseInt(gallons) * parseFloat(creditPrice);
   var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100;
   var difference;
+
   //substracting larger value from smaller result in negative, therefore use absolute value:
   if (totalCreditWDiscount < cashPrice) {
     difference = Math.abs(totalCreditWDiscount - totalCash);
@@ -43,21 +44,22 @@ var main = function () {
   tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
   console.log(tableDataArray);
 
+////dynamically create HTML table when user clicks on calculate button:
+  console.log('test b4 loop');
+  var table = '';
+  var rows = 4;
+  var cols = 3;
 
+  for (var r=0; r < rows; r++ ) {
+    table += "<tr>";
+      for (var c=1; c <= cols; c++ ) {
+        table += "<td>" + c + "</td>";
+      }
+    table += "</tr>";
+  }
+  $("#resultTable").append(table);
+  // });
 
-
-
-
-
-
-  //use jQuery to create elements and put in calculation results:
-  var $totalCash = $("<td>").text(totalCash);
-  var $totalCredit =  $("<td>").text(totalCredit);
-  var $totalCreditWDiscount = $("<td>").text(totalCreditWDiscount);
-  $("#cashTr").append($totalCash);
-  $("#creditTr").append($totalCredit);
-  $("#creditAndDiscountTr").append($totalCreditWDiscount);
-  $("#diffTr").append(difference);
 
   //jQuery create element template to put in FINAL conclusion:
   var elConclusion = $("<p>");
@@ -78,17 +80,26 @@ var main = function () {
   ///run #
    var runNumber = $("<p>").text("Run #" + clickCount);
      $(".calculationResultContainer").append(runNumber);
-
 ////closing of calculate button function syntax:
 });
 
 ///closing of main function syntax:
-}
+};
 $(document).ready(main);
 ///end of document ready function//
 
 
+
+//use jQuery to create elements and put in calculation results:
+// var $totalCash = $("<td>").text(totalCash);
+// var $totalCredit =  $("<td>").text(totalCredit);
+// var $totalCreditWDiscount = $("<td>").text(totalCreditWDiscount);
+// $("#cashTr").append($totalCash);
+// $("#creditTr").append($totalCredit);
+// $("#creditAndDiscountTr").append($totalCreditWDiscount);
+// $("#diffTr").append(difference);
 //
+// //
 // ///testing table creation template
 // function createResultTable () {
 //   //first, create elements:
