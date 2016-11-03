@@ -9,11 +9,12 @@ var main = function () {
   console.log("Document ready, js loaded.");
 
 //all code below is inside main function://
-  var priceArray = [], tableDataArray = [];
 
 //create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
   $calculateButtonEl.on("click", function(){
+
+  var priceArray = [], tableDataArray = [];
 
   //run to keep track to print out num of runs to user (Run #1, run #2, etc...)
   calcButtonClickCounter();
@@ -39,25 +40,46 @@ var main = function () {
   }
 
 //push calculation result and table data title into arrays:
+///careful, you need to reset both arrays or else it will keep adding data to it when user
+//clicks on calculate button.
   priceArray.push(totalCash, totalCredit, totalCreditWDiscount, difference);
   console.log('price arr', priceArray);
   tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
-  console.log(tableDataArray);
+  console.log("table data arr", tableDataArray);
 
 ////dynamically create HTML table when user clicks on calculate button:
   console.log('test b4 loop');
   var table = '';
   var rows = 4;
-  var cols = 3;
+  var cols = 2;
+  var t = 0;
+
+var index;
+// var priceArray = [], tableDataArray = [];
+
+// price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
+//table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
+
+console.log('len', priceArray.length);
+console.log('len', tableDataArray.length);
+console.log(priceArray[3]);
+console.log(tableDataArray[2]);
 
   for (var r=0; r < rows; r++ ) {
     table += "<tr>";
-      for (var c=1; c <= cols; c++ ) {
-        table += "<td>" + c + "</td>";
+
+      for (index = 0; index < 1; index++ ) {
+        table += "<td>" + tableDataArray[t] + "</td>";
+        table += "<td>" + priceArray[t]  + "</td>";
       }
+
+      t ++;
+
     table += "</tr>";
   }
-  $("#resultTable").append(table);
+  $(".calculationResultContainer").append(table);
+
+
   // });
 
 
