@@ -1,23 +1,23 @@
 //calculate button click counter
-var clickCount = 0;
+var clickCount = 1;
 function calcButtonClickCounter () {
   clickCount ++;
 }
 
 var main = function () {
   "use strict";
-  console.log("Document ready, js loaded.");
-
-//all code below is inside main function://
+////--------------all code below is inside main function---------------------------////
 
 //create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
   $calculateButtonEl.on("click", function(){
-
-  var priceArray = [], tableDataArray = [];
-
+      ///run #:
+  var runNumber = $("<p>").text("Run #" + clickCount);
+  $(".calculationResultContainer").append(runNumber);
   //run to keep track to print out num of runs to user (Run #1, run #2, etc...)
   calcButtonClickCounter();
+
+  var priceArray = [], tableDataArray = [];
 
   //get IDs of elements:
   var cashPrice = document.getElementById("cashPrice").value;
@@ -52,36 +52,31 @@ var main = function () {
   var table = '';
   var rows = 4;
   var cols = 2;
-  var t = 0;
-
-var index;
-// var priceArray = [], tableDataArray = [];
+  var arrayIndex = 0;
 
 // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
 //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
-
 console.log('len', priceArray.length);
 console.log('len', tableDataArray.length);
 console.log(priceArray[3]);
 console.log(tableDataArray[2]);
 
+//dynamically create html table:
+  //outside loop creates the rows (4 rows total)
   for (var r=0; r < rows; r++ ) {
     table += "<tr>";
-
-      for (index = 0; index < 1; index++ ) {
-        table += "<td>" + tableDataArray[t] + "</td>";
-        table += "<td>" + priceArray[t]  + "</td>";
+      //inside loop creates the table data (2 td created every inner loop run)
+      for (var tdCreator = 0; tdCreator < 1; tdCreator++ ) {
+        table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+        table += "<td>" + priceArray[arrayIndex]  + "</td>";
       }
-
-      t ++;
+      //when inner loop exits, arrayIndex incremented. this way we can iterate through
+      //the arrays
+      arrayIndex ++;
 
     table += "</tr>";
   }
   $(".calculationResultContainer").append(table);
-
-
-  // });
-
 
   //jQuery create element template to put in FINAL conclusion:
   var elConclusion = $("<p>");
@@ -96,20 +91,14 @@ console.log(tableDataArray[2]);
   }
   $(".calculationResultContainer").append(elConclusion);
 
-  //finally, after calculation done, unhide the hiddenResultTable:
-  $(".hiddenResultTable").css("visibility", "visible");
-
-  ///run #
-   var runNumber = $("<p>").text("Run #" + clickCount);
-     $(".calculationResultContainer").append(runNumber);
 ////closing of calculate button function syntax:
 });
 
 ///closing of main function syntax:
 };
 $(document).ready(main);
+console.log("Document ready, js loaded.");
 ///end of document ready function//
-
 
 
 //use jQuery to create elements and put in calculation results:
@@ -194,17 +183,3 @@ $(document).ready(main);
 // td2.text('td4 text!');
 //
 // $("#resultTable").append($newUl);
-
-
-// var table = '';
-// var rows = 4;
-// var cols = 3;
-//
-// for (var r=0; r < rows; r++) {
-//   table += "<tr>";
-//     for (var c=0; c < cols; c++ ) {
-//       table += "<td>" + c + "</td>";
-//     }
-//   table += "</tr>";
-// }
-// document.write(table);
