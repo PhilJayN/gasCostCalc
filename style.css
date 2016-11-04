@@ -21,5 +21,9 @@ table {
 }
 
 td {
-   border: 1px solid green; 
+   border: 1px solid green;
+}
+
+.calculationResultContainer {
+   border: 1px solid red;
 }

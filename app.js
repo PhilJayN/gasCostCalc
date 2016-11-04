@@ -101,6 +101,46 @@ console.log("Document ready, js loaded.");
 ///end of document ready function//
 
 
+
+////Final verdict: Maybe put this in an organized table, pros and cons,
+//people prob dont like to read long P!.  Typically, for most gas stations
+//in the South Bay area, cash prices are around ten cents less for many reasons.
+//One reason is to encourage people to get inside to buy snacks and spend more.
+//But hot Cheetos aside, you can save some money by paying with cash.
+//However, it depends on how much you value your time.
+//Of course, paying by cash requires you to walk inside,
+//and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
+
+
+//ERROR:
+
+//MORE FEATURES:
+//click to see how much money you can save over the month, years, by saviing only a few cents now.
+//take care of preventing user errors!
+//input box placeholder text that dissapears when user begin typing.
+//alow user to navigate boxes with arrow keys, tabs, etc.
+// RESULT log: if more than 99 cents, then it should convert to dollars
+//parseInt or float or gallons
+
+
+//FEATURES - FUTURE if time:
+//do you like math prompt? if yes, show them calculation
+//go far, and convert cents to a tenth of a penny. ex: .07234 is 7 cents, but that's a little more than 7 cents. so 7.23 cents, is actually 7 cents AND 23 hundreth of a penny.
+//kickback points consideration, or other rewards, optional choice for users.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //use jQuery to create elements and put in calculation results:
 // var $totalCash = $("<td>").text(totalCash);
 // var $totalCredit =  $("<td>").text(totalCredit);
@@ -111,6 +151,7 @@ console.log("Document ready, js loaded.");
 // $("#diffTr").append(difference);
 //
 // //
+
 // ///testing table creation template
 // function createResultTable () {
 //   //first, create elements:
@@ -135,20 +176,13 @@ console.log("Document ready, js loaded.");
 //
 // }
 
-////Final verdict: Maybe put this in an organized table, pros and cons,
-//people prob dont like to read long P!.  Typically, for most gas stations
-//in the South Bay area, cash prices are around ten cents less for many reasons. One reason is to encourage people to get inside to buy snacks and spend more. But hot Cheetos aside, you can save some money by paying with cash. However, it depends on how much you value your time. Of course, paying by cash requires you to walk inside, and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
 
-//error w/ code:
 
-// RESULT log: if more than 99 cents, then it should convert to dollars
-//clicking submit will keep creating calc result element.
-//parseInt or float or gallons
-//make sure when user click calc button, that
-//xtra feature: do you like math prompt? if yes, show them these: go far, and convert cents to a tenth of a penny. ex: .07234 is 7 cents, but that's a little more than 7 cents. so 7.23 cents, is actually 7 cents AND 23 hundreth of a penny.
 
-//add more features at end of app:
-//kickback points consideration, or other rewards.(maybe do a check box that user can click to incl. calc)
+
+
+
+
 
 // //create new dangling table and tr element
 // var $newTable = $("<table>");
