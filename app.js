@@ -1,12 +1,27 @@
-//calculate button click counter
+//Dependencies: jQuery
+
+// -------------------------------------------------------------------------
+//Calculate button click counter
+// -------------------------------------------------------------------------
 var clickCount = 1;
 function calcButtonClickCounter () {
   clickCount ++;
 }
 
+// -------------------------------------------------------------------------
+// Main function
+// -------------------------------------------------------------------------
 var main = function () {
   "use strict";
 ////--------------all code below is inside main function---------------------------////
+
+///keypress event handler to make sure user inputs corerct value in input fields:
+// $("input").keypress(function() {
+//   console.log('hi!');
+//   // if (typeof input.value !== 'number') {
+//   //   console.log('please input num!');
+//   // }
+// });
 
 //create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
@@ -21,7 +36,16 @@ var main = function () {
 
   //get IDs of elements:
   var cashPrice = document.getElementById("cashPrice").value;
+
+
+  console.log('typeof', typeof cashPrice);
+  if ( cashPrice !== 'number' ) {
+    console.log('not!');
+  }
+
   var creditPrice = document.getElementById("creditPrice").value;
+
+  console.log('cred price', creditPrice);
   var bankDiscount = document.getElementById("bankDiscount").value;
   var gallons = document.getElementById("gallonsNeeded").value;
 
