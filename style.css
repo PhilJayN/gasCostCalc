@@ -27,3 +27,8 @@ td {
 .calculationResultContainer {
    border: 1px solid red;
 }
+
+.userInput {
+  min-width: 400px;
+  
+}

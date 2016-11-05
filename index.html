@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Welcome to Gas Calc!</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Welcome to Gas Calc!</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h5>Calculate gas cost when using credit card with reward points vs paying by cash</h5>
+    <h5>Calculate gas cost when using credit card with reward points vs paying by cash</h5>
 
-  <main>
-    <div class="userInput">
-      <p>
-        Cash Price $ <input type="text" id="cashPrice" value="2.63">
-      </p>
-<p>
-  Credit Price: $<input type="text" id="creditPrice" value="2.73">
-</p>
+    <main>
 
-<p>
-  Bank Discount %<input type="text" id="bankDiscount" value="1">
-</p>
+        <div class="userInput">
 
-<p>
-  Gallons Needed: <input type="text" id="gallonsNeeded" value="1">
-</p>
-      <button class="calculate">Calculate!</button>
-    </div>
+            <label>Cash Price $<input type="number" step="0.01" id="cashPrice" value="2.63"></label><br />
 
-    <div class="calculationResultContainer">
+            <label>Credit Price $<input type="number" step="0.01" id="creditPrice" value="2.73"></label><br />
 
-    </div>
+            <label>Bank Discount %<input type="number" step="0.01" id="bankDiscount" value="1"></label><br />
 
-  </main>
+            <label> Gallons Needed<input type="number" step="0.01" id="gallonsNeeded" value="1"></label><br />
+
+            <button class="calculate">Calculate!</button>
+        </div>
+
+        <div class="calculationResultContainer">
+
+        </div>
+
+    </main>
 
 
-  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
 
 </body>
+
 </html>
 
 
@@ -49,9 +47,21 @@
 
 
 
+<!--
+<p>
+  Cash Price $ <input type="text" id="cashPrice" value="2.63">
+</p>
+<p>
+Credit Price: $<input type="text" id="creditPrice" value="2.73">
+</p>
 
+<p>
+Bank Discount %<input type="text" id="bankDiscount" value="1">
+</p>
 
-
+<p>
+Gallons Needed: <input type="text" id="gallonsNeeded" value="1">
+</p> -->
 
 
 
