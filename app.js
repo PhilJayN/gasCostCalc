@@ -13,42 +13,29 @@ function calcButtonClickCounter () {
 // -------------------------------------------------------------------------
 var main = function () {
   "use strict";
-////--------------all code below is inside main function---------------------------////
-
-///keypress event handler to make sure user inputs corerct value in input fields:
-// $("input").keypress(function() {
-//   console.log('hi!');
-//   // if (typeof input.value !== 'number') {
-//   //   console.log('please input num!');
-//   // }
-// });
-
-//create click handler for calculate button element and run code when it is clicked//
+  //create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
   $calculateButtonEl.on("click", function(){
-      ///run #:
+
+  ///run #:
   var runNumber = $("<p>").text("Run #" + clickCount);
   $(".calculationResultContainer").append(runNumber);
   //run to keep track to print out num of runs to user (Run #1, run #2, etc...)
   calcButtonClickCounter();
 
-  var priceArray = [], tableDataArray = [];
+  var priceArray = [];
+  var tableDataArray = [];
 
   //get IDs of elements:
   var cashPrice = document.getElementById("cashPrice").value;
-
-
-  console.log('typeof', typeof cashPrice);
-  if ( cashPrice !== 'number' ) {
-    console.log('not!');
-  }
-
   var creditPrice = document.getElementById("creditPrice").value;
-
-  console.log('cred price', creditPrice);
   var bankDiscount = document.getElementById("bankDiscount").value;
   var gallons = document.getElementById("gallonsNeeded").value;
 
+  if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
+    alert('blank!');
+    return false;
+  }
   //calculations:
   var totalCash = parseInt(gallons) * parseFloat(cashPrice);
   var totalCredit = parseInt(gallons) * parseFloat(creditPrice);
@@ -63,29 +50,25 @@ var main = function () {
     difference = totalCreditWDiscount - totalCash;
   }
 
-//push calculation result and table data title into arrays:
-///careful, you need to reset both arrays or else it will keep adding data to it when user
-//clicks on calculate button.
+  //push calculation result and table data title into arrays:
+  ///careful, you need to reset both arrays or else it will keep adding data to it when user
+  ///clicks on calculate button.
   priceArray.push(totalCash, totalCredit, totalCreditWDiscount, difference);
-  console.log('price arr', priceArray);
   tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
-  console.log("table data arr", tableDataArray);
 
-////dynamically create HTML table when user clicks on calculate button:
-  console.log('test b4 loop');
+  ////dynamically create HTML table when user clicks on calculate button:
   var table = '';
   var rows = 4;
   var cols = 2;
   var arrayIndex = 0;
-
 // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
 //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
-console.log('len', priceArray.length);
-console.log('len', tableDataArray.length);
-console.log(priceArray[3]);
-console.log(tableDataArray[2]);
+// console.log('len', priceArray.length);
+// console.log('len', tableDataArray.length);
+// console.log(priceArray[3]);
+// console.log(tableDataArray[2]);
 
-//dynamically create html table:
+  //dynamically create html table:
   //outside loop creates the rows (4 rows total)
   for (var r=0; r < rows; r++ ) {
     table += "<tr>";
@@ -115,7 +98,7 @@ console.log(tableDataArray[2]);
   }
   $(".calculationResultContainer").append(elConclusion);
 
-////closing of calculate button function syntax:
+  ////closing of calculate button function syntax:
 });
 
 ///closing of main function syntax:
@@ -137,14 +120,16 @@ console.log("Document ready, js loaded.");
 
 
 //ERROR:
+//user puts 234235.234. and it will still work wtf
+
 
 //MORE FEATURES:
+//button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
 //take care of preventing user errors!
-//input box placeholder text that dissapears when user begin typing.
-//alow user to navigate boxes with arrow keys, tabs, etc.
 // RESULT log: if more than 99 cents, then it should convert to dollars
-//parseInt or float or gallons
+//parseInt or float or gallons,
+//put gals in table
 
 
 //FEATURES - FUTURE if time:
