@@ -1,5 +1,4 @@
 //Dependencies: jQuery
-
 // -------------------------------------------------------------------------
 //Calculate button click counter
 // -------------------------------------------------------------------------
@@ -7,7 +6,6 @@ var clickCount = 1;
 function calcButtonClickCounter () {
   clickCount ++;
 }
-
 // -------------------------------------------------------------------------
 // Main function
 // -------------------------------------------------------------------------
@@ -17,28 +15,36 @@ var main = function () {
   var $calculateButtonEl = $(".calculate");
   $calculateButtonEl.on("click", function(){
 
-  ///run #:
+  //run # to show user (Run #1, run #2, etc...)
   var runNumber = $("<p>").text("Run #" + clickCount);
   $(".calculationResultContainer").append(runNumber);
-  //run to keep track to print out num of runs to user (Run #1, run #2, etc...)
   calcButtonClickCounter();
 
   var priceArray = [];
   var tableDataArray = [];
 
-  //get IDs of elements:
+  //get IDs of elements, and values they hold to use for calculations:
   var cashPrice = document.getElementById("cashPrice").value;
   var creditPrice = document.getElementById("creditPrice").value;
   var bankDiscount = document.getElementById("bankDiscount").value;
   var gallons = document.getElementById("gallonsNeeded").value;
 
-  if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
-    alert('blank!');
-    return false;
-  }
+  // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
+  //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
+  //   return false;
+  // }
+
+  $("p").on("click", function(){
+    console.log('clicked');
+    alert("The paragraph was clicked.");
+});
+//     $("#creditPrice").keypress(function(){
+// console.log('keys pressed!');
+//     });
+
   //calculations:
-  var totalCash = parseInt(gallons) * parseFloat(cashPrice);
-  var totalCredit = parseInt(gallons) * parseFloat(creditPrice);
+  var totalCash = parseFloat(gallons) * parseFloat(cashPrice);
+  var totalCredit = parseFloat(gallons) * parseFloat(creditPrice);
   var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100;
   var difference;
 
@@ -87,16 +93,32 @@ var main = function () {
 
   //jQuery create element template to put in FINAL conclusion:
   var elConclusion = $("<p>");
-  var conclusion = 'You can shave approximately ' + (difference*100).toFixed(2) + ' cents off your total bill by using ' ;
+  var amtSaved = (difference*100).toFixed(2);
+  var cents = 'cents';
+  var dollars = 'dollars';
+  var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ' ;
+
+  function finalMsg (amtSaved) {
+    if (amtSaved < 100) {
+      elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ' );
+    }
+    else {
+      elConclusion.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ' );
+    }
+  }
+// elConclusion.text('You can shave approximately ' + amtSaved + dollarorCents +  off your total bill by using ' + cash + credit );
+
 
   //code below runs depending on whether it's cheaper to pay with cash or credit:
   if (totalCreditWDiscount < totalCash) {
-    elConclusion.text(conclusion + 'credit card!');
-  }
-  else {
-    elConclusion.text(conclusion + 'cash!');
-  }
-  $(".calculationResultContainer").append(elConclusion);
+    finalMsg(amtSaved);
+    }
+    $(".calculationResultContainer").append(elConclusion);
+  //   elConclusion.text(conclusionMsg + 'credit card!');
+  // }
+  // else {
+  //   elConclusion.text(conclusionMsg + 'cash!');
+  // }
 
   ////closing of calculate button function syntax:
 });
@@ -104,9 +126,8 @@ var main = function () {
 ///closing of main function syntax:
 };
 $(document).ready(main);
-console.log("Document ready, js loaded.");
+console.log("Document ready, js loaded!!.");
 ///end of document ready function//
-
 
 
 ////Final verdict: Maybe put this in an organized table, pros and cons,
@@ -121,6 +142,8 @@ console.log("Document ready, js loaded.");
 
 //ERROR:
 //user puts 234235.234. and it will still work wtf
+//can put neg num
+//user can still leave input field blank
 
 
 //MORE FEATURES:
@@ -128,7 +151,6 @@ console.log("Document ready, js loaded.");
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
 //take care of preventing user errors!
 // RESULT log: if more than 99 cents, then it should convert to dollars
-//parseInt or float or gallons,
 //put gals in table
 
 
