@@ -2,18 +2,24 @@
 // -------------------------------------------------------------------------
 //Calculate button click counter
 // -------------------------------------------------------------------------
-var clickCount = 1;
-function calcButtonClickCounter () {
-  clickCount ++;
-}
+
 // -------------------------------------------------------------------------
 // Main function
-// -------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 var main = function () {
   "use strict";
+  console.log('hello there!');
+
+  var clickCount = 1;
+  function calcButtonClickCounter () {
+    clickCount ++;
+  }
+
   //create click handler for calculate button element and run code when it is clicked//
   var $calculateButtonEl = $(".calculate");
+  console.log('calc el', $calculateButtonEl);
   $calculateButtonEl.on("click", function(){
+
 
   //run # to show user (Run #1, run #2, etc...)
   var runNumber = $("<p>").text("Run #" + clickCount);
@@ -24,20 +30,62 @@ var main = function () {
   var tableDataArray = [];
 
   //get IDs of elements, and values they hold to use for calculations:
-  var cashPrice = document.getElementById("cashPrice").value;
+  var cashPrice = document.getElementById("cashPrice").value; //returns str, NOT a #!!
   var creditPrice = document.getElementById("creditPrice").value;
   var bankDiscount = document.getElementById("bankDiscount").value;
   var gallons = document.getElementById("gallonsNeeded").value;
+  //don't delete:
+// console.log('typeof', typeof +cashPrice);
+// console.log('cp', typeof +cashPrice);
+// console.log('true or false', +cashPrice === -2.63);
 
+  //test validation:
+  //capture form id:
+  function checkForm(form){
+    // validation fails if the input is blank
+
+    if(+cashPrice === -2.63 )  {
+      console.log("both are equal");
+      // cashPrice.focus();
+      // form.inputfield.focus();
+      return false;
+    }
+
+    // if(cashPrice === "") {
+    //   alert("Error: Input is empty!");
+    //   // cashPrice.focus();
+    //   // form.inputfield.focus();
+    //   return false;
+    // }
+
+    // validation fails if the input has negative sign
+    var re = /[-]/;
+    // var re = /^[0-9.]+$/;
+    var foundNegVal = re.test(cashPrice);
+    console.log(foundNegVal);
+
+    if (foundNegVal === true) {
+      console.log('check input, you have a negative as a value!');
+      return false;
+    }
+    // // validation was successful
+    // return true;
+  }
+
+  checkForm(cashPrice);
+  console.log('checkForm result', checkForm(cashPrice));
+
+  //
   // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
   //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
   //   return false;
   // }
+//
+//   $("p").on("click", function(){
+//     console.log('clicked');
+//     alert("The paragraph was clicked.");
+// });
 
-  $("p").on("click", function(){
-    console.log('clicked');
-    alert("The paragraph was clicked.");
-});
 //     $("#creditPrice").keypress(function(){
 // console.log('keys pressed!');
 //     });
@@ -147,6 +195,7 @@ console.log("Document ready, js loaded!!.");
 
 
 //MORE FEATURES:
+//one click to clear all calculation results.
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
 //take care of preventing user errors!
