@@ -8,7 +8,6 @@
 // ------------------------------------------------------------------------
 var main = function () {
   "use strict";
-  console.log('hello there!');
 
   var clickCount = 1;
   function calcButtonClickCounter () {
@@ -20,7 +19,6 @@ var main = function () {
   console.log('calc el', $calculateButtonEl);
   $calculateButtonEl.on("click", function(){
 
-
   //run # to show user (Run #1, run #2, etc...)
   var runNumber = $("<p>").text("Run #" + clickCount);
   $(".calculationResultContainer").append(runNumber);
@@ -30,8 +28,8 @@ var main = function () {
   var tableDataArray = [];
 
   //get IDs of elements, and values they hold to use for calculations:
-  var cashPrice = document.getElementById("cashPrice").value; //returns str, NOT a #!!
-  var creditPrice = document.getElementById("creditPrice").value;
+  var cashPrice = document.getElementById("cashPrice").value;
+  var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
   var bankDiscount = document.getElementById("bankDiscount").value;
   var gallons = document.getElementById("gallonsNeeded").value;
   //don't delete:
@@ -44,26 +42,25 @@ var main = function () {
   function checkForm(form){
     // validation fails if the input is blank
 
-    if(+cashPrice === -2.63 )  {
-      console.log("both are equal");
-      // cashPrice.focus();
-      // form.inputfield.focus();
-      return false;
-    }
-
-    // if(cashPrice === "") {
-    //   alert("Error: Input is empty!");
+    // if(+cashPrice === -2.63 )  {
+    //   console.log("both are equal");
     //   // cashPrice.focus();
     //   // form.inputfield.focus();
     //   return false;
     // }
+
+    if(cashPrice === "") {
+      alert("Error: Input is empty!");
+      // cashPrice.focus();
+      // form.inputfield.focus();
+      return false;
+    }
 
     // validation fails if the input has negative sign
     var re = /[-]/;
     // var re = /^[0-9.]+$/;
     var foundNegVal = re.test(cashPrice);
     console.log(foundNegVal);
-
     if (foundNegVal === true) {
       console.log('check input, you have a negative as a value!');
       return false;
@@ -177,6 +174,8 @@ $(document).ready(main);
 console.log("Document ready, js loaded!!.");
 ///end of document ready function//
 
+console.log('linux!');
+
 
 ////Final verdict: Maybe put this in an organized table, pros and cons,
 //people prob dont like to read long P!.  Typically, for most gas stations
@@ -191,7 +190,6 @@ console.log("Document ready, js loaded!!.");
 //ERROR:
 //user puts 234235.234. and it will still work wtf
 //can put neg num
-//user can still leave input field blank
 
 
 //MORE FEATURES:
