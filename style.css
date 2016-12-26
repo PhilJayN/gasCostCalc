@@ -3,48 +3,52 @@
 }
 
 body {
-  background-color: #E3E3E3;
+  background-color: #c7c7c7;
   margin: 2px auto;
-  width: 500px;
-
+  /*width: 500px;*/
 }
 
-.userInput {
-   border: 1px solid tomato;
-    
-   margin: 5px;
-   border-radius: 99px;
+.formFields {
+  background-color: #ffffff;
+  max-width: 220px;
 
+   /*border: 1px solid tomato;*/
+   margin: 5px;
+   border-radius: 5px;
+   box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
+   padding: 12px;
 }
 
 h4 {
-  color: #7ED321
-}
-
-.formUserInput {
-  background-color: #F9F9F9;
+  color: rgb(110, 180, 49);
 }
 
 /*make the li the flex container, while the label
 and input elements are the flex items inside*/
-.formUserInput li {
+.formFields li {
   display: flex;
   flex-wrap: wrap;
-
+  padding: 2px;
 }
 /*flex item 1*/
 label {
-  /*flex: 1 0 130px;*/
-  flex: 2 0 100px;
-  background-color: pink;
+  flex: 1 0 130px;
+  /*max width prevents the labels from getting too wide*/
+  max-width: 120px;
+  text-align: right;
+  margin-right: 4px;
+  /*flex: 2 0 70px;*/
+  /*background-color: pink;*/
    /*border: 1px solid tomato; */
 }
 
 /*flex item 2*/
 /*using attribute selector to select all input types w/ number*/
 input[type="number"]{
-  /*flex: 2 0 230px;*/
-  flex: 1 0 90px;
+  flex: 2 0 230px;
+  max-width: 70px;
+
+  /*flex: 1 0 90px;*/
 background-color: #E3E3E3;
 padding: 0.15em 0.45em;
 font-size: 15px;
@@ -55,14 +59,21 @@ max-height: 3em;
 
 .calculateBtn {
   box-sizing: border-box;
-  background: rgb(117, 190, 52);
+  /*background: rgb(117, 190, 52);*/
+
+/*less bright green*/
+  background: rgb(110, 180, 49);
+
   color: #fafafa;
-  padding: 8px;
+  padding: 7px;
+  margin-left: 3px;
+  margin-top: 8px;
     border-radius: 5px;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: 500;
     box-shadow: 1px 3px rgba(0, 0, 0, 0.5);
+
 }
 
 .calculateBtn:hover {
