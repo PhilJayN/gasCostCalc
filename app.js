@@ -6,174 +6,182 @@
 // -------------------------------------------------------------------------
 // Main function
 // ------------------------------------------------------------------------
-var main = function () {
-  "use strict";
+var main = function() {
+    "use strict";
+    var clickCount = 1;
 
-  var clickCount = 1;
-  function calcButtonClickCounter () {
-    clickCount ++;
-  }
-
-  var priceArray = [];
-  var tableDataArray = [];
-
-  //create click handler for calculate button element and run code when it is clicked//
-  var $calculateButtonEl = $(".calculateBtn");
-  console.log('calc el', $calculateButtonEl);
-  $calculateButtonEl.on("click", function(){
-
-  //run # to show user (Run #1, run #2, etc...)
-  var runNumber = $("<p>").text("Run #" + clickCount);
-  $(".calculationResultContainer").append(runNumber);
-  calcButtonClickCounter();
-
-
-  //get IDs of elements, and values they hold to use for calculations:
-  var cashPrice = document.getElementById("cashPrice").value;
-  var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
-  var bankDiscount = document.getElementById("bankDiscount").value;
-  var gallons = document.getElementById("gallonsNeeded").value;
-  //don't delete:
-// console.log('typeof', typeof +cashPrice);
-// console.log('cp', typeof +cashPrice);
-// console.log('true or false', +cashPrice === -2.63);
-
-  //test validation:
-  //capture form id:
-  function checkForm(form){
-    // validation fails if the input is blank
-
-    // if(+cashPrice === -2.63 )  {
-    //   console.log("both are equal");
-    //   // cashPrice.focus();
-    //   // form.inputfield.focus();
-    //   return false;
-    // }
-
-    if(cashPrice === "") {
-      alert("Error: Input is empty!");
-      // cashPrice.focus();
-      // form.inputfield.focus();
-      return false;
+    function calcButtonClickCounter() {
+        clickCount++;
     }
 
-    // validation fails if the input has negative sign
-    var re = /[-]/;
-    // var re = /^[0-9.]+$/;
-    var foundNegVal = re.test(cashPrice);
-    console.log(foundNegVal);
-    if (foundNegVal === true) {
-      console.log('check input, you have a negative as a value!');
-      return false;
-    }
-    // // validation was successful
-    // return true;
-  }
+    var priceArray = [];
+    var tableDataArray = [];
+    var resultHeader = "";
 
-  checkForm(cashPrice);
-  console.log('checkForm result', checkForm(cashPrice));
+    var $calculateButtonEl = $(".calculateBtn");
+    var calculationResultContainerEl = $(".calculationResultContainer");
 
-  //
-  // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
-  //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
-  //   return false;
-  // }
-//
-//   $("p").on("click", function(){
-//     console.log('clicked');
-//     alert("The paragraph was clicked.");
-// });
+    //create click handler for calculate button element and run code when it is clicked//
+    console.log('calc el', $calculateButtonEl);
+    $calculateButtonEl.on("click", function() {
+      
+              //result container creation:
+              //create the result string ONLY if it's empty (first time)
+              //because we do NOT want the result header created everytime
+              //user clicks calculateBtn:
+              if (resultHeader === "") {
+                console.log('resultHeader is empty, so creating header...');
+                resultHeader = resultHeader + "Result";
+                var headerEl = $("<h4>");
+                // calculationResultContainer.append("<h4>Result</h4>");
+                calculationResultContainerEl.append(headerEl);
+                headerEl.text(resultHeader);
+              }
 
-//     $("#creditPrice").keypress(function(){
-// console.log('keys pressed!');
-//     });
+        //run # to show user (Run #1, run #2, etc...)
+        var runNumber = $("<p>").text("Run #" + clickCount);
+        calculationResultContainerEl.append(runNumber);
+        calcButtonClickCounter();
 
-  //calculations:
-  var totalCash = parseFloat(gallons) * parseFloat(cashPrice);
-  var totalCredit = parseFloat(gallons) * parseFloat(creditPrice);
-  var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100;
-  var difference;
+        //get IDs of elements, and values they hold to use for calculations:
+        var cashPrice = document.getElementById("cashPrice").value;
+        var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
+        var bankDiscount = document.getElementById("bankDiscount").value;
+        var gallons = document.getElementById("gallonsNeeded").value;
+        //don't delete:
+        // console.log('typeof', typeof +cashPrice);
+        // console.log('cp', typeof +cashPrice);
+        // console.log('true or false', +cashPrice === -2.63);
 
-  //substracting larger value from smaller result in negative, therefore use absolute value:
-  if (totalCreditWDiscount < cashPrice) {
-    difference = Math.abs(totalCreditWDiscount - totalCash);
-  }
-  else {
-    difference = totalCreditWDiscount - totalCash;
-  }
+        //test validation:
+        //capture form id:
+        function checkForm(form) {
+            // validation fails if the input is blank
+            // if(+cashPrice === -2.63 )  {
+            //   console.log("both are equal");
+            //   // cashPrice.focus();
+            //   // form.inputfield.focus();
+            //   return false;
+            // }
+            if (cashPrice === "") {
+                alert("Error: Input is empty!");
+                // cashPrice.focus();
+                // form.inputfield.focus();
+                return false;
+            }
+            // validation fails if the input has negative sign
+            var re = /[-]/;
+            // var re = /^[0-9.]+$/;
+            var foundNegVal = re.test(cashPrice);
+            console.log(foundNegVal);
+            if (foundNegVal === true) {
+                console.log('check input, you have a negative as a value!');
+                return false;
+            }
+            // // validation was successful
+            // return true;
+        }
+        checkForm(cashPrice);
+        console.log('checkForm result', checkForm(cashPrice));
+        // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
+        //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
+        //   return false;
+        // }
+        //
+        //   $("p").on("click", function(){
+        //     console.log('clicked');
+        //     alert("The paragraph was clicked.");
+        // });
 
-  //push calculation result and table data title into arrays:
-  ///careful, you need to reset both arrays or else it will keep adding data to it when user
-  ///clicks on calculate button.
-  priceArray.push(totalCash, totalCredit, totalCreditWDiscount, difference);
-  tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
+        //     $("#creditPrice").keypress(function(){
+        // console.log('keys pressed!');
+        //     });
 
-  ////dynamically create HTML table when user clicks on calculate button:
-  var table = '';
-  var rows = 4;
-  var cols = 2;
-  var arrayIndex = 0;
-// price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
-//table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
-// console.log('len', priceArray.length);
-// console.log('len', tableDataArray.length);
-// console.log(priceArray[3]);
-// console.log(tableDataArray[2]);
+        //calculations:
+        var totalCash = parseFloat(gallons) * parseFloat(cashPrice);
+        var totalCredit = parseFloat(gallons) * parseFloat(creditPrice);
+        var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100;
+        var difference;
+        //substracting larger value from smaller result in negative, therefore use absolute value:
+        if (totalCreditWDiscount < cashPrice) {
+            difference = Math.abs(totalCreditWDiscount - totalCash);
+        } else {
+            difference = totalCreditWDiscount - totalCash;
+        }
+        //push calculation result and table data title into arrays:
+        ///careful, you need to reset both arrays or else it will keep adding data to it when user
+        ///clicks on calculate button.
+        priceArray.push(totalCash, totalCredit, totalCreditWDiscount, difference);
+        tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
 
-  //dynamically create html table:
-  //outside loop creates the rows (4 rows total)
-  for (var r=0; r < rows; r++ ) {
-    table += "<tr>";
-      //inside loop creates the table data (2 td created every inner loop run)
-      for (var tdCreator = 0; tdCreator < 1; tdCreator++ ) {
-        table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-        table += "<td>" + priceArray[arrayIndex]  + "</td>";
-      }
-      //when inner loop exits, arrayIndex incremented. this way we can iterate through
-      //the arrays
-      arrayIndex ++;
+        //dynamically create a container to hold results
 
-    table += "</tr>";
-  }
-  $(".calculationResultContainer").append(table);
+        ////dynamically create HTML table when user clicks on calculate button:
+        var table = '';
+        var rows = 4;
+        var cols = 2;
+        var arrayIndex = 0;
+        // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
+        //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
+        // console.log('len', priceArray.length);
+        // console.log('len', tableDataArray.length);
+        // console.log(priceArray[3]);
+        // console.log(tableDataArray[2]);
 
-  //jQuery create element template to put in FINAL conclusion:
-  var elConclusion = $("<p>");
-  var amtSaved = (difference*100).toFixed(2);
-  var cents = 'cents';
-  var dollars = 'dollars';
-  var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ' ;
+        //dynamically create html table:
+        //outside loop creates the rows (4 rows total)
+        for (var r = 0; r < rows; r++) {
+            table += "<tr>";
+            //inside loop creates the table data (2 td created every inner loop run)
+            for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+                table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+                table += "<td>" + priceArray[arrayIndex] + "</td>";
+            }
+            //when inner loop exits, arrayIndex incremented. this way we can iterate through
+            //the arrays
+            arrayIndex++;
 
-  function finalMsg (amtSaved) {
-    if (amtSaved < 100) {
-      elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ' );
-    }
-    else {
-      elConclusion.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ' );
-    }
-  }
-// elConclusion.text('You can shave approximately ' + amtSaved + dollarorCents +  off your total bill by using ' + cash + credit );
+            table += "</tr>";
+        }
+        calculationResultContainerEl.append(table);
+
+        //jQuery create element template to put in FINAL conclusion:
+        var elConclusion = $("<p>");
+        var amtSaved = (difference * 100).toFixed(2);
+        var cents = 'cents';
+        var dollars = 'dollars';
+        var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
+
+        function finalMsg(amtSaved) {
+            if (amtSaved < 100) {
+                elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ');
+            } else {
+                elConclusion.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ');
+            }
+        }
+        // elConclusion.text('You can shave approximately ' + amtSaved + dollarorCents +  off your total bill by using ' + cash + credit );
 
 
-  //code below runs depending on whether it's cheaper to pay with cash or credit:
-  if (totalCreditWDiscount < totalCash) {
-    finalMsg(amtSaved);
-    }
-    $(".calculationResultContainer").append(elConclusion);
-  //   elConclusion.text(conclusionMsg + 'credit card!');
-  // }
-  // else {
-  //   elConclusion.text(conclusionMsg + 'cash!');
-  // }
+        //code below runs depending on whether it's cheaper to pay with cash or credit:
+        if (totalCreditWDiscount < totalCash) {
+            finalMsg(amtSaved);
+        }
+        calculationResultContainerEl.append(elConclusion);
+        //   elConclusion.text(conclusionMsg + 'credit card!');
+        // }
+        // else {
+        //   elConclusion.text(conclusionMsg + 'cash!');
+        // }
+        ////closing of calculate button function syntax:
+    });
 
-  ////closing of calculate button function syntax:
-});
-
-///closing of main function syntax:
+    ///closing of main function syntax:
 };
 $(document).ready(main);
 console.log("Document ready, js loaded!!.");
 ///end of document ready function//
+
+
 
 
 ////Final verdict: Maybe put this in an organized table, pros and cons,
@@ -213,11 +221,6 @@ console.log("Document ready, js loaded!!.");
 
 
 
-
-
-
-
-
 //use jQuery to create elements and put in calculation results:
 // var $totalCash = $("<td>").text(totalCash);
 // var $totalCredit =  $("<td>").text(totalCredit);
@@ -236,7 +239,7 @@ console.log("Document ready, js loaded!!.");
 //     // var $table = $(".calculationResultContainer").children(); ///this holds a jQuery obj. (<table> element is created, but dangling)
 //     //   var $row1 = $table.append( $("<tr><td>A</td><td>B</td></tr>") );
 //     //   var $row2 = $table.append( $("<tr><td>Testdata</td></tr>") );
-//     //   var $row3 = $table.append( $("<tr></tr>") );
+//     //   var $row3 = $table.append( .63$("<tr></tr>") );
 //       // var $row4 = $table.append( $("<tr><p>jasdklf</p></tr>") );
 //     // $row4.append("<td></td>").text(testData);
 //     // $row1.text('hi');
@@ -252,13 +255,6 @@ console.log("Document ready, js loaded!!.");
 //     // $(".calculationResultContainer").append($table);
 //
 // }
-
-
-
-
-
-
-
 
 
 // //create new dangling table and tr element

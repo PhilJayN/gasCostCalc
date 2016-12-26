@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #c7c7c7;
+  background-color: #E3E3E3;
   margin: 2px auto;
   /*width: 500px;*/
 }
@@ -19,8 +19,12 @@ body {
    padding: 12px;
 }
 
-h4 {
+h4, p {
   color: rgb(110, 180, 49);
+  font-weight: 800;
+  /*nice orange*/
+  /*color: #FFCC00;
+  color: #F3A51B;*/
 }
 
 /*make the li the flex container, while the label
@@ -47,9 +51,9 @@ label {
 input[type="number"]{
   flex: 2 0 230px;
   max-width: 70px;
-
   /*flex: 1 0 90px;*/
 background-color: #E3E3E3;
+background-color: #F9F9F9;
 padding: 0.15em 0.45em;
 font-size: 15px;
 border-radius: 3px;
