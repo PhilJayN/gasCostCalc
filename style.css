@@ -2,11 +2,111 @@
   visibility: hidden;
 }
 
-.userInput {
-  border: 1px solid gray;
+body {
+  background-color: #E3E3E3;
+  margin: 2px auto;
+  width: 500px;
+
 }
 
-.calculationResultContainer {
+.userInput {
+   border: 1px solid tomato;
+    
+   margin: 5px;
+   border-radius: 99px;
+
+}
+
+h4 {
+  color: #7ED321
+}
+
+.formUserInput {
+  background-color: #F9F9F9;
+}
+
+/*make the li the flex container, while the label
+and input elements are the flex items inside*/
+.formUserInput li {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+/*flex item 1*/
+label {
+  /*flex: 1 0 130px;*/
+  flex: 2 0 100px;
+  background-color: pink;
+   /*border: 1px solid tomato; */
+}
+
+/*flex item 2*/
+/*using attribute selector to select all input types w/ number*/
+input[type="number"]{
+  /*flex: 2 0 230px;*/
+  flex: 1 0 90px;
+background-color: #E3E3E3;
+padding: 0.15em 0.45em;
+font-size: 15px;
+border-radius: 3px;
+box-sizing: border-box;
+max-height: 3em;
+}
+
+.calculateBtn {
+  box-sizing: border-box;
+  background: rgb(117, 190, 52);
+  color: #fafafa;
+  padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    box-shadow: 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.calculateBtn:hover {
+  background-color: #7ED321;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.calculationResultContainer {
   border: 1px dashed blue;
 }
 
@@ -30,4 +130,4 @@ td {
 .userInput {
   min-width: 400px;
 
-}
+}*/

@@ -14,8 +14,11 @@ var main = function () {
     clickCount ++;
   }
 
+  var priceArray = [];
+  var tableDataArray = [];
+
   //create click handler for calculate button element and run code when it is clicked//
-  var $calculateButtonEl = $(".calculate");
+  var $calculateButtonEl = $(".calculateBtn");
   console.log('calc el', $calculateButtonEl);
   $calculateButtonEl.on("click", function(){
 
@@ -24,8 +27,6 @@ var main = function () {
   $(".calculationResultContainer").append(runNumber);
   calcButtonClickCounter();
 
-  var priceArray = [];
-  var tableDataArray = [];
 
   //get IDs of elements, and values they hold to use for calculations:
   var cashPrice = document.getElementById("cashPrice").value;
@@ -173,8 +174,6 @@ var main = function () {
 $(document).ready(main);
 console.log("Document ready, js loaded!!.");
 ///end of document ready function//
-
-console.log('linux!');
 
 
 ////Final verdict: Maybe put this in an organized table, pros and cons,

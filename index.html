@@ -2,40 +2,43 @@
 <html>
 
 <head>
-    <title>Wel!</title>
+    <title>gasC</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h5>Calculate cost of gas when using credit card with reward points vs paying by cash</h5>
-
-    <main>
-      <p>
-        hi there! p
-      </p>
-      <h5>header!</h5>
 
         <div class="userInput">
-          <form action="index.html" method="post">
-            <input id="testInput"  type="text" value="2">
+            <form action="index.html" method="post">
+                <ul class="formUserInput">
+                  <h4>Info</h4>
+                        <li>
+                          <label for="cashPrice">Cash Price $</label>
+                          <input type="number" step="0.01" min="0" id="cashPrice" value="2.63" />
+                        </li>
 
-            <label>Cash Price $<input type="number" step="0.01" min="0" id="cashPrice" />  </label>   <br />
+                        <li>
+                          <label for="creditPrice">Credit Price $</label>
+                            <input type="number" step="0.01" id="creditPrice" value="2.73" />
+                        </li>
 
-            <label>Credit Price $<input type="number" step="0.01" id="creditPrice" value="2.73" /></label><br />
+                        <li>
+                          <label for="bankDiscount">Bank Discount %</label>
+                          <input type="number" step="0.01" id="bankDiscount" value="1" />
+                        </li>
 
-            <label>Bank Discount %<input type="number" step="0.01" id="bankDiscount" value="1" /></label><br />
-
-            <label> Gallons Needed<input type="number" step="0.01" id="gallonsNeeded" value="1" /></label><br />
-          </form>
-
-            <button class="calculate">Calculate!</button>
+                        <li>
+                          <label for="gallonsNeeded"> Gallons Needed</label>
+                          <input type="number" step="0.01" id="gallonsNeeded" value="1" />
+                        </li>
+                </ul>
+            </form>
+            <button class="calculateBtn">Calculate</button>
         </div>
 
         <div class="calculationResultContainer">
 
         </div>
-
-    </main>
 
 
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -46,6 +49,53 @@
 </html>
 
 
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+<form action="index.html" method="post">
+    <ul class="formUserInput">
+      <h4>Info</h4>
+            <li>
+              <label for="cashPrice">Cash Price $<input type="number" step="0.01" min="0" id="cashPrice" value="2.63" />  </label>
+            </li>
+
+            <li><label for="creditPrice">Credit Price $<input type="number" step="0.01" id="creditPrice" value="2.73" /></label>
+            </li>
+
+            <li><label for="bankDiscount">Bank Discount %<input type="number" step="0.01" id="bankDiscount" value="1" /></label>
+            </li>
+
+            <li> <label for="gallonsNeeded"> Gallons Needed<input type="number" step="0.01" id="gallonsNeeded" value="1" /></label>
+            </li>
+    </ul>
+</form> -->
+
+
+
+
+<!-- <input id="testInput"  type="text" value="2"> -->
+<!--
+<label for="cashPrice">Cash Price</label>
+<input type="number" step="0.01" min="0" id="cashPrice" value="2.63" />
+
+<label for="creditPrice">Credit Price</label>
+<input type="number" step="0.01" id="creditPrice" value="2.73" />
+
+<label for="bankDiscount">Bank Discount</label>
+<input type="number" step="0.01" id="bankDiscount" value="1" />
+
+<label for="gallonsNeeded">Gallons Needed</label>
+<input type="number" step="0.01" id="gallonsNeeded" value="1" /> -->
 
 
 
