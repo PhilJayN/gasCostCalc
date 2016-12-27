@@ -87,24 +87,26 @@ var main = function() {
         // }
 
         //calculations:
-        var totalCash = parseFloat(gallons) * parseFloat(cashPrice);
-        var totalCredit = parseFloat(gallons) * parseFloat(creditPrice);
-        var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100; //should be less than totalCredit due to discount
-        console.log('totalCash', totalCash);
-        console.log('totalCredit', totalCredit);
-        console.log('totalCreditWDiscount',  totalCreditWDiscount);
+        var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
+        var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
+        var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
+        console.log('totalCostInCash', totalCostInCash);
+        console.log('totalCostInCredit', totalCostInCredit);
+        console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
         var difference;
         //substracting larger value from smaller result in negative, therefore use absolute value:
-        //if totalCreditWDiscount is less than totalCash, it means using CC is cheaper...
-        if (totalCreditWDiscount < cashPrice) {
-            difference = Math.abs(totalCreditWDiscount - totalCash);
+        //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
+        if (totalCostInCreditWDiscount < totalCostInCash) {
+            difference = Math.abs(totalCostInCreditWDiscount - totalCostInCash);
+            //then give msg that you can save amtOfMoney paying w/ CC
         } else {
-            difference = totalCreditWDiscount - totalCash;
+            difference = totalCostInCreditWDiscount - totalCostInCash;
+            //otherwise msg will say you can save amtOfMoney paying with CASH
         }
         //push calculation result and table data title into arrays:
         ///careful, you need to reset both arrays or else it will keep adding data to it when user
         ///clicks on calculate button.
-        priceArray.push(totalCash, totalCredit, totalCreditWDiscount, difference);
+        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, difference);
         tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
 
         //dynamically create a container to hold results
@@ -156,7 +158,7 @@ var main = function() {
             }
         }
         //code below runs depending on whether it's cheaper to pay with cash or credit:
-        // if (totalCreditWDiscount < totalCash) {
+        // if (totalCostInCreditWDiscount < totalCostInCash) {
         //     finalMsg(amtSaved);
         // }
 
@@ -230,6 +232,7 @@ console.log("Document ready, js loaded!!.");
 //take care of preventing user errors!
 // RESULT log: if more than 99 cents, then it should convert to dollars
 //put gals in table
+//change input fields to look like gas station electronic #
 
 
 //FEATURES - FUTURE if time:
