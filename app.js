@@ -6,17 +6,72 @@
 var main = function() {
     "use strict";
     var clickCount = 1;
-
-    function calcButtonClickCounter() {
-        clickCount++;
-    }
-
     var priceArray = [];
     var tableDataArray = [];
     var resultHeader = "";
+    var difference;
+    var finalDifference;
+    var amtSaved;
 
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
+    //jQuery create element template to put in FINAL conclusion:
+    var conclusionElement = $("<p>");
+    var headerEl = $("<h3>");
+    //run # to show user (Run #1, run #2, etc...)
+    var runNumber = $("<p>").text("Run " + clickCount);
+
+    //get IDs of elements, and values they hold to use for calculations:
+    var cashPrice = document.getElementById("cashPrice").value;
+    var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
+    var bankDiscount = document.getElementById("bankDiscount").value;
+    var gallons = document.getElementById("gallonsNeeded").value;
+
+    //calculations:
+    var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
+    var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
+    var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
+    difference = totalCostInCreditWDiscount - totalCostInCash;
+    amtSaved = parseFloat( (difference * 100).toFixed(2) ); //cents in string form
+    console.log('totalCostInCash', totalCostInCash);
+    console.log('totalCostInCredit', totalCostInCredit);
+    console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
+
+    console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
+    console.log('test of amtSaved', amtSaved > 4);
+    // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
+
+
+    function conclusionMsg () {
+
+
+      //substracting larger value from smaller result in negative, therefore use absolute value:
+      //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
+      if (totalCostInCreditWDiscount < totalCostInCash) {
+        finalDifference = Math.abs(difference);
+        //then give msg that you can save amtOfMoney paying w/ CC
+        conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
+      } else {
+        finalDifference = difference;
+        //otherwise msg will say you can save amtOfMoney paying with CASH
+        conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
+      }
+    }
+
+    //code below runs depending on whether it's cheaper to pay with cash or credit:
+
+    //     if (amtSaved < 100) {
+    //       // console.log('amtSaved: ',  parseFloat(amtSaved));
+    //         // console.log('conclusionElement holds:', conclusionElement);
+    //
+    //     } else {
+    //     }
+    // }
+
+
+    function calcButtonClickCounter() {
+      clickCount++;
+    }
 
     //create click handler for calculate button element and run code when it is clicked//
     // console.log('calc el', $calculateButtonEl);
@@ -29,22 +84,13 @@ var main = function() {
         if (resultHeader === "") {
             console.log('resultHeader is empty, so creating header...');
             resultHeader = resultHeader + "Result";
-            var headerEl = $("<h3>");
             // calculationResultContainer.append("<h4>Result</h4>");
             calculationResultContainerEl.append(headerEl);
             headerEl.text(resultHeader);
         }
 
-        //run # to show user (Run #1, run #2, etc...)
-        var runNumber = $("<p>").text("Run " + clickCount);
         calculationResultContainerEl.append(runNumber);
         calcButtonClickCounter();
-
-        //get IDs of elements, and values they hold to use for calculations:
-        var cashPrice = document.getElementById("cashPrice").value;
-        var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
-        var bankDiscount = document.getElementById("bankDiscount").value;
-        var gallons = document.getElementById("gallonsNeeded").value;
         //don't delete:
         // console.log('typeof', typeof +cashPrice);
         // console.log('cp', typeof +cashPrice);
@@ -86,23 +132,6 @@ var main = function() {
         //   return false;
         // }
 
-        //calculations:
-        var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
-        var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
-        var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
-        console.log('totalCostInCash', totalCostInCash);
-        console.log('totalCostInCredit', totalCostInCredit);
-        console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
-        var difference;
-        //substracting larger value from smaller result in negative, therefore use absolute value:
-        //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
-        if (totalCostInCreditWDiscount < totalCostInCash) {
-            difference = Math.abs(totalCostInCreditWDiscount - totalCostInCash);
-            //then give msg that you can save amtOfMoney paying w/ CC
-        } else {
-            difference = totalCostInCreditWDiscount - totalCostInCash;
-            //otherwise msg will say you can save amtOfMoney paying with CASH
-        }
         //push calculation result and table data title into arrays:
         ///careful, you need to reset both arrays or else it will keep adding data to it when user
         ///clicks on calculate button.
@@ -135,40 +164,12 @@ var main = function() {
             //when inner loop exits, arrayIndex incremented. this way we can iterate through
             //the arrays
             arrayIndex++;
-
             table += "</tr>";
         }
         calculationResultContainerEl.append(table);
 
-        //jQuery create element template to put in FINAL conclusion:
-        var conclusionElement = $("<p>");
-        var amtSaved = parseFloat( (difference * 100).toFixed(2) ); //cents in string form
-        // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
-        console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
-        console.log('test', amtSaved > 4);
-
-        function finalMsg() {
-            if (amtSaved < 100) {
-              // console.log('amtSaved: ',  parseFloat(amtSaved));
-                conclusionElement.text('You can shave approximately ' +  amtSaved + ' cents off your total bill by using ');
-                // console.log('conclusionElement holds:', conclusionElement);
-
-            } else {
-                conclusionElement.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ');
-            }
-        }
-        //code below runs depending on whether it's cheaper to pay with cash or credit:
-        // if (totalCostInCreditWDiscount < totalCostInCash) {
-        //     finalMsg(amtSaved);
-        // }
-
         calculationResultContainerEl.append(conclusionElement);
-        finalMsg();
-        //   conclusionElement.text(conclusionMsg + 'credit card!');
-        // }
-        // else {
-        //   conclusionElement.text(conclusionMsg + 'cash!');
-        // }
+        conclusionMsg();
 
         //create horizontal line break after every run:
         var horzLineBreak = $("<hr>");
@@ -176,35 +177,19 @@ var main = function() {
         // calculationResultContainerEl.style.visibility = "visible";
         // var showMe = document.getElementsByClassName("calculationResultContainer");
 
-        //capture element:
+        //makes result container visible:
+        //first, capture element:
         var capturedElement = document.getElementById("showMe");
-        // //then:
+        //then, show visibility:
         capturedElement.style.visibility = "visible";
 
-
-        // var showme = document.getElementsByClassName("calculationResultContainer");
-        // showme.style.visibility =  "visible";
-
-        // var showme = document.getElementsByClassName("calculateBtn");
-        // showme.style.visibility =  "visible";
-
-
-        ////closing of calculate button function syntax:
+    ///closing of calculate button function:
     });
-
-
-    //
-    // function newwindow() {
-    //      var showme = document.getElementById("testing");
-    //      showme.style.visibility = "visible";
-    //  }
-
-    ///closing of main function syntax:
-
+    ///closing of main function:
 };
 $(document).ready(main);
 console.log("Document ready, js loaded!!.");
-///end of document ready function//
+///end of document ready function
 
 
 
@@ -246,7 +231,62 @@ console.log("Document ready, js loaded!!.");
 
 
 
-//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 // //jQuery create element template to put in FINAL conclusion:
 // var elConclusion = $("<p>");
@@ -256,7 +296,7 @@ console.log("Document ready, js loaded!!.");
 // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
 //
 // console.log(conclusionMsg);
-// function finalMsg(amtSaved) {
+// function conclusionMsg(amtSaved) {
 //     if (amtSaved < 100) {
 //         elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ');
 //     } else {
