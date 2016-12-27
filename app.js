@@ -1,8 +1,5 @@
 //Dependencies: jQuery
 // -------------------------------------------------------------------------
-//Calculate button click counter
-// -------------------------------------------------------------------------
-
 // -------------------------------------------------------------------------
 // Main function
 // ------------------------------------------------------------------------
@@ -22,24 +19,24 @@ var main = function() {
     var calculationResultContainerEl = $(".calculationResultContainer");
 
     //create click handler for calculate button element and run code when it is clicked//
-    console.log('calc el', $calculateButtonEl);
+    // console.log('calc el', $calculateButtonEl);
     $calculateButtonEl.on("click", function() {
-      
-              //result container creation:
-              //create the result string ONLY if it's empty (first time)
-              //because we do NOT want the result header created everytime
-              //user clicks calculateBtn:
-              if (resultHeader === "") {
-                console.log('resultHeader is empty, so creating header...');
-                resultHeader = resultHeader + "Result";
-                var headerEl = $("<h4>");
-                // calculationResultContainer.append("<h4>Result</h4>");
-                calculationResultContainerEl.append(headerEl);
-                headerEl.text(resultHeader);
-              }
+
+        //result container creation:
+        //create the result string ONLY if it's empty (first time)
+        //because we do NOT want the result header created everytime
+        //user clicks calculateBtn:
+        if (resultHeader === "") {
+            console.log('resultHeader is empty, so creating header...');
+            resultHeader = resultHeader + "Result";
+            var headerEl = $("<h3>");
+            // calculationResultContainer.append("<h4>Result</h4>");
+            calculationResultContainerEl.append(headerEl);
+            headerEl.text(resultHeader);
+        }
 
         //run # to show user (Run #1, run #2, etc...)
-        var runNumber = $("<p>").text("Run #" + clickCount);
+        var runNumber = $("<p>").text("Run " + clickCount);
         calculationResultContainerEl.append(runNumber);
         calcButtonClickCounter();
 
@@ -81,28 +78,24 @@ var main = function() {
             // // validation was successful
             // return true;
         }
+        /////------------end of checkForm fxn----------////
         checkForm(cashPrice);
         console.log('checkForm result', checkForm(cashPrice));
         // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
         //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
         //   return false;
         // }
-        //
-        //   $("p").on("click", function(){
-        //     console.log('clicked');
-        //     alert("The paragraph was clicked.");
-        // });
-
-        //     $("#creditPrice").keypress(function(){
-        // console.log('keys pressed!');
-        //     });
 
         //calculations:
         var totalCash = parseFloat(gallons) * parseFloat(cashPrice);
         var totalCredit = parseFloat(gallons) * parseFloat(creditPrice);
-        var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100;
+        var totalCreditWDiscount = totalCredit - totalCredit * bankDiscount / 100; //should be less than totalCredit due to discount
+        console.log('totalCash', totalCash);
+        console.log('totalCredit', totalCredit);
+        console.log('totalCreditWDiscount',  totalCreditWDiscount);
         var difference;
         //substracting larger value from smaller result in negative, therefore use absolute value:
+        //if totalCreditWDiscount is less than totalCash, it means using CC is cheaper...
         if (totalCreditWDiscount < cashPrice) {
             difference = Math.abs(totalCreditWDiscount - totalCash);
         } else {
@@ -146,36 +139,66 @@ var main = function() {
         calculationResultContainerEl.append(table);
 
         //jQuery create element template to put in FINAL conclusion:
-        var elConclusion = $("<p>");
-        var amtSaved = (difference * 100).toFixed(2);
-        var cents = 'cents';
-        var dollars = 'dollars';
-        var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
+        var conclusionElement = $("<p>");
+        var amtSaved = parseFloat( (difference * 100).toFixed(2) ); //cents in string form
+        // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
+        console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
+        console.log('test', amtSaved > 4);
 
-        function finalMsg(amtSaved) {
+        function finalMsg() {
             if (amtSaved < 100) {
-                elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ');
+              // console.log('amtSaved: ',  parseFloat(amtSaved));
+                conclusionElement.text('You can shave approximately ' +  amtSaved + ' cents off your total bill by using ');
+                // console.log('conclusionElement holds:', conclusionElement);
+
             } else {
-                elConclusion.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ');
+                conclusionElement.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ');
             }
         }
-        // elConclusion.text('You can shave approximately ' + amtSaved + dollarorCents +  off your total bill by using ' + cash + credit );
-
-
         //code below runs depending on whether it's cheaper to pay with cash or credit:
-        if (totalCreditWDiscount < totalCash) {
-            finalMsg(amtSaved);
-        }
-        calculationResultContainerEl.append(elConclusion);
-        //   elConclusion.text(conclusionMsg + 'credit card!');
+        // if (totalCreditWDiscount < totalCash) {
+        //     finalMsg(amtSaved);
+        // }
+
+        calculationResultContainerEl.append(conclusionElement);
+        finalMsg();
+        //   conclusionElement.text(conclusionMsg + 'credit card!');
         // }
         // else {
-        //   elConclusion.text(conclusionMsg + 'cash!');
+        //   conclusionElement.text(conclusionMsg + 'cash!');
         // }
+
+        //create horizontal line break after every run:
+        var horzLineBreak = $("<hr>");
+        calculationResultContainerEl.append(horzLineBreak);
+        // calculationResultContainerEl.style.visibility = "visible";
+        // var showMe = document.getElementsByClassName("calculationResultContainer");
+
+        //capture element:
+        var capturedElement = document.getElementById("showMe");
+        // //then:
+        capturedElement.style.visibility = "visible";
+
+
+        // var showme = document.getElementsByClassName("calculationResultContainer");
+        // showme.style.visibility =  "visible";
+
+        // var showme = document.getElementsByClassName("calculateBtn");
+        // showme.style.visibility =  "visible";
+
+
         ////closing of calculate button function syntax:
     });
 
+
+    //
+    // function newwindow() {
+    //      var showme = document.getElementById("testing");
+    //      showme.style.visibility = "visible";
+    //  }
+
     ///closing of main function syntax:
+
 };
 $(document).ready(main);
 console.log("Document ready, js loaded!!.");
@@ -200,6 +223,7 @@ console.log("Document ready, js loaded!!.");
 
 
 //MORE FEATURES:
+//toggle clear results container!
 //one click to clear all calculation results.
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
@@ -219,6 +243,37 @@ console.log("Document ready, js loaded!!.");
 
 
 
+//
+//
+// //jQuery create element template to put in FINAL conclusion:
+// var elConclusion = $("<p>");
+// var amtSaved = (difference * 100).toFixed(2);
+// var cents = 'cents';
+// var dollars = 'dollars';
+// var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
+//
+// console.log(conclusionMsg);
+// function finalMsg(amtSaved) {
+//     if (amtSaved < 100) {
+//         elConclusion.text('You can shave approximately ' + amtSaved + ' cents off your total bill by using ');
+//     } else {
+//         elConclusion.text('You can shave approximately ' + amtSaved + ' dollars off your total bill by using ');
+//     }
+// }
+// // elConclusion.text('You can shave approximately ' + amtSaved + dollarorCents +  off your total bill by using ' + cash + credit );
+//
+//
+//
+// //code below runs depending on whether it's cheaper to pay with cash or credit:
+// if (totalCreditWDiscount < totalCash) {
+//     finalMsg(amtSaved);
+// }
+// calculationResultContainerEl.append(elConclusion);
+// //   elConclusion.text(conclusionMsg + 'credit card!');
+// // }
+// // else {
+// //   elConclusion.text(conclusionMsg + 'cash!');
+// // }
 
 
 //use jQuery to create elements and put in calculation results:

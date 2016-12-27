@@ -9,7 +9,7 @@
 <body>
         <article class="example">
             <form action="index.html" method="post">
-              <h3>Info</h3>
+              <h2>Info</h2>
                 <ul class="formFields">
                         <li>
                           <label for="cashPrice">Cash Price $</label>
@@ -28,14 +28,15 @@
 
                         <li>
                           <label for="gallonsNeeded"> Gallons Needed</label>
-                          <input type="number" step="0.01" id="gallonsNeeded" value="1" />
+                          <input type="number" step="0.01" id="gallonsNeeded" value="2" />
                         </li>
+
                 </ul>
             </form>
 
             <button class="calculateBtn">Calculate</button>
             <!-- results container: -->
-            <div class="calculationResultContainer">
+            <div class="calculationResultContainer" id="showMe">
 
             </div>
         </article>

@@ -1,6 +1,17 @@
-.hiddenResultTable {
-  visibility: hidden;
+.calculationResultContainer {
+   /*border: 1px solid tomato;*/
+   background-color: #ffffff;
+   max-width: 220px;
+
+    /*border: 1px solid tomato;*/
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
+    padding: 12px;
+    visibility: hidden;
+    text-align: center;
 }
+
 
 body {
   background-color: #E3E3E3;
@@ -19,7 +30,7 @@ body {
    padding: 12px;
 }
 
-h4, p {
+h2, h3, p {
   color: rgb(110, 180, 49);
   font-weight: 800;
   /*nice orange*/
@@ -72,6 +83,8 @@ max-height: 3em;
   padding: 7px;
   margin-left: 3px;
   margin-top: 8px;
+  margin-bottom: 8px;
+
     border-radius: 5px;
     cursor: pointer;
     text-transform: uppercase;
