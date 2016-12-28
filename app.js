@@ -10,6 +10,7 @@ var main = function() {
     var tableDataArray = [];
     var resultHeader = "";
     var difference;
+    var differenceRounded;
     var finalDifference;
     var amtSaved;
 
@@ -20,6 +21,8 @@ var main = function() {
     var headerEl = $("<h3>");
     //run # to show user (Run #1, run #2, etc...)
     var runNumber = $("<p>").text("Run " + clickCount);
+    var finalMsgEl =$("<p>");
+
 
     //get IDs of elements, and values they hold to use for calculations:
     var cashPrice = document.getElementById("cashPrice").value;
@@ -31,31 +34,74 @@ var main = function() {
     var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
     var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
     var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
-    difference = totalCostInCreditWDiscount - totalCostInCash;
-    amtSaved = parseFloat( (difference * 100).toFixed(2) ); //cents in string form
+    // difference = (totalCostInCreditWDiscount - totalCostInCash); //not last step in calculation yet....
+    // amtSaved = parseFloat( (difference * 100).toFixed(2) ); //last step in calc, now rounding...cents in string form, then parsedFloat to get number
+    difference = (totalCostInCreditWDiscount - totalCostInCash).toFixed(2); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+    differenceRounded = parseFloat(difference * 100); //multiply .15 * 100 to get your cents, (15);
+
     console.log('totalCostInCash', totalCostInCash);
     console.log('totalCostInCredit', totalCostInCredit);
     console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
 
-    console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
-    console.log('test of amtSaved', amtSaved > 4);
+    console.log('difference', difference);
+    console.log('differenceRounded', differenceRounded);
+    // console.log('difference NOT rounded yet', difference);
+    // console.log('difference test', difference.toFixed(2));
+    // console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
+    // console.log('test of amtSaved', amtSaved > 4);
     // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
 
 
     function conclusionMsg () {
+      var isPlural;
+      var centsOrDollars = "";
+      var sString = "s";
+      var cashOrCredit;
+      var finalString;
+      var convertToDollar;
 
+      if (differenceRounded > 1) {
+        isPlural = true;
+      }
+      else {
+        isPlural = false;
+      }
+
+      // checks for plurality:
+      if (isPlural === true) {
+         finalString = (differenceRounded < 100) ? " cents": " dollars";
+      }
+      // NOT plural:
+      else {
+         finalString = (differenceRounded > 100) ? " cent":" dollar";
+         convertToDollar = differenceRounded / 100; //changes those cents to dollars.
+         //have to convert that differenceRounded to dollars by diving by 100. so 200cents/100 = 2 dollars
+      }
+
+
+      //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
+      //money to use CC. iow, use cash! cash saves you more $$!
+      cashOrCredit = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
 
       //substracting larger value from smaller result in negative, therefore use absolute value:
       //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
       if (totalCostInCreditWDiscount < totalCostInCash) {
         finalDifference = Math.abs(difference);
         //then give msg that you can save amtOfMoney paying w/ CC
-        conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
+        // conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
       } else {
         finalDifference = difference;
         //otherwise msg will say you can save amtOfMoney paying with CASH
-        conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
+        // conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
       }
+
+      var msgArray = ['You can save approximately ', differenceRounded, finalString, ' by using ', cashOrCredit];
+      // var msgArray = ['You can save  approximately ', finalString, 'by using '];
+
+      var msgArrayJoined = msgArray.join("");
+      console.log(msgArray.join(""));
+      calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+
     }
 
     //code below runs depending on whether it's cheaper to pay with cash or credit:
