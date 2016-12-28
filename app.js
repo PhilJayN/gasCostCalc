@@ -11,8 +11,8 @@ var main = function() {
     var resultHeader = "";
     var difference;
     var differenceRounded;
-    var finalDifference;
-    var amtSaved;
+    // var finalDifference;
+    // var amtSaved;
 
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -22,7 +22,6 @@ var main = function() {
     //run # to show user (Run #1, run #2, etc...)
     var runNumber = $("<p>").text("Run " + clickCount);
     var finalMsgEl =$("<p>");
-
 
     //get IDs of elements, and values they hold to use for calculations:
     var cashPrice = document.getElementById("cashPrice").value;
@@ -46,18 +45,12 @@ var main = function() {
     console.log('difference', difference);
     console.log('differenceRounded', differenceRounded);
     // console.log('difference NOT rounded yet', difference);
-    // console.log('difference test', difference.toFixed(2));
-    // console.log('amtSaved val ', amtSaved, "amtSaved type:", typeof amtSaved);
-    // console.log('test of amtSaved', amtSaved > 4);
-    // var conclusionMsg = 'You can shave approximately ' + 'hi' + 'centOrDollars' + ' off your total bill by using ';
-
 
     function conclusionMsg () {
       var isPlural;
-      var centsOrDollars = "";
-      var sString = "s";
-      var cashOrCredit;
-      var finalString;
+      // var sString = "s";
+      var cashOrCreditString;
+      var monentaryUnitString;
       var convertToDollar;
 
       if (differenceRounded > 1) {
@@ -69,31 +62,30 @@ var main = function() {
 
       // checks for plurality:
       if (isPlural === true) {
-         finalString = (differenceRounded < 100) ? " cents": " dollars";
+         monentaryUnitString = (differenceRounded < 100) ? " cents": " dollars";
       }
       // NOT plural:
       else {
-         finalString = (differenceRounded > 100) ? " cent":" dollar";
+         monentaryUnitString = (differenceRounded > 100) ? " cent":" dollar";
          convertToDollar = differenceRounded / 100; //changes those cents to dollars.
          //have to convert that differenceRounded to dollars by diving by 100. so 200cents/100 = 2 dollars
       }
 
-
       //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
       //money to use CC. iow, use cash! cash saves you more $$!
-      cashOrCredit = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
+      cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
 
       //substracting larger value from smaller result in negative, therefore use absolute value:
       //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
-      if (totalCostInCreditWDiscount < totalCostInCash) {
-        finalDifference = Math.abs(difference);
-        //then give msg that you can save amtOfMoney paying w/ CC
-        // conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
-      } else {
-        finalDifference = difference;
-        //otherwise msg will say you can save amtOfMoney paying with CASH
-        // conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
-      }
+      // if (totalCostInCreditWDiscount < totalCostInCash) {
+      //   finalDifference = Math.abs(difference);
+      //   //then give msg that you can save amtOfMoney paying w/ CC
+      //   // conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
+      // } else {
+      //   finalDifference = difference;
+      //   //otherwise msg will say you can save amtOfMoney paying with CASH
+      //   // conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
+      // }
 
       var msgArray = ['You can save approximately ', differenceRounded, finalString, ' by using ', cashOrCredit];
       // var msgArray = ['You can save  approximately ', finalString, 'by using '];
@@ -272,6 +264,10 @@ console.log("Document ready, js loaded!!.");
 //kickback points consideration, or other rewards, optional choice for users.
 
 
+//challenges i had to think about:
+//keeping calcuations to only pennies makes calculations consistent,
+//so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
+//then i coiuld convert .3254534534 ` to dollars. `
 
 
 
