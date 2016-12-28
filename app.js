@@ -10,9 +10,11 @@ var main = function() {
     var tableDataArray = [];
     var resultHeader = "";
     var difference;
-    var differenceRounded;
-    // var finalDifference;
-    // var amtSaved;
+    var differenceInCents;
+    var differenceInCentsPositive;
+    var cashOrCreditString;
+    var monentaryUnitString;
+    var testMe = "hello there!";
 
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -35,45 +37,55 @@ var main = function() {
     var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
     // difference = (totalCostInCreditWDiscount - totalCostInCash); //not last step in calculation yet....
     // amtSaved = parseFloat( (difference * 100).toFixed(2) ); //last step in calc, now rounding...cents in string form, then parsedFloat to get number
-    difference = (totalCostInCreditWDiscount - totalCostInCash).toFixed(2); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-    differenceRounded = parseFloat(difference * 100); //multiply .15 * 100 to get your cents, (15);
+    differenceInCents = ( (totalCostInCreditWDiscount - totalCostInCash).toFixed(2) ) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+    // differenceRounded = parseFloat(difference * 100); //multiply .15 * 100 to get your cents, (15);
+
+    //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
+    //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
+    //money to use CC. iow, use cash! cash saves you more $$!
+    cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
+
+    //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
+    differenceInCentsPositive = Math.abs(differenceInCents);
+    console.log('type differenceInCents', typeof differenceInCents);
 
     console.log('totalCostInCash', totalCostInCash);
     console.log('totalCostInCredit', totalCostInCredit);
     console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
 
-    console.log('difference', difference);
-    console.log('differenceRounded', differenceRounded);
+      console.log('difference', difference);
+    console.log('differenceInCentsPositive', differenceInCentsPositive);
+    // console.log('test', differenceInCentsPositive >= 101);
     // console.log('difference NOT rounded yet', difference);
 
     function conclusionMsg () {
-      var isPlural;
-      // var sString = "s";
-      var cashOrCreditString;
-      var monentaryUnitString;
-      var convertToDollar;
+      // var isPlural;
+      // // var sString = "s";
+      // var convertToDollar;
 
-      if (differenceRounded > 1) {
-        isPlural = true;
-      }
-      else {
-        isPlural = false;
-      }
+      //assign plurality:
+      // if (differenceInCentsPositive > 1) {
+      //   isPlural = true;
+      // }
+      // else {
+      //   isPlural = false;
+      // }
 
-      // checks for plurality:
-      if (isPlural === true) {
-         monentaryUnitString = (differenceRounded < 100) ? " cents": " dollars";
+      if (differenceInCentsPositive <= 1) {
+        monentaryUnitString = " cent";
       }
-      // NOT plural:
-      else {
-         monentaryUnitString = (differenceRounded > 100) ? " cent":" dollar";
-         convertToDollar = differenceRounded / 100; //changes those cents to dollars.
-         //have to convert that differenceRounded to dollars by diving by 100. so 200cents/100 = 2 dollars
+      else if (differenceInCentsPositive <= 99) {
+        monentaryUnitString = " cents";
       }
+      else if (differenceInCentsPositive === 100) {
+          monentaryUnitString = " dollar";
+      }
+      else if (differenceInCentsPositive >= 101) {
+        monentaryUnitString = " dollars";
+      }
+      // console.log('monentaryUnitString final after fxn running', monentaryUnitString);
 
-      //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
-      //money to use CC. iow, use cash! cash saves you more $$!
-      cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
+    } //end of conclusionMsg fxn
 
       //substracting larger value from smaller result in negative, therefore use absolute value:
       //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
@@ -87,13 +99,19 @@ var main = function() {
       //   // conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
       // }
 
-      var msgArray = ['You can save approximately ', differenceRounded, finalString, ' by using ', cashOrCredit];
-      // var msgArray = ['You can save  approximately ', finalString, 'by using '];
+      conclusionMsg();
 
+      var msgArray = ['You can save approximately ', differenceInCentsPositive, monentaryUnitString, ' by using ', cashOrCreditString];
+      // var msgArray = ['You can save  approximately ', monentaryUnitString, 'by using '];
+      // console.log('monentaryUnitString', monentaryUnitString);
+      console.log('msgArray', msgArray);
       var msgArrayJoined = msgArray.join("");
       console.log(msgArray.join(""));
-      calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-
+      if (cashPrice === creditPrice && bankDiscount === 0) {
+        calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+      }
+      else {
+        calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
     }
 
     //code below runs depending on whether it's cheaper to pay with cash or credit:
@@ -114,11 +132,8 @@ var main = function() {
     //create click handler for calculate button element and run code when it is clicked//
     // console.log('calc el', $calculateButtonEl);
     $calculateButtonEl.on("click", function() {
-
-        //result container creation:
         //create the result string ONLY if it's empty (first time)
-        //because we do NOT want the result header created everytime
-        //user clicks calculateBtn:
+        //because we do NOT want the result header created everytime user clicks calculateBtn:
         if (resultHeader === "") {
             console.log('resultHeader is empty, so creating header...');
             resultHeader = resultHeader + "Result";
@@ -207,7 +222,6 @@ var main = function() {
         calculationResultContainerEl.append(table);
 
         calculationResultContainerEl.append(conclusionElement);
-        conclusionMsg();
 
         //create horizontal line break after every run:
         var horzLineBreak = $("<hr>");
@@ -226,7 +240,6 @@ var main = function() {
     ///closing of main function:
 };
 $(document).ready(main);
-console.log("Document ready, js loaded!!.");
 ///end of document ready function
 
 
@@ -326,6 +339,17 @@ console.log("Document ready, js loaded!!.");
 
 
 
+      // // checks for plurality:
+      // if (isPlural === true) {
+      //    monentaryUnitString = (differenceInCentsPositive >= 101) ? " cents": " dollars";
+      // }
+      // // NOT plural:
+      // else {
+      //   //  monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
+      //     monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
+      //    convertToDollar = differenceInCentsPositive / 100; //changes those cents to dollars.
+      //    //have to convert that differenceInCentsPositive to dollars by diving by 100. so 200cents/100 = 2 dollars
+      // }
 
 
 
