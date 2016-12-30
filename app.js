@@ -15,6 +15,7 @@ var main = function() {
     var cashOrCreditString;
     var monentaryUnitString;
     var testMe = "hello there!";
+    var monentaryConversion;
 
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -73,15 +74,20 @@ var main = function() {
 
       if (differenceInCentsPositive <= 1) {
         monentaryUnitString = " cent";
+        monentaryConversion = differenceInCentsPositive;
       }
       else if (differenceInCentsPositive <= 99) {
         monentaryUnitString = " cents";
+        monentaryConversion = differenceInCentsPositive;
       }
       else if (differenceInCentsPositive === 100) {
           monentaryUnitString = " dollar";
+          monentaryConversion = differenceInCentsPositive / 100;
+
       }
       else if (differenceInCentsPositive >= 101) {
         monentaryUnitString = " dollars";
+        monentaryConversion = differenceInCentsPositive / 100;
       }
       // console.log('monentaryUnitString final after fxn running', monentaryUnitString);
 
@@ -101,7 +107,7 @@ var main = function() {
 
       conclusionMsg();
 
-      var msgArray = ['You can save approximately ', differenceInCentsPositive, monentaryUnitString, ' by using ', cashOrCreditString];
+      var msgArray = ['You can save approximately ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
       // var msgArray = ['You can save  approximately ', monentaryUnitString, 'by using '];
       // console.log('monentaryUnitString', monentaryUnitString);
       console.log('msgArray', msgArray);
