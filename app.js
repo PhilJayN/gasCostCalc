@@ -22,6 +22,31 @@ var main = function() {
     var runNumber = $("<p>").text("Run " + clickCount);
     var finalMsgEl = $("<p>");
 
+    var inputFields = document.querySelectorAll("input");
+    console.log('inp field', inputFields);
+    // inputFields[3].style.backgroundColor = "red";
+
+    // for (var i = 0; i < inputFields.length; i++) {
+    //   inputFields[i].style.backgroundColor = "tomato";
+    // }
+
+
+    for (var i = 0; i < inputFields.length; i++) {
+      inputFields[i].onchange = function () {
+        //when inputFields change, run compute fxn:
+        console.log('234789wsedf!');
+      }
+    }
+
+      // inputFields.on("click", function() {
+      //   console.log('238947+!');
+      // });
+
+    // var cashPriceEl = document.getElementById("cashPrice");
+    // var creditPriceEl = document.getElementById("creditPrice");
+    // var bankDiscountEl = document.getElementById("bankDiscount");
+    // var gallonsEl = document.getElementById("gallonsNeeded");
+
     //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
     var cashPrice = document.getElementById("cashPrice").value;
     var creditPrice = document.getElementById("creditPrice").value;
@@ -48,8 +73,12 @@ var main = function() {
     console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
     console.log('differenceInCents', differenceInCents);
     console.log('type differenceInCents', typeof differenceInCents);
-
     console.log('differenceInCentsPositive', differenceInCentsPositive);
+
+    // input.onchange = function() {
+    //   console.log('onchange!!');
+    // }
+
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
             monentaryUnitString = " cent";
