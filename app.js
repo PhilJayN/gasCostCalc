@@ -9,26 +9,22 @@ var main = function() {
     var priceArray = [];
     var tableDataArray = [];
     var resultHeader = "";
-    var difference;
     var differenceInCents;
     var differenceInCentsPositive;
     var cashOrCreditString;
     var monentaryUnitString;
-    var testMe = "hello there!";
     var monentaryConversion;
 
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
-    //jQuery create element template to put in FINAL conclusion:
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
-    //run # to show user (Run #1, run #2, etc...)
     var runNumber = $("<p>").text("Run " + clickCount);
-    var finalMsgEl =$("<p>");
+    var finalMsgEl = $("<p>");
 
-    //get IDs of elements, and values they hold to use for calculations:
+    //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
     var cashPrice = document.getElementById("cashPrice").value;
-    var creditPrice = document.getElementById("creditPrice").value; //returns str, NOT a #
+    var creditPrice = document.getElementById("creditPrice").value;
     var bankDiscount = document.getElementById("bankDiscount").value;
     var gallons = document.getElementById("gallonsNeeded").value;
 
@@ -36,103 +32,43 @@ var main = function() {
     var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
     var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
     var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
-    // difference = (totalCostInCreditWDiscount - totalCostInCash); //not last step in calculation yet....
-    // amtSaved = parseFloat( (difference * 100).toFixed(2) ); //last step in calc, now rounding...cents in string form, then parsedFloat to get number
-    differenceInCents = ( (totalCostInCreditWDiscount - totalCostInCash).toFixed(2) ) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-    // differenceRounded = parseFloat(difference * 100); //multiply .15 * 100 to get your cents, (15);
+    // differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash).toFixed(2)) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+    //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
+    differenceInCents = ( (totalCostInCreditWDiscount - totalCostInCash) *100 ).toFixed(0) ; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
 
     //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
     //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
     //money to use CC. iow, use cash! cash saves you more $$!
-    cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash.":"credit.";
+    cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
 
     //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
     differenceInCentsPositive = Math.abs(differenceInCents);
-    console.log('type differenceInCents', typeof differenceInCents);
-
     console.log('totalCostInCash', totalCostInCash);
     console.log('totalCostInCredit', totalCostInCredit);
-    console.log('totalCostInCreditWDiscount',  totalCostInCreditWDiscount);
+    console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
+    console.log('differenceInCents', differenceInCents);
+    console.log('type differenceInCents', typeof differenceInCents);
 
-      console.log('difference', difference);
     console.log('differenceInCentsPositive', differenceInCentsPositive);
-    // console.log('test', differenceInCentsPositive >= 101);
-    // console.log('difference NOT rounded yet', difference);
-
-    function conclusionMsg () {
-      // var isPlural;
-      // // var sString = "s";
-      // var convertToDollar;
-
-      //assign plurality:
-      // if (differenceInCentsPositive > 1) {
-      //   isPlural = true;
-      // }
-      // else {
-      //   isPlural = false;
-      // }
-
-      if (differenceInCentsPositive <= 1) {
-        monentaryUnitString = " cent";
-        monentaryConversion = differenceInCentsPositive;
-      }
-      else if (differenceInCentsPositive <= 99) {
-        monentaryUnitString = " cents";
-        monentaryConversion = differenceInCentsPositive;
-      }
-      else if (differenceInCentsPositive === 100) {
-          monentaryUnitString = " dollar";
-          monentaryConversion = differenceInCentsPositive / 100;
-
-      }
-      else if (differenceInCentsPositive >= 101) {
-        monentaryUnitString = " dollars";
-        monentaryConversion = differenceInCentsPositive / 100;
-      }
-      // console.log('monentaryUnitString final after fxn running', monentaryUnitString);
-
-    } //end of conclusionMsg fxn
-
-      //substracting larger value from smaller result in negative, therefore use absolute value:
-      //if totalCostInCreditWDiscount is less than totalCostInCash, it means using CC is cheaper...
-      // if (totalCostInCreditWDiscount < totalCostInCash) {
-      //   finalDifference = Math.abs(difference);
-      //   //then give msg that you can save amtOfMoney paying w/ CC
-      //   // conclusionElement.text('You can shave approximately ' +  finalDifference + ' cents off your total bill by using credit card! ');
-      // } else {
-      //   finalDifference = difference;
-      //   //otherwise msg will say you can save amtOfMoney paying with CASH
-      //   // conclusionElement.text('You can shave approximately ' + finalDifference + ' dollars off your total bill by using cash! ');
-      // }
-
-      conclusionMsg();
-
-      var msgArray = ['You can save approximately ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-      // var msgArray = ['You can save  approximately ', monentaryUnitString, 'by using '];
-      // console.log('monentaryUnitString', monentaryUnitString);
-      console.log('msgArray', msgArray);
-      var msgArrayJoined = msgArray.join("");
-      console.log(msgArray.join(""));
-      if (cashPrice === creditPrice && bankDiscount === 0) {
-        calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
-      }
-      else {
-        calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-    }
-
-    //code below runs depending on whether it's cheaper to pay with cash or credit:
-
-    //     if (amtSaved < 100) {
-    //       // console.log('amtSaved: ',  parseFloat(amtSaved));
-    //         // console.log('conclusionElement holds:', conclusionElement);
-    //
-    //     } else {
-    //     }
-    // }
-
+    function pluralOrNot() {
+        if (differenceInCentsPositive <= 1) {
+            monentaryUnitString = " cent";
+            monentaryConversion = differenceInCentsPositive;
+        } else if (differenceInCentsPositive <= 99) {
+            monentaryUnitString = " cents";
+            monentaryConversion = differenceInCentsPositive;
+        } else if (differenceInCentsPositive === 100) {
+            monentaryUnitString = " dollar";
+            monentaryConversion = differenceInCentsPositive / 100;
+        } else if (differenceInCentsPositive >= 101) {
+            monentaryUnitString = " dollars";
+            monentaryConversion = differenceInCentsPositive / 100;
+        }
+    } //end of pluralOrNot fxn
+    pluralOrNot();
 
     function calcButtonClickCounter() {
-      clickCount++;
+        clickCount++;
     }
 
     //create click handler for calculate button element and run code when it is clicked//
@@ -154,20 +90,9 @@ var main = function() {
         // console.log('typeof', typeof +cashPrice);
         // console.log('cp', typeof +cashPrice);
         // console.log('true or false', +cashPrice === -2.63);
-
-        //test validation:
-        //capture form id:
         function checkForm(form) {
-            // validation fails if the input is blank
-            // if(+cashPrice === -2.63 )  {
-            //   console.log("both are equal");
-            //   // cashPrice.focus();
-            //   // form.inputfield.focus();
-            //   return false;
-            // }
             if (cashPrice === "") {
                 alert("Error: Input is empty!");
-                // cashPrice.focus();
                 // form.inputfield.focus();
                 return false;
             }
@@ -194,10 +119,8 @@ var main = function() {
         //push calculation result and table data title into arrays:
         ///careful, you need to reset both arrays or else it will keep adding data to it when user
         ///clicks on calculate button.
-        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, difference);
+        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
         tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
-
-        //dynamically create a container to hold results
 
         ////dynamically create HTML table when user clicks on calculate button:
         var table = '';
@@ -211,7 +134,6 @@ var main = function() {
         // console.log(priceArray[3]);
         // console.log(tableDataArray[2]);
 
-        //dynamically create html table:
         //outside loop creates the rows (4 rows total)
         for (var r = 0; r < rows; r++) {
             table += "<tr>";
@@ -226,29 +148,33 @@ var main = function() {
             table += "</tr>";
         }
         calculationResultContainerEl.append(table);
-
         calculationResultContainerEl.append(conclusionElement);
 
-        //create horizontal line break after every run:
+        var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+        console.log('msgArray', msgArray);
+        var msgArrayJoined = msgArray.join("");
+        if (cashPrice === creditPrice && bankDiscount === 0) {
+            calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+        } else {
+            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+        }
+
+        //create horizontal line break at the end:
         var horzLineBreak = $("<hr>");
         calculationResultContainerEl.append(horzLineBreak);
         // calculationResultContainerEl.style.visibility = "visible";
         // var showMe = document.getElementsByClassName("calculationResultContainer");
 
-        //makes result container visible:
-        //first, capture element:
+        //makes result container visible. First, capture element:
         var capturedElement = document.getElementById("showMe");
         //then, show visibility:
         capturedElement.style.visibility = "visible";
-
-    ///closing of calculate button function:
+        ///closing of calculate button function:
     });
     ///closing of main function:
 };
 $(document).ready(main);
 ///end of document ready function
-
-
 
 
 ////Final verdict: Maybe put this in an organized table, pros and cons,
@@ -260,26 +186,28 @@ $(document).ready(main);
 //Of course, paying by cash requires you to walk inside,
 //and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
 
-
 //ERROR:
 //user puts 234235.234. and it will still work wtf
 //can put neg num
+//pressing calcuate > 1 time will not keep result history, and won't show final conclusion msg.
+
+
+//Test
+// if more than 99 cents, then it should convert to dollars
 
 
 //MORE FEATURES:
 //toggle clear results container!
-//one click to clear all calculation results.
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
-//take care of preventing user errors!
-// RESULT log: if more than 99 cents, then it should convert to dollars
 //put gals in table
 //change input fields to look like gas station electronic #
+//if input field empty, or error, focus on box and change color.
 
 
 //FEATURES - FUTURE if time:
+//automatically calculate by using slides instead of pressing calc button.
 //do you like math prompt? if yes, show them calculation
-//go far, and convert cents to a tenth of a penny. ex: .07234 is 7 cents, but that's a little more than 7 cents. so 7.23 cents, is actually 7 cents AND 23 hundreth of a penny.
 //kickback points consideration, or other rewards, optional choice for users.
 
 
@@ -345,17 +273,19 @@ $(document).ready(main);
 
 
 
-      // // checks for plurality:
-      // if (isPlural === true) {
-      //    monentaryUnitString = (differenceInCentsPositive >= 101) ? " cents": " dollars";
-      // }
-      // // NOT plural:
-      // else {
-      //   //  monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
-      //     monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
-      //    convertToDollar = differenceInCentsPositive / 100; //changes those cents to dollars.
-      //    //have to convert that differenceInCentsPositive to dollars by diving by 100. so 200cents/100 = 2 dollars
-      // }
+
+
+// // checks for plurality:
+// if (isPlural === true) {
+//    monentaryUnitString = (differenceInCentsPositive >= 101) ? " cents": " dollars";
+// }
+// // NOT plural:
+// else {
+//   //  monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
+//     monentaryUnitString = (differenceInCentsPositive >= 100) ? " cent":" dollar";
+//    convertToDollar = differenceInCentsPositive / 100; //changes those cents to dollars.
+//    //have to convert that differenceInCentsPositive to dollars by diving by 100. so 200cents/100 = 2 dollars
+// }
 
 
 
