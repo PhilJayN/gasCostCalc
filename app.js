@@ -19,18 +19,10 @@ var main = function() {
     var calculationResultContainerEl = $(".calculationResultContainer");
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
-      // var runNumber = $("<p>").text("Run " + clickCount);
+    // var runNumber = $("<p>").text("Run " + clickCount);
     var finalMsgEl = $("<p>");
     var inputFields = $(".formFields li input");
     console.log('test jQuery ', inputFields);
-    inputFields.toArray().forEach(function(element) {
-      console.log('element', element);
-      console.log('jQuery element', $(element) );
-      $(element).on("change", function() {
-        console.log('change');
-        calculate();
-      });
-    });
 
     //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
     var cashPrice = document.getElementById("cashPrice").value;
@@ -44,7 +36,7 @@ var main = function() {
     var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
     // differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash).toFixed(2)) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
     //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
-    differenceInCents = ( (totalCostInCreditWDiscount - totalCostInCash) *100 ).toFixed(0) ; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+    differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
 
     //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
     //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
@@ -96,78 +88,91 @@ var main = function() {
         // return true;
     } //end of checkForm fxn-------------------
 
-    function calculate () {
-      //create the result string ONLY if it's empty (first time)
-      //because we do NOT want the result header created everytime...
-      if (resultHeader === "") {
-          console.log('resultHeader is empty, so creating header...');
-          resultHeader = resultHeader + "Result";
-          // calculationResultContainer.append("<h4>Result</h4>");
-          calculationResultContainerEl.append(headerEl);
-          headerEl.text(resultHeader);
-      }
-      //don't delete:
-      // console.log('typeof', typeof +cashPrice);
-      // console.log('cp', typeof +cashPrice);
-      // console.log('true or false', +cashPrice === -2.63);
-
-      checkForm(cashPrice);
-      // console.log('checkForm result', checkForm(cashPrice));
-
-      //push calculation result and table data title into arrays:
-      ///careful, you need to reset both arrays or else it will keep adding data to it when user
-      ///clicks on calculate button.
-      priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-      tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
-
-      ////dynamically create HTML table when user clicks on calculate button:
-      var table = '';
-      var rows = 4;
-      var cols = 2;
-      var arrayIndex = 0;
-      //outside loop creates the rows (4 rows total)
-      for (var r = 0; r < rows; r++) {
-          table += "<tr>";
-          //inside loop creates the table data (2 td created every inner loop run)
-          for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
-              table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-              table += "<td>" + priceArray[arrayIndex] + "</td>";
-          }
-          //when inner loop exits, arrayIndex incremented. this way we can iterate through
-          //the arrays
-          arrayIndex++;
-          table += "</tr>";
-      }
-      calculationResultContainerEl.append(table);
-      calculationResultContainerEl.append(conclusionElement);
-
-      var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-      console.log('msgArray', msgArray);
-      var msgArrayJoined = msgArray.join("");
-      if (cashPrice === creditPrice && bankDiscount === 0) {
-          calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
-      } else {
-          calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-      }
-
-      //create horizontal line break at the end:
-      var horzLineBreak = $("<hr>");
-      calculationResultContainerEl.append(horzLineBreak);
-      // calculationResultContainerEl.style.visibility = "visible";
-      // var showMe = document.getElementsByClassName("calculationResultContainer");
-
-      //makes result container visible. First, capture element:
-      var capturedElement = document.getElementById("showMe");
-      //then, show visibility:
-      capturedElement.style.visibility = "visible";
-      ///closing of calculate button function:
+    function createTableDynamically() {
+        //push calculation result and table data title into arrays:
+        ///careful, you need to reset both arrays or else it will keep adding data to it when user
+        ///clicks on calculate button.
+        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
+        tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
+        ////dynamically create HTML table when user clicks on calculate button:
+        var table = '';
+        var rows = 4;
+        var cols = 2;
+        var arrayIndex = 0;
+        //outside loop creates the rows (4 rows total)
+        for (var r = 0; r < rows; r++) {
+            table += "<tr>";
+            //inside loop creates the table data (2 td created every inner loop run)
+            for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+                table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+                table += "<td>" + priceArray[arrayIndex] + "</td>";
+            }
+            //when inner loop exits, arrayIndex incremented. this way we can iterate through
+            //the arrays
+            arrayIndex++;
+            table += "</tr>";
+        }
+        calculationResultContainerEl.append(table);
+        calculationResultContainerEl.append(conclusionElement);
     }
-    ///closing of main function:
-};
+
+    function finalMsgForUser() {
+        var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+        console.log('msgArray', msgArray);
+        var msgArrayJoined = msgArray.join("");
+        if (cashPrice === creditPrice && bankDiscount === 0) {
+            calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+        } else {
+            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+        }
+    }
+
+    function calculateResult() {
+        //create the result string ONLY if it's empty (first time)
+        //because we do NOT want the result header created everytime...
+        if (resultHeader === "") {
+            console.log('resultHeader is empty, so creating header...');
+            resultHeader = resultHeader + "Result";
+            // calculationResultContainer.append("<h4>Result</h4>");
+            calculationResultContainerEl.append(headerEl);
+            headerEl.text(resultHeader);
+        }
+        // console.log('checkForm result', checkForm(cashPrice));
+        checkForm(cashPrice);
+        createTableDynamically();
+        finalMsgForUser();
+        //don't delete:
+        // console.log('typeof', typeof +cashPrice);
+        // console.log('cp', typeof +cashPrice);
+        // console.log('true or false', +cashPrice === -2.63);
+
+        //create horizontal line break at the end:
+        var horzLineBreak = $("<hr>");
+        calculationResultContainerEl.append(horzLineBreak);
+
+        //makes result container visible. First, capture element:
+        var capturedElement = document.getElementById("showMe");
+        //then, show visibility:
+        capturedElement.style.visibility = "visible";
+    }
+    
+    inputFields.toArray().forEach(function(element) {
+        console.log('element', element);
+        console.log('jQuery element', $(element));
+        $(element).on("change", function() {
+            console.log('change');
+            calculateResult();
+        });
+    });
+
+
+}; ///end of main function:
 $(document).ready(main);
 ///end of document ready function
 
 
+
+/////---------------------NOTES--------------------------------////
 ////Final verdict: Maybe put this in an organized table, pros and cons,
 //people prob dont like to read long P!.  Typically, for most gas stations
 //in the South Bay area, cash prices are around ten cents less for many reasons.
@@ -206,52 +211,6 @@ $(document).ready(main);
 //keeping calcuations to only pennies makes calculations consistent,
 //so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
 //then i coiuld convert .3254534534 ` to dollars. `
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -371,9 +330,9 @@ $(document).ready(main);
 
 
 
-    // for (var i = 0; i < inputFields.length; i++) {
-    //   inputFields[i].style.backgroundColor = "tomato";
-    // }
+// for (var i = 0; i < inputFields.length; i++) {
+//   inputFields[i].style.backgroundColor = "tomato";
+// }
 
 
 //     var cashPriceEl = document.getElementById("cashPrice");
@@ -413,9 +372,9 @@ $(document).ready(main);
 //   calculate();
 // };
 
-      // inputFields.on("click", function() {
-      //   console.log('238947+!');
-      // });
+// inputFields.on("click", function() {
+//   console.log('238947+!');
+// });
 
 
 // // checks for plurality:
