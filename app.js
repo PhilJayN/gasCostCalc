@@ -19,73 +19,18 @@ var main = function() {
     var calculationResultContainerEl = $(".calculationResultContainer");
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
-    var runNumber = $("<p>").text("Run " + clickCount);
+      // var runNumber = $("<p>").text("Run " + clickCount);
     var finalMsgEl = $("<p>");
-
-    // var inputFields = document.querySelectorAll("input");
-
     var inputFields = $(".formFields li input");
     console.log('test jQuery ', inputFields);
     inputFields.toArray().forEach(function(element) {
       console.log('element', element);
       console.log('jQuery element', $(element) );
-
       $(element).on("change", function() {
         console.log('change');
         calculate();
       });
-      // $(element).onclick = function () {
-      //   console.log('changeeee!1');
-      // };
     });
-
-    // for (var i = 0; i < inputFields.length; i++) {
-    //   inputFields[i].style.backgroundColor = "tomato";
-    // }
-
-
-
-
-//     var cashPriceEl = document.getElementById("cashPrice");
-//     var creditPriceEl = document.getElementById("creditPrice");
-//     var bankDiscountEl = document.getElementById("bankDiscount");
-//     var gallonsEl = document.getElementById("gallonsNeeded");
-//
-// cashPriceEl.onchange = function () {
-//   calculate();
-// };
-//
-// creditPriceEl.onchange = function () {
-//   calculate();
-// };
-//
-// bankDiscountEl.onchange = function () {
-//   calculate();
-// };
-//
-// gallonsEl.onchange = function () {
-//   calculate();
-// };
-
-
-
-
-//use querySelectorAll and push elements into arr. it works, but lokos ugly.
-//     function testFxn () {
-//       console.log('dfsgsdfg!');
-//     }
-//     var inputFieldsArr = [];
-//     for (var i = 0; i < inputFields.length; i++) {
-//       inputFieldsArr.push(inputFields[i]);
-//       }
-//       console.log('inputFieldsArr', inputFieldsArr[0]);
-// inputFieldsArr[0].onchange = function () {
-//   calculate();
-// };
-
-      // inputFields.on("click", function() {
-      //   console.log('238947+!');
-      // });
 
     //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
     var cashPrice = document.getElementById("cashPrice").value;
@@ -115,10 +60,6 @@ var main = function() {
     console.log('type differenceInCents', typeof differenceInCents);
     console.log('differenceInCentsPositive', differenceInCentsPositive);
 
-    // input.onchange = function() {
-    //   console.log('onchange!!');
-    // }
-
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
             monentaryUnitString = " cent";
@@ -133,17 +74,31 @@ var main = function() {
             monentaryUnitString = " dollars";
             monentaryConversion = differenceInCentsPositive / 100;
         }
-    } //end of pluralOrNot fxn
+    } //end of pluralOrNot fxn-------------------
     pluralOrNot();
 
-    function calcButtonClickCounter() {
-        clickCount++;
-    }
-
+    function checkForm(form) {
+        if (cashPrice === "") {
+            alert("Error: Input is empty!");
+            // form.inputfield.focus();
+            return false;
+        }
+        // validation fails if the input has negative sign
+        var re = /[-]/;
+        // var re = /^[0-9.]+$/;
+        var foundNegVal = re.test(cashPrice);
+        console.log(foundNegVal);
+        if (foundNegVal === true) {
+            console.log('check input, you have a negative as a value!');
+            return false;
+        }
+        // // validation was successful
+        // return true;
+    } //end of checkForm fxn-------------------
 
     function calculate () {
       //create the result string ONLY if it's empty (first time)
-      //because we do NOT want the result header created everytime user clicks calculateBtn:
+      //because we do NOT want the result header created everytime...
       if (resultHeader === "") {
           console.log('resultHeader is empty, so creating header...');
           resultHeader = resultHeader + "Result";
@@ -151,57 +106,25 @@ var main = function() {
           calculationResultContainerEl.append(headerEl);
           headerEl.text(resultHeader);
       }
-
-      calculationResultContainerEl.append(runNumber);
-      calcButtonClickCounter();
       //don't delete:
       // console.log('typeof', typeof +cashPrice);
       // console.log('cp', typeof +cashPrice);
       // console.log('true or false', +cashPrice === -2.63);
-      function checkForm(form) {
-          if (cashPrice === "") {
-              alert("Error: Input is empty!");
-              // form.inputfield.focus();
-              return false;
-          }
-          // validation fails if the input has negative sign
-          var re = /[-]/;
-          // var re = /^[0-9.]+$/;
-          var foundNegVal = re.test(cashPrice);
-          console.log(foundNegVal);
-          if (foundNegVal === true) {
-              console.log('check input, you have a negative as a value!');
-              return false;
-          }
-          // // validation was successful
-          // return true;
-      }
-      /////------------end of checkForm fxn----------////
+
       checkForm(cashPrice);
-      console.log('checkForm result', checkForm(cashPrice));
-      // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
-      //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
-      //   return false;
-      // }
+      // console.log('checkForm result', checkForm(cashPrice));
 
       //push calculation result and table data title into arrays:
       ///careful, you need to reset both arrays or else it will keep adding data to it when user
       ///clicks on calculate button.
       priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-      tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
+      tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
 
       ////dynamically create HTML table when user clicks on calculate button:
       var table = '';
       var rows = 4;
       var cols = 2;
       var arrayIndex = 0;
-      // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
-      //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
-      // console.log('len', priceArray.length);
-      // console.log('len', tableDataArray.length);
-      // console.log(priceArray[3]);
-      // console.log(tableDataArray[2]);
-
       //outside loop creates the rows (4 rows total)
       for (var r = 0; r < rows; r++) {
           table += "<tr>";
@@ -239,112 +162,6 @@ var main = function() {
       capturedElement.style.visibility = "visible";
       ///closing of calculate button function:
     }
-
-
-
-/////---------------------------ORIGINAL CALC BUTTON CALCULATE---------------------------////
-    //create click handler for calculate button element and run code when it is clicked//
-    // console.log('calc el', $calculateButtonEl);
-    $calculateButtonEl.on("click", function() {
-        //create the result string ONLY if it's empty (first time)
-        //because we do NOT want the result header created everytime user clicks calculateBtn:
-        if (resultHeader === "") {
-            console.log('resultHeader is empty, so creating header...');
-            resultHeader = resultHeader + "Result";
-            // calculationResultContainer.append("<h4>Result</h4>");
-            calculationResultContainerEl.append(headerEl);
-            headerEl.text(resultHeader);
-        }
-
-        calculationResultContainerEl.append(runNumber);
-        calcButtonClickCounter();
-        //don't delete:
-        // console.log('typeof', typeof +cashPrice);
-        // console.log('cp', typeof +cashPrice);
-        // console.log('true or false', +cashPrice === -2.63);
-        function checkForm(form) {
-            if (cashPrice === "") {
-                alert("Error: Input is empty!");
-                // form.inputfield.focus();
-                return false;
-            }
-            // validation fails if the input has negative sign
-            var re = /[-]/;
-            // var re = /^[0-9.]+$/;
-            var foundNegVal = re.test(cashPrice);
-            console.log(foundNegVal);
-            if (foundNegVal === true) {
-                console.log('check input, you have a negative as a value!');
-                return false;
-            }
-            // // validation was successful
-            // return true;
-        }
-        /////------------end of checkForm fxn----------////
-        checkForm(cashPrice);
-        console.log('checkForm result', checkForm(cashPrice));
-        // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
-        //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
-        //   return false;
-        // }
-
-        //push calculation result and table data title into arrays:
-        ///careful, you need to reset both arrays or else it will keep adding data to it when user
-        ///clicks on calculate button.
-        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-        tableDataArray.push("Cash Price", "Credit Price", "Credit Price with Discount", "Difference");
-
-        ////dynamically create HTML table when user clicks on calculate button:
-        var table = '';
-        var rows = 4;
-        var cols = 2;
-        var arrayIndex = 0;
-        // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
-        //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
-        // console.log('len', priceArray.length);
-        // console.log('len', tableDataArray.length);
-        // console.log(priceArray[3]);
-        // console.log(tableDataArray[2]);
-
-        //outside loop creates the rows (4 rows total)
-        for (var r = 0; r < rows; r++) {
-            table += "<tr>";
-            //inside loop creates the table data (2 td created every inner loop run)
-            for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
-                table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-                table += "<td>" + priceArray[arrayIndex] + "</td>";
-            }
-            //when inner loop exits, arrayIndex incremented. this way we can iterate through
-            //the arrays
-            arrayIndex++;
-            table += "</tr>";
-        }
-        calculationResultContainerEl.append(table);
-        calculationResultContainerEl.append(conclusionElement);
-
-        var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-        console.log('msgArray', msgArray);
-        var msgArrayJoined = msgArray.join("");
-        if (cashPrice === creditPrice && bankDiscount === 0) {
-            calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
-        } else {
-            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-        }
-
-        //create horizontal line break at the end:
-        var horzLineBreak = $("<hr>");
-        calculationResultContainerEl.append(horzLineBreak);
-        // calculationResultContainerEl.style.visibility = "visible";
-        // var showMe = document.getElementsByClassName("calculationResultContainer");
-
-        //makes result container visible. First, capture element:
-        var capturedElement = document.getElementById("showMe");
-        //then, show visibility:
-        capturedElement.style.visibility = "visible";
-        ///closing of calculate button function:
-    });
-    /////---------------------------ORIGINAL CALC BUTTON CALCULATE END---------------------------////
-
     ///closing of main function:
 };
 $(document).ready(main);
@@ -444,9 +261,161 @@ $(document).ready(main);
 
 
 
+//
+//
+// /////---------------------------ORIGINAL CALC BUTTON CALCULATE---------------------------////
+//     //create click handler for calculate button element and run code when it is clicked//
+//     // console.log('calc el', $calculateButtonEl);
+//     $calculateButtonEl.on("click", function() {
+//         //create the result string ONLY if it's empty (first time)
+//         //because we do NOT want the result header created everytime user clicks calculateBtn:
+//         if (resultHeader === "") {
+//             console.log('resultHeader is empty, so creating header...');
+//             resultHeader = resultHeader + "Calculation Result";
+//             // calculationResultContainer.append("<h4>Result</h4>");
+//             calculationResultContainerEl.append(headerEl);
+//             headerEl.text(resultHeader);
+//         }
+//
+//         calculationResultContainerEl.append(runNumber);
+//         calcButtonClickCounter();
+//         //don't delete:
+//         // console.log('typeof', typeof +cashPrice);
+//         // console.log('cp', typeof +cashPrice);
+//         // console.log('true or false', +cashPrice === -2.63);
+//         function checkForm(form) {
+//             if (cashPrice === "") {
+//                 alert("Error: Input is empty!");
+//                 // form.inputfield.focus();
+//                 return false;
+//             }
+//             // validation fails if the input has negative sign
+//             var re = /[-]/;
+//             // var re = /^[0-9.]+$/;
+//             var foundNegVal = re.test(cashPrice);
+//             console.log(foundNegVal);
+//             if (foundNegVal === true) {
+//                 console.log('check input, you have a negative as a value!');
+//                 return false;
+//             }
+//             // // validation was successful
+//             // return true;
+//         }
+//         /////------------end of checkForm fxn----------////
+//         checkForm(cashPrice);
+//         console.log('checkForm result', checkForm(cashPrice));
+//         // if (cashPrice ==="" || creditPrice ==="" || bankDiscount==="" || gallons ==="") {
+//         //   alert('Please do not leave input fields blank!!'); //change this to a description box, looks bette
+//         //   return false;
+//         // }
+//
+//         //push calculation result and table data title into arrays:
+//         ///careful, you need to reset both arrays or else it will keep adding data to it when user
+//         ///clicks on calculate button.
+//         priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
+//         tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
+//
+//         ////dynamically create HTML table when user clicks on calculate button:
+//         var table = '';
+//         var rows = 4;
+//         var cols = 2;
+//         var arrayIndex = 0;
+//         // price arr [2.63, 2.73, 2.7027, 0.07270000000000021]
+//         //table data arr ["Cash Price", "Credit Price", "Credit Price with Discount", "Difference"]
+//         // console.log('len', priceArray.length);
+//         // console.log('len', tableDataArray.length);
+//         // console.log(priceArray[3]);
+//         // console.log(tableDataArray[2]);
+//
+//         //outside loop creates the rows (4 rows total)
+//         for (var r = 0; r < rows; r++) {
+//             table += "<tr>";
+//             //inside loop creates the table data (2 td created every inner loop run)
+//             for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+//                 table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+//                 table += "<td>" + priceArray[arrayIndex] + "</td>";
+//             }
+//             //when inner loop exits, arrayIndex incremented. this way we can iterate through
+//             //the arrays
+//             arrayIndex++;
+//             table += "</tr>";
+//         }
+//         calculationResultContainerEl.append(table);
+//         calculationResultContainerEl.append(conclusionElement);
+//
+//         var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+//         console.log('msgArray', msgArray);
+//         var msgArrayJoined = msgArray.join("");
+//         if (cashPrice === creditPrice && bankDiscount === 0) {
+//             calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+//         } else {
+//             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+//         }
+//
+//         //create horizontal line break at the end:
+//         var horzLineBreak = $("<hr>");
+//         calculationResultContainerEl.append(horzLineBreak);
+//         // calculationResultContainerEl.style.visibility = "visible";
+//         // var showMe = document.getElementsByClassName("calculationResultContainer");
+//
+//         //makes result container visible. First, capture element:
+//         var capturedElement = document.getElementById("showMe");
+//         //then, show visibility:
+//         capturedElement.style.visibility = "visible";
+//         ///closing of calculate button function:
+//     });
+//     /////---------------------------ORIGINAL CALC BUTTON CALCULATE END---------------------------////
 
 
 
+
+
+
+    // for (var i = 0; i < inputFields.length; i++) {
+    //   inputFields[i].style.backgroundColor = "tomato";
+    // }
+
+
+//     var cashPriceEl = document.getElementById("cashPrice");
+//     var creditPriceEl = document.getElementById("creditPrice");
+//     var bankDiscountEl = document.getElementById("bankDiscount");
+//     var gallonsEl = document.getElementById("gallonsNeeded");
+//
+// cashPriceEl.onchange = function () {
+//   calculate();
+// };
+//
+// creditPriceEl.onchange = function () {
+//   calculate();
+// };
+//
+// bankDiscountEl.onchange = function () {
+//   calculate();
+// };
+//
+// gallonsEl.onchange = function () {
+//   calculate();
+// };
+
+
+
+
+//use querySelectorAll and push elements into arr. it works, but lokos ugly.
+//     function testFxn () {
+//       console.log('dfsgsdfg!');
+//     }
+//     var inputFieldsArr = [];
+//     for (var i = 0; i < inputFields.length; i++) {
+//       inputFieldsArr.push(inputFields[i]);
+//       }
+//       console.log('inputFieldsArr', inputFieldsArr[0]);
+// inputFieldsArr[0].onchange = function () {
+//   calculate();
+// };
+
+      // inputFields.on("click", function() {
+      //   console.log('238947+!');
+      // });
 
 
 // // checks for plurality:

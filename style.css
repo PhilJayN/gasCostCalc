@@ -19,6 +19,10 @@ body {
   /*width: 500px;*/
 }
 
+p {
+  text-align: center;
+}
+
 .formFields {
   background-color: #ffffff;
   max-width: 220px;
