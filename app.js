@@ -22,36 +22,6 @@ var main = function() {
     var inputFields = $(".formFields li input");
     console.log('test jQuery ', inputFields);
 
-    //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
-    var cashPrice = document.getElementById("cashPrice").value;
-    var creditPrice = document.getElementById("creditPrice").value;
-    var bankDiscount = document.getElementById("bankDiscount").value;
-    var gallons = document.getElementById("gallonsNeeded").value;
-    // var testVal = document.getElementById("gallonsNeeded").value;
-
-
-    //calculations:
-    var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
-    var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
-    var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
-    // differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash).toFixed(2)) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-    //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
-    differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-
-    //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
-    //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
-    //money to use CC. iow, use cash! cash saves you more $$!
-    cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
-
-    //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
-    differenceInCentsPositive = Math.abs(differenceInCents);
-    console.log('totalCostInCash', totalCostInCash);
-    console.log('totalCostInCredit', totalCostInCredit);
-    console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
-    console.log('differenceInCents', differenceInCents);
-    console.log('type differenceInCents', typeof differenceInCents);
-    console.log('differenceInCentsPositive', differenceInCentsPositive);
-
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
             monentaryUnitString = " cent";
@@ -67,7 +37,6 @@ var main = function() {
             monentaryConversion = differenceInCentsPositive / 100;
         }
     } //end of pluralOrNot fxn-------------------
-    pluralOrNot();
 
     function checkForm(form) {
         if (cashPrice === "") {
@@ -90,58 +59,101 @@ var main = function() {
 
 
     function finalMsgForUser() {
-        var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-        console.log('msgArray', msgArray);
-        var msgArrayJoined = msgArray.join("");
-        //what does this do:
-        if (cashPrice === creditPrice && bankDiscount === 0) {
-            calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
-        } else {
-            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-        }
+
+
+
     }
 
     var horzLineBreak;
-    function calculateResult() {
-        //create the result string ONLY if it's empty (first time)
-        //because we do NOT want the result header created everytime...
-        if (resultHeader === "") {
-            console.log('resultHeader is empty, so creating header...');
-            resultHeader = resultHeader + "Result";
-            // calculationResultContainer.append("<h4>Result</h4>");
-            calculationResultContainerEl.append(headerEl);
-            headerEl.text(resultHeader);
-        }
-        // console.log('checkForm result', checkForm(cashPrice));
-        checkForm(cashPrice);
-        // createTableDynamically();
-        // var table = $("table");
-
-        //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
-        //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
-        console.log('horzLineBreak', horzLineBreak === undefined);
-        if (horzLineBreak === undefined) {
-          horzLineBreak = $("<hr>");
-          calculationResultContainerEl.append(horzLineBreak);
-        }
-        //don't delete:
-        // console.log('typeof', typeof +cashPrice);
-        // console.log('cp', typeof +cashPrice);
-        // console.log('true or false', +cashPrice === -2.63);
-        finalMsgForUser();
-
-        //makes result container visible. First, capture element:
-        var capturedElement = document.getElementById("showMe");
-        //then, show visibility:
-        capturedElement.style.visibility = "visible";
-    }
 
     inputFields.toArray().forEach(function(element) {
         console.log('element', element);
         console.log('jQuery element', $(element));
         $(element).on("change", function() {
             console.log('change');
-            calculateResult();
+
+
+            //create the result string ONLY if it's empty (first time)
+            //because we do NOT want the result header created everytime...
+
+            //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
+            var cashPrice = document.getElementById("cashPrice").value;
+            var creditPrice = document.getElementById("creditPrice").value;
+            var bankDiscount = document.getElementById("bankDiscount").value;
+            var gallons = document.getElementById("gallonsNeeded").value;
+
+            //calculations:
+            var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
+            var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
+            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
+            // differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash).toFixed(2)) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+            //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
+            differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+            //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
+            //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
+            //money to use CC. iow, use cash! cash saves you more $$!
+            cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
+            //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
+            differenceInCentsPositive = Math.abs(differenceInCents);
+
+            console.log('totalCostInCash', totalCostInCash);
+            console.log('totalCostInCredit', totalCostInCredit);
+            // console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
+            // console.log('differenceInCents', differenceInCents);
+            // console.log('type differenceInCents', typeof differenceInCents);
+            // console.log('differenceInCentsPositive', differenceInCentsPositive);
+
+            pluralOrNot();
+
+
+            if (resultHeader === "") {
+                console.log('resultHeader is empty, so creating header...');
+                resultHeader = resultHeader + "Result";
+                // calculationResultContainer.append("<h4>Result</h4>");
+                calculationResultContainerEl.append(headerEl);
+                headerEl.text(resultHeader);
+            }
+            // console.log('checkForm result', checkForm(cashPrice));
+            checkForm(cashPrice);
+
+
+            var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+            console.log('msgArray', msgArray);
+            var msgArrayJoined = msgArray.join("");
+            //what does this do:
+            if (cashPrice === creditPrice && bankDiscount === 0) {
+                calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+            } else {
+                calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+            }
+
+
+            // createTableDynamically();
+            // var table = $("table");
+
+            //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+            //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+            console.log('horzLineBreak', horzLineBreak === undefined);
+            if (horzLineBreak === undefined) {
+              horzLineBreak = $("<hr>");
+              calculationResultContainerEl.append(horzLineBreak);
+            }
+            //don't delete:
+            // console.log('typeof', typeof +cashPrice);
+            // console.log('cp', typeof +cashPrice);
+            // console.log('true or false', +cashPrice === -2.63);
+            finalMsgForUser();
+
+            //makes result container visible. First, capture element:
+            var capturedElement = document.getElementById("showMe");
+            //then, show visibility:
+            capturedElement.style.visibility = "visible";
+
+
+
+
+
+
         });
     });
 
