@@ -5,7 +5,6 @@
 // ------------------------------------------------------------------------
 var main = function() {
     "use strict";
-    var clickCount = 1;
     var priceArray = [];
     var tableDataArray = [];
     var resultHeader = "";
@@ -19,7 +18,6 @@ var main = function() {
     var calculationResultContainerEl = $(".calculationResultContainer");
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
-    // var runNumber = $("<p>").text("Run " + clickCount);
     var finalMsgEl = $("<p>");
     var inputFields = $(".formFields li input");
     console.log('test jQuery ', inputFields);
@@ -89,7 +87,8 @@ var main = function() {
     } //end of checkForm fxn-------------------
 
     function createTableDynamically() {
-        //push calculation result and table data title into arrays:
+      //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
+      //will populate in the table automatically without having to target them using ids.
         ///careful, you need to reset both arrays or else it will keep adding data to it when user
         ///clicks on calculate button.
         priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
@@ -112,6 +111,8 @@ var main = function() {
             arrayIndex++;
             table += "</tr>";
         }
+        //the variable 'table' is a huge long string of html and text. The 2 lines of code below appends this
+        //into the calculationResultContainerEl
         calculationResultContainerEl.append(table);
         calculationResultContainerEl.append(conclusionElement);
     }
@@ -140,22 +141,25 @@ var main = function() {
         // console.log('checkForm result', checkForm(cashPrice));
         checkForm(cashPrice);
         createTableDynamically();
+        // var table = $("table");
+
+
+
+
+        var horzLineBreak = $("<hr>");
+        calculationResultContainerEl.append(horzLineBreak);
         finalMsgForUser();
         //don't delete:
         // console.log('typeof', typeof +cashPrice);
         // console.log('cp', typeof +cashPrice);
         // console.log('true or false', +cashPrice === -2.63);
 
-        //create horizontal line break at the end:
-        var horzLineBreak = $("<hr>");
-        calculationResultContainerEl.append(horzLineBreak);
-
         //makes result container visible. First, capture element:
         var capturedElement = document.getElementById("showMe");
         //then, show visibility:
         capturedElement.style.visibility = "visible";
     }
-    
+
     inputFields.toArray().forEach(function(element) {
         console.log('element', element);
         console.log('jQuery element', $(element));
@@ -193,6 +197,9 @@ $(document).ready(main);
 
 
 //MORE FEATURES:
+//reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"
+  //also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
+  //when pressing reset"
 //toggle clear results container!
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
