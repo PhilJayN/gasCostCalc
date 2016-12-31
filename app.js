@@ -27,6 +27,8 @@ var main = function() {
     var creditPrice = document.getElementById("creditPrice").value;
     var bankDiscount = document.getElementById("bankDiscount").value;
     var gallons = document.getElementById("gallonsNeeded").value;
+    // var testVal = document.getElementById("gallonsNeeded").value;
+
 
     //calculations:
     var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
@@ -86,41 +88,12 @@ var main = function() {
         // return true;
     } //end of checkForm fxn-------------------
 
-    function createTableDynamically() {
-      //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
-      //will populate in the table automatically without having to target them using ids.
-        ///careful, you need to reset both arrays or else it will keep adding data to it when user
-        ///clicks on calculate button.
-        priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-        tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
-        ////dynamically create HTML table when user clicks on calculate button:
-        var table = '';
-        var rows = 4;
-        var cols = 2;
-        var arrayIndex = 0;
-        //outside loop creates the rows (4 rows total)
-        for (var r = 0; r < rows; r++) {
-            table += "<tr>";
-            //inside loop creates the table data (2 td created every inner loop run)
-            for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
-                table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-                table += "<td>" + priceArray[arrayIndex] + "</td>";
-            }
-            //when inner loop exits, arrayIndex incremented. this way we can iterate through
-            //the arrays
-            arrayIndex++;
-            table += "</tr>";
-        }
-        //the variable 'table' is a huge long string of html and text. The 2 lines of code below appends this
-        //into the calculationResultContainerEl
-        calculationResultContainerEl.append(table);
-        calculationResultContainerEl.append(conclusionElement);
-    }
 
     function finalMsgForUser() {
         var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
         console.log('msgArray', msgArray);
         var msgArrayJoined = msgArray.join("");
+        //what does this do:
         if (cashPrice === creditPrice && bankDiscount === 0) {
             calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
         } else {
@@ -128,6 +101,7 @@ var main = function() {
         }
     }
 
+    var horzLineBreak;
     function calculateResult() {
         //create the result string ONLY if it's empty (first time)
         //because we do NOT want the result header created everytime...
@@ -140,19 +114,21 @@ var main = function() {
         }
         // console.log('checkForm result', checkForm(cashPrice));
         checkForm(cashPrice);
-        createTableDynamically();
+        // createTableDynamically();
         // var table = $("table");
 
-
-
-
-        var horzLineBreak = $("<hr>");
-        calculationResultContainerEl.append(horzLineBreak);
-        finalMsgForUser();
+        //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+        //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+        console.log('horzLineBreak', horzLineBreak === undefined);
+        if (horzLineBreak === undefined) {
+          horzLineBreak = $("<hr>");
+          calculationResultContainerEl.append(horzLineBreak);
+        }
         //don't delete:
         // console.log('typeof', typeof +cashPrice);
         // console.log('cp', typeof +cashPrice);
         // console.log('true or false', +cashPrice === -2.63);
+        finalMsgForUser();
 
         //makes result container visible. First, capture element:
         var capturedElement = document.getElementById("showMe");
@@ -218,6 +194,48 @@ $(document).ready(main);
 //keeping calcuations to only pennies makes calculations consistent,
 //so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
 //then i coiuld convert .3254534534 ` to dollars. `
+
+
+
+
+
+
+
+
+
+
+
+
+// function createTableDynamically() {
+//   //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
+//   //will populate in the table automatically without having to target them using ids.
+//     ///careful, you need to reset both arrays or else it will keep adding data to it when user
+//     ///clicks on calculate button.
+//     priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
+//     tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
+//     ////dynamically create HTML table when user clicks on calculate button:
+//     var table = '';
+//     var rows = 4;
+//     var cols = 2;
+//     var arrayIndex = 0;
+//     //outside loop creates the rows (4 rows total)
+//     for (var r = 0; r < rows; r++) {
+//         table += "<tr>";
+//         //inside loop creates the table data (2 td created every inner loop run)
+//         for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+//             table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+//             table += "<td>" + priceArray[arrayIndex] + "</td>";
+//         }
+//         //when inner loop exits, arrayIndex incremented. this way we can iterate through
+//         //the arrays
+//         arrayIndex++;
+//         table += "</tr>";
+//     }
+//     //the variable 'table' is a huge long string of html and text. The 2 lines of code below appends this
+//     //into the calculationResultContainerEl
+//     calculationResultContainerEl.append(table);
+//     calculationResultContainerEl.append(conclusionElement);
+// }
 
 
 
