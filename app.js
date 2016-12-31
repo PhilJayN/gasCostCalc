@@ -1,12 +1,13 @@
 //Dependencies: jQuery
 // -------------------------------------------------------------------------
+
 // -------------------------------------------------------------------------
 // Main function
 // ------------------------------------------------------------------------
 var main = function() {
     "use strict";
-    var priceArray = [];
-    var tableDataArray = [];
+    // var priceArray = [];
+    // var tableDataArray = [];
     var resultHeader = "";
     var differenceInCents;
     var differenceInCentsPositive;
@@ -14,6 +15,7 @@ var main = function() {
     var monentaryUnitString;
     var monentaryConversion;
 
+    //change to reset button
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
     var conclusionElement = $("<p>");
@@ -21,6 +23,18 @@ var main = function() {
     var finalMsgEl = $("<p>");
     var inputFields = $(".formFields li input");
     console.log('test jQuery ', inputFields);
+
+    function createResultHeader() {
+        //create the result string ONLY if it's empty (first time)
+        //we do NOT want the result header created if it already exists
+        if (resultHeader === "") {
+            console.log('resultHeader is empty, so creating header...');
+            resultHeader = resultHeader + "Result";
+            // calculationResultContainer.append("<h4>Result</h4>");
+            calculationResultContainerEl.append(headerEl);
+            headerEl.text(resultHeader);
+        }
+    }
 
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
@@ -36,7 +50,7 @@ var main = function() {
             monentaryUnitString = " dollars";
             monentaryConversion = differenceInCentsPositive / 100;
         }
-    } //end of pluralOrNot fxn-------------------
+    }
 
     function checkForm(form) {
         if (cashPrice === "") {
@@ -55,16 +69,29 @@ var main = function() {
         }
         // // validation was successful
         // return true;
-    } //end of checkForm fxn-------------------
-
+    }
 
     function finalMsgForUser() {
-
-
 
     }
 
     var horzLineBreak;
+    function createHorzLineBreak() {
+      //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+      //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+      console.log('horzLineBreak', horzLineBreak === undefined);
+      if (horzLineBreak === undefined) {
+          horzLineBreak = $("<hr>");
+          calculationResultContainerEl.append(horzLineBreak);
+      }
+    }
+
+    function showResultContainer() {
+      //makes result container visible. First, capture element:
+      var capturedElement = document.getElementById("showMe");
+      //then make visible:
+      capturedElement.style.visibility = "visible";
+    }
 
     inputFields.toArray().forEach(function(element) {
         console.log('element', element);
@@ -72,21 +99,20 @@ var main = function() {
         $(element).on("change", function() {
             console.log('change');
 
-
-            //create the result string ONLY if it's empty (first time)
-            //because we do NOT want the result header created everytime...
-
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             var cashPrice = document.getElementById("cashPrice").value;
             var creditPrice = document.getElementById("creditPrice").value;
             var bankDiscount = document.getElementById("bankDiscount").value;
             var gallons = document.getElementById("gallonsNeeded").value;
+            //don't delete:
+            // console.log('typeof', typeof +cashPrice);
+            // console.log('cp', typeof +cashPrice);
+            // console.log('true or false', +cashPrice === -2.63);
 
             //calculations:
             var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
             var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
             var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
-            // differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash).toFixed(2)) * 100; //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
             differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
@@ -96,26 +122,19 @@ var main = function() {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-            console.log('totalCostInCash', totalCostInCash);
-            console.log('totalCostInCredit', totalCostInCredit);
+            //DO NOT delete, useful:
+            // console.log('totalCostInCash', totalCostInCash);
+            // console.log('totalCostInCredit', totalCostInCredit);
             // console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
             // console.log('differenceInCents', differenceInCents);
             // console.log('type differenceInCents', typeof differenceInCents);
             // console.log('differenceInCentsPositive', differenceInCentsPositive);
 
             pluralOrNot();
-
-
-            if (resultHeader === "") {
-                console.log('resultHeader is empty, so creating header...');
-                resultHeader = resultHeader + "Result";
-                // calculationResultContainer.append("<h4>Result</h4>");
-                calculationResultContainerEl.append(headerEl);
-                headerEl.text(resultHeader);
-            }
-            // console.log('checkForm result', checkForm(cashPrice));
+            createResultHeader();
+            createHorzLineBreak();
             checkForm(cashPrice);
-
+            // console.log('checkForm result', checkForm(cashPrice));
 
             var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
             console.log('msgArray', msgArray);
@@ -127,32 +146,9 @@ var main = function() {
                 calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
             }
 
-
-            // createTableDynamically();
-            // var table = $("table");
-
-            //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
-            //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
-            console.log('horzLineBreak', horzLineBreak === undefined);
-            if (horzLineBreak === undefined) {
-              horzLineBreak = $("<hr>");
-              calculationResultContainerEl.append(horzLineBreak);
-            }
-            //don't delete:
-            // console.log('typeof', typeof +cashPrice);
-            // console.log('cp', typeof +cashPrice);
-            // console.log('true or false', +cashPrice === -2.63);
             finalMsgForUser();
-
-            //makes result container visible. First, capture element:
-            var capturedElement = document.getElementById("showMe");
-            //then, show visibility:
-            capturedElement.style.visibility = "visible";
-
-
-
-
-
+            //should call visible element very last step when all is fine and dandy:
+            showResultContainer();
 
         });
     });
@@ -175,6 +171,7 @@ $(document).ready(main);
 //and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
 
 //ERROR:
+//if bankDiscount and gallons botyh 0, it says "you can save 0 cents"
 //user puts 234235.234. and it will still work wtf
 //can put neg num
 //pressing calcuate > 1 time will not keep result history, and won't show final conclusion msg.
@@ -186,14 +183,16 @@ $(document).ready(main);
 
 //MORE FEATURES:
 //reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"
-  //also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
-  //when pressing reset"
+//also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
+//when pressing reset"
 //toggle clear results container!
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
 //put gals in table
 //change input fields to look like gas station electronic #
 //if input field empty, or error, focus on box and change color.
+//area to put common bank discounts for various banks: chase 1-5%, boa, discover, etc... maybe a
+//...dropbox menu for these banks.
 
 
 //FEATURES - FUTURE if time:
@@ -206,9 +205,6 @@ $(document).ready(main);
 //keeping calcuations to only pennies makes calculations consistent,
 //so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
 //then i coiuld convert .3254534534 ` to dollars. `
-
-
-
 
 
 
