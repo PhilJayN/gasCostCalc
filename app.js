@@ -71,8 +71,11 @@ var main = function() {
         // return true;
     }
 
-    function finalMsgForUser() {
-
+    function amtSavedFinalMsg() {
+      var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+      console.log('msgArray', msgArray);
+      var msgArrayJoined = msgArray.join("");
+      calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
     }
 
     var horzLineBreak;
@@ -135,29 +138,15 @@ var main = function() {
             createHorzLineBreak();
             checkForm(cashPrice);
             // console.log('checkForm result', checkForm(cashPrice));
-
-            var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-            console.log('msgArray', msgArray);
-            var msgArrayJoined = msgArray.join("");
-            //what does this do:
-            if (cashPrice === creditPrice && bankDiscount === 0) {
-                calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
-            } else {
-                calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-            }
-
-            finalMsgForUser();
+            amtSavedFinalMsg();
             //should call visible element very last step when all is fine and dandy:
             showResultContainer();
 
         });
     });
-
-
 }; ///end of main function:
 $(document).ready(main);
 ///end of document ready function
-
 
 
 /////---------------------NOTES--------------------------------////
