@@ -6,9 +6,8 @@
 // ------------------------------------------------------------------------
 var main = function() {
     "use strict";
-
-    var priceArray = [];
-    var tableDataArray = [];
+    // var priceArray = [];
+    // var tableDataArray = [];
     var resultHeader = "";
     var differenceInCents;
     var differenceInCentsPositive;
@@ -19,29 +18,11 @@ var main = function() {
     //change to reset button
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
-
-    var resultTable = $("<table>");
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
     var finalMsgEl = $("<p>");
     var inputFields = $(".formFields li input");
-    var cashEl = $("#cashTableData");
-    var creditEl = $("#creditTableData");
-
-
-    // console.log('test jQuery ', inputFields);
-
-    function createResultHeader() {
-        //create the result string ONLY if it's empty (first time)
-        //we do NOT want the result header created if it already exists
-        if (resultHeader === "") {
-            console.log('resultHeader is empty, so creating header...');
-            resultHeader = resultHeader + "Result";
-            // calculationResultContainer.append("<h4>Result</h4>");
-            calculationResultContainerEl.append(headerEl);
-            headerEl.text(resultHeader);
-        }
-    }
+    console.log('test jQuery ', inputFields);
 
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
@@ -60,7 +41,6 @@ var main = function() {
     }
 
     function checkForm(form) {
-      console.log('checkForm fxn running...');
         if (cashPrice === "") {
             alert("Error: Input is empty!");
             // form.inputfield.focus();
@@ -79,84 +59,23 @@ var main = function() {
         // return true;
     }
 
-    function amtSavedFinalMsg() {
-      // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-      //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
-      // var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
-      var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
+    function finalMsgForUser() {
 
-//It will be 2.72 dollars less if you pay using cash.
-//You will pay 2.72 dollars less if you use cash.
-      console.log('msgArray', msgArray);
-      var msgArrayJoined = msgArray.join("");
-      if (monentaryConversion > 0) {
-        calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-      }
-      else {
-        calculationResultContainerEl.append(finalMsgEl.text('No difference.'));
-      }
     }
 
     var horzLineBreak;
-    function createHorzLineBreak() {
-      //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
-      //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
-      // console.log('horzLineBreak', horzLineBreak === undefined);
-      if (horzLineBreak === undefined) {
-          horzLineBreak = $("<hr>");
-          calculationResultContainerEl.append(horzLineBreak);
-      }
-    }
-
-function showResultContainer() {
-      //makes result container visible. First, capture element:
-      var capturedElement = document.getElementById("showMe");
-      //then make visible:
-      capturedElement.style.visibility = "visible";
-    }
-
-function replaceCalculationResultNaN () {
-  cashEl.text("dfsgsdfg");
-  creditEl.text("");
-}
-
-
-var formFieldEmpty;
-function checkIfFormFieldsEmpty () {
-  var mainFormEls = document.getElementById("mainForm").elements;
-  console.log('forms', mainFormEls);
-
-  for (var i = 0; i < mainFormEls.length; i++) {
-    // mainFormEls[i];
-    if (mainFormEls[i].value === "") {
-      console.log('form field empty!');
-      replaceCalculationResultNaN();
-
-    }
-    // console.log(mainFormEls[i]);
-    //if form input doesn't have a value, it's considered to be an empty string(""), as shown by:
-    console.log('el 1:', typeof mainFormEls[0].value);
-    console.log('el 1:', mainFormEls[0].value === "");
-  }
-}
 
     inputFields.toArray().forEach(function(element) {
-        // console.log('element', element);
-        // console.log('jQuery element', $(element));
-        $(element).on("input", function() {
-          checkIfFormFieldsEmpty();
-          createResultHeader();
-            // console.log('change');
+        console.log('element', element);
+        console.log('jQuery element', $(element));
+        $(element).on("change", function() {
+            console.log('change');
 
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             var cashPrice = document.getElementById("cashPrice").value;
             var creditPrice = document.getElementById("creditPrice").value;
             var bankDiscount = document.getElementById("bankDiscount").value;
             var gallons = document.getElementById("gallonsNeeded").value;
-            //don't delete:
-            // console.log('typeof', typeof +cashPrice);
-            // console.log('cp', typeof +cashPrice);
-            // console.log('true or false', +cashPrice === -2.63);
 
             //calculations:
             var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
@@ -171,56 +90,78 @@ function checkIfFormFieldsEmpty () {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-
-
-                function resultTablePushValue () {
-                  // var creditEl = document.getElementById("creditTotalPush");
-                  // creditEl.textContent(totalCostInCash);
-                  // console.log('credit test', credit.textContent);
-                  console.log('teddy', totalCostInCash);
-
-                  if (totalCostInCash === "") {
-                    cashEl.text("jklasd");
-                  }
-                  cashEl.text(totalCostInCash.toFixed(2));
-                  console.log('creditEl', creditEl);
-                  creditEl.text(totalCostInCredit.toFixed(2));
-                }
-
-
-            //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
-            // calculationResultContainerEl.append("<p>totalCostInCash</p>");
-
-
             //DO NOT delete, useful:
-            // console.log('totalCostInCash', totalCostInCash);
-            // console.log('totalCostInCredit', totalCostInCredit);
+              // console.log('totalCostInCash', totalCostInCash);
+              // console.log('totalCostInCredit', totalCostInCredit);
             // console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
             // console.log('differenceInCents', differenceInCents);
             // console.log('type differenceInCents', typeof differenceInCents);
             // console.log('differenceInCentsPositive', differenceInCentsPositive);
 
             pluralOrNot();
-            createHorzLineBreak();
-            checkForm(cashPrice);
-            // createTableDynamically();
-            resultTablePushValue();
 
+            //create the result string ONLY if it's empty (first time)
+            //because we do NOT want the result header created ...
+            if (resultHeader === "") {
+                console.log('resultHeader is empty, so creating header...');
+                resultHeader = resultHeader + "Result";
+                // calculationResultContainer.append("<h4>Result</h4>");
+                calculationResultContainerEl.append(headerEl);
+                headerEl.text(resultHeader);
+            }
             // console.log('checkForm result', checkForm(cashPrice));
-            amtSavedFinalMsg();
-            //should call visible element very last step when all is fine and dandy:
-            showResultContainer();
+            checkForm(cashPrice);
+
+
+            var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+            console.log('msgArray', msgArray);
+            var msgArrayJoined = msgArray.join("");
+            //what does this do:
+            if (cashPrice === creditPrice && bankDiscount === 0) {
+                calculationResultContainerEl.append(finalMsgEl.text("Cash and credit price is the same, while bank discount is 0. It is the same price!"));
+            } else {
+                calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+            }
+
+
+            // createTableDynamically();
+            // var table = $("table");
+
+            //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+            //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+            console.log('horzLineBreak', horzLineBreak === undefined);
+            if (horzLineBreak === undefined) {
+              horzLineBreak = $("<hr>");
+              calculationResultContainerEl.append(horzLineBreak);
+            }
+            //don't delete:
+            // console.log('typeof', typeof +cashPrice);
+            // console.log('cp', typeof +cashPrice);
+            // console.log('true or false', +cashPrice === -2.63);
+            finalMsgForUser();
+
+            //makes result container visible. First, capture element:
+            var capturedElement = document.getElementById("showMe");
+            //then, show visibility:
+            capturedElement.style.visibility = "visible";
+
+
+
+
+
 
         });
     });
+
+
 }; ///end of main function:
 $(document).ready(main);
 ///end of document ready function
 
 
+
 /////---------------------NOTES--------------------------------////
-////Final verdict: Have a button or checkbox that ask user: "All finished? click here for final discussion"
-//Maybe put this in an organized table, pros and cons,
+////Final verdict: Maybe put this in an organized table, pros and cons,
 //people prob dont like to read long P!.  Typically, for most gas stations
 //in the South Bay area, cash prices are around ten cents less for many reasons.
 //One reason is to encourage people to get inside to buy snacks and spend more.
@@ -230,29 +171,20 @@ $(document).ready(main);
 //and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
 
 //ERROR:
-//prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
-  ///bank discoiunt can be 0, that's okay. but maybe point out that it defeats purpose of app.
-  //whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
-
+//if bankDiscount and gallons botyh 0, it says "you can save 0 cents"
 //user puts 234235.234. and it will still work wtf
 //can put neg num
 //pressing calcuate > 1 time will not keep result history, and won't show final conclusion msg.
 
 
 //Test
-//DONE if more than 99 cents, then it should convert to dollars
-//when you increase gallons, the cost doesn't increase at same rate. it should though, right?
+// if more than 99 cents, then it should convert to dollars
 
 
 //MORE FEATURES:
-//BIGGEST: prevent user entering in stupid # in input
-//either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
-//..occur when it's alwaysgreen. maybe little icons or pics.
-//finalMsg jumps is jerky when going from cents to dollars due to space limitation?
-
 //reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"
-//also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
-//when pressing reset"
+  //also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
+  //when pressing reset"
 //toggle clear results container!
 //button that clears all calculation, right now refresh is the way.
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
@@ -263,11 +195,7 @@ $(document).ready(main);
 //...dropbox menu for these banks.
 
 
-//USER input restriction:
-//entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
-
 //FEATURES - FUTURE if time:
-//if bankDiscount input is > 15%, do a description box that says "no bank in existence will give customers more than 15% CB"
 //automatically calculate by using slides instead of pressing calc button.
 //do you like math prompt? if yes, show them calculation
 //kickback points consideration, or other rewards, optional choice for users.
@@ -289,50 +217,46 @@ $(document).ready(main);
 
 
 
+// function createTableDynamically() {
+//   //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
+//   //will populate in the table automatically without having to target them using ids.
+//     ///careful, you need to reset both arrays or else it will keep adding data to it when user
+//     ///clicks on calculate button.
+//     priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
+//     tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
+//     ////dynamically create HTML table when user clicks on calculate button:
+//     var table = '';
+//     var rows = 4;
+//     var cols = 2;
+//     var arrayIndex = 0;
+//     //outside loop creates the rows (4 rows total)
+//     for (var r = 0; r < rows; r++) {
+//         table += "<tr>";
+//         //inside loop creates the table data (2 td created every inner loop run)
+//         for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+//             table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+//             table += "<td>" + priceArray[arrayIndex] + "</td>";
+//         }
+//         //when inner loop exits, arrayIndex incremented. this way we can iterate through
+//         //the arrays
+//         arrayIndex++;
+//         table += "</tr>";
+//     }
+//     //the variable 'table' is a huge long string of html and text. The 2 lines of code below appends this
+//     //into the calculationResultContainerEl
+//     calculationResultContainerEl.append(table);
+//     calculationResultContainerEl.append(conclusionElement);
+// }
+
+
+
+
+
+
+
+
+
 //
-
-
-
-
-
-
-
-            //
-            // function createTableDynamically() {
-            //   //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
-            //   //will populate in the table automatically without having to target them using ids.
-            //     ///careful, you need to reset both arrays or else it will keep adding data to it when user
-            //     ///clicks on calculate button.
-            //     priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-            //     tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
-            //     ////dynamically create HTML table when user clicks on calculate button:
-            //     var table = '';
-            //     var rows = 4;
-            //     var cols = 2;
-            //     var arrayIndex = 0;
-            //     //outside loop creates the rows (4 rows total)
-            //     for (var r = 0; r < rows; r++) {
-            //         table += "<tr>";
-            //         //inside loop creates the table data (2 td created every inner loop run)
-            //         for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
-            //             table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-            //             table += "<td>" + priceArray[arrayIndex] + "</td>";
-            //         }
-            //         //when inner loop exits, arrayIndex incremented. this way we can iterate through
-            //         //the arrays
-            //         arrayIndex++;
-            //         table += "</tr>";
-            //     }
-            //     //the variable 'table' is a huge long string of html and text. The code below appends this
-            //     //into the calculationResultContainerEl (a div)
-            //     calculationResultContainerEl.append(table);
-            //     // calculationResultContainerEl.append(conclusionElement);
-            // }
-            //
-            //
-
-
-
 //
 // /////---------------------------ORIGINAL CALC BUTTON CALCULATE---------------------------////
 //     //create click handler for calculate button element and run code when it is clicked//

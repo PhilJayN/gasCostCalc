@@ -10,6 +10,13 @@
     padding: 12px;
     visibility: hidden;
     text-align: center;
+
+
+
+    /*DELETE LATER AFTER DEBUGGING*/
+float: left;
+border: 1px solid blue;
+
 }
 
 
@@ -32,6 +39,11 @@ p {
    border-radius: 5px;
    box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
    padding: 12px;
+
+/*DELETE LATER AFTER DEBUGGING*/
+float: left;
+
+
 }
 
 h2, h3, p {
