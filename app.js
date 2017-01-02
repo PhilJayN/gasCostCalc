@@ -115,6 +115,8 @@ var teddy = 'hi';
         capturedElement.style.visibility = "visible";
     }
 
+
+
     function replaceCalculationResultNaN() {
       console.log('replaceCalculationResultNaN fxn running...');
       //works:
@@ -125,7 +127,6 @@ var teddy = 'hi';
         // cashEl.text("dfsgsdfg");
         // creditEl.text("");
     }
-
 
     var formFieldEmpty;
     function checkIfFormFieldsEmpty() {
@@ -144,11 +145,13 @@ var teddy = 'hi';
         }
     }
 
+
+
+
     inputFields.toArray().forEach(function(element) {
         // console.log('element', element);
         // console.log('jQuery element', $(element));
         $(element).on("input", function() {
-            checkIfFormFieldsEmpty();
             createResultHeader();
             // console.log('change');
 
@@ -185,10 +188,16 @@ var teddy = 'hi';
                 // if (totalCostInCash === "") {
                 //   cashEl.text("jklasd");
                 // }
+
+
                 cashEl.text(totalCostInCash.toFixed(2));
                 console.log('creditEl', creditEl);
                 creditEl.text(totalCostInCredit.toFixed(2));
             }
+
+
+
+
 
 
             //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
@@ -205,7 +214,7 @@ var teddy = 'hi';
 
             pluralOrNot();
             createHorzLineBreak();
-            checkForm(cashPrice);
+            // checkForm(cashPrice);
             // createTableDynamically();
             resultTablePushValue();
 
