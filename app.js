@@ -128,26 +128,10 @@ var main = function() {
     }
 
 
-
     inputFields.toArray().forEach(function(element) {
 
         // console.log('jQuery element', $(element));
         $(element).on("input", function() {
-          console.log('element', element.value);
-
-          console.log('element', element.value === "");
-
-          if (element.value === "") {
-            console.log('found empty element');
-              cashEl.text('');
-          }
-          if (element.value !== "") {
-            cashEl.text('sadfjk');
-
-              // cashEl.text(totalCostInCash);
-              // creditEl.text(totalCostInCredit);
-
-          }
 
 
             // formChecker();
@@ -188,6 +172,23 @@ var main = function() {
             //
             // }
             //
+
+            console.log('element', element.value);
+
+            console.log('element', element.value === "");
+
+            if (element.value === "") {
+              console.log('found empty element');
+                cashEl.text('');
+            }
+            if (element.value !== "") {
+              console.log('type of', typeof totalCostInCash);
+              cashEl.text(totalCostInCash);
+
+                // cashEl.text(totalCostInCash);
+                creditEl.text(totalCostInCredit);
+
+            }
 
             function formChecker() {
                 var mainFormEls = document.getElementById("mainForm").elements;
