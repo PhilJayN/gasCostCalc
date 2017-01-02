@@ -16,7 +16,6 @@ var main = function() {
     var monentaryUnitString;
     var monentaryConversion;
 
-var teddy = 'hi';
     //change to reset button
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -31,29 +30,9 @@ var teddy = 'hi';
     // console.log('test jQuery ', inputFields);
 
 
-    function formChecker() {
-      var mainFormEls = document.getElementById("mainForm").elements;
-      console.log('forms', mainFormEls);
-      // console.log('forms', mainFormEls.length);
-      for (var i = 0; i < mainFormEls.length; i++) {
-          mainFormEls[i];
-          // console.log('main form els', mainFormEls[i]);
-          console.log('main form els value:', mainFormEls[i].value);
-          console.log('main form val blank', mainFormEls[i].value === "");
-          if (mainFormEls[i].value === "") {
-              console.log('form field EMPTY!!');
-              cashEl.text('sjldfke4ty7u');
-          }
-          else {
-            // cashEl.text(totalCostInCash.toFixed(2));
-            // console.log('creditEl', creditEl);
-            // creditEl.text(totalCostInCredit.toFixed(2));
-          }
-        }
-    }
 
     function createResultHeader() {
-        //create the result string ONLY if it's empty (first time)
+        //create the result string ONLY[[[[]]]] if it's empty (first time)
         //we do NOT want the result header created if it already exists
         if (resultHeader === "") {
             console.log('resultHeader is empty, so creating header...');
@@ -130,6 +109,17 @@ var teddy = 'hi';
         }
     }
 
+    function replaceCalculationResultNaN() {
+        console.log('replaceCalculationResultNaN fxn running...');
+        //works:
+        // calculationResultContainerEl.text("sdfsdfw");
+        cashEl.text("");
+        creditEl.text("");
+
+        // cashEl.text("dfsgsdfg");
+        // creditEl.text("");
+    }
+
     function showResultContainer() {
         //makes result container visible. First, capture element:
         var capturedElement = document.getElementById("showMe");
@@ -137,23 +127,30 @@ var teddy = 'hi';
         capturedElement.style.visibility = "visible";
     }
 
-    function replaceCalculationResultNaN() {
-      console.log('replaceCalculationResultNaN fxn running...');
-      //works:
-      // calculationResultContainerEl.text("sdfsdfw");
-      cashEl.text("");
-      creditEl.text("");
-
-        // cashEl.text("dfsgsdfg");
-        // creditEl.text("");
-    }
 
 
     inputFields.toArray().forEach(function(element) {
-        // console.log('element', element);
+
         // console.log('jQuery element', $(element));
         $(element).on("input", function() {
-          formChecker();
+          console.log('element', element.value);
+
+          console.log('element', element.value === "");
+
+          if (element.value === "") {
+            console.log('found empty element');
+              cashEl.text('');
+          }
+          if (element.value !== "") {
+            cashEl.text('sadfjk');
+
+              // cashEl.text(totalCostInCash);
+              // creditEl.text(totalCostInCredit);
+
+          }
+
+
+            // formChecker();
             createResultHeader();
             // checkIfFormFieldsEmpty();
             // console.log('change');
@@ -192,6 +189,28 @@ var teddy = 'hi';
             // }
             //
 
+            function formChecker() {
+                var mainFormEls = document.getElementById("mainForm").elements;
+                console.log('forms', mainFormEls);
+                // console.log('forms', mainFormEls.length);
+                for (var i = 0; i < mainFormEls.length; i++) {
+                    mainFormEls[i];
+                    // console.log('main form els', mainFormEls[i]);
+                    console.log('main form els value:', mainFormEls[i].value);
+                    console.log('main form val blank', mainFormEls[i].value === "");
+                    if (mainFormEls[i].value === "") {
+                        console.log('one of the form field is EMPTY!!');
+                        cashEl.text('blank!');
+                        cashEl.text('blank!');
+                    } else {
+                        // cashEl.text('else');
+                        // console.log('totalCostInCash', totalCostInCash);
+                        // cashEl.text(totalCostInCash.toFixed(2));
+                        // console.log('creditEl', creditEl);
+                        // creditEl.text(totalCostInCredit.toFixed(2));
+                    }
+                }
+            }
 
 
 
