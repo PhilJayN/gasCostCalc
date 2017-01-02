@@ -30,6 +30,28 @@ var teddy = 'hi';
     var creditEl = $("#creditTableData");
     // console.log('test jQuery ', inputFields);
 
+
+    function formChecker() {
+      var mainFormEls = document.getElementById("mainForm").elements;
+      console.log('forms', mainFormEls);
+      // console.log('forms', mainFormEls.length);
+      for (var i = 0; i < mainFormEls.length; i++) {
+          mainFormEls[i];
+          // console.log('main form els', mainFormEls[i]);
+          console.log('main form els value:', mainFormEls[i].value);
+          console.log('main form val blank', mainFormEls[i].value === "");
+          if (mainFormEls[i].value === "") {
+              console.log('form field EMPTY!!');
+              cashEl.text('sjldfke4ty7u');
+          }
+          else {
+            // cashEl.text(totalCostInCash.toFixed(2));
+            // console.log('creditEl', creditEl);
+            // creditEl.text(totalCostInCredit.toFixed(2));
+          }
+        }
+    }
+
     function createResultHeader() {
         //create the result string ONLY if it's empty (first time)
         //we do NOT want the result header created if it already exists
@@ -57,26 +79,26 @@ var teddy = 'hi';
             monentaryConversion = differenceInCentsPositive / 100;
         }
     }
-
-    function checkForm(form) {
-        console.log('checkForm fxn running...');
-        if (cashPrice === "") {
-            alert("Error: Input is empty!");
-            // form.inputfield.focus();
-            return false;
-        }
-        // validation fails if the input has negative sign
-        var re = /[-]/;
-        // var re = /^[0-9.]+$/;
-        var foundNegVal = re.test(cashPrice);
-        console.log(foundNegVal);
-        if (foundNegVal === true) {
-            console.log('check input, you have a negative as a value!');
-            return false;
-        }
-        // // validation was successful
-        // return true;
-    }
+    //
+    // function checkForm(form) {
+    //     console.log('checkForm fxn running...');
+    //     if (cashPrice === "") {
+    //         alert("Error: Input is empty!");
+    //         // form.inputfield.focus();
+    //         return false;
+    //     }
+    //     // validation fails if the input has negative sign
+    //     var re = /[-]/;
+    //     // var re = /^[0-9.]+$/;
+    //     var foundNegVal = re.test(cashPrice);
+    //     console.log(foundNegVal);
+    //     if (foundNegVal === true) {
+    //         console.log('check input, you have a negative as a value!');
+    //         return false;
+    //     }
+    //     // // validation was successful
+    //     // return true;
+    // }
 
     function amtSavedFinalMsg() {
         // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
@@ -115,8 +137,6 @@ var teddy = 'hi';
         capturedElement.style.visibility = "visible";
     }
 
-
-
     function replaceCalculationResultNaN() {
       console.log('replaceCalculationResultNaN fxn running...');
       //works:
@@ -128,31 +148,14 @@ var teddy = 'hi';
         // creditEl.text("");
     }
 
-    var formFieldEmpty;
-    function checkIfFormFieldsEmpty() {
-        var mainFormEls = document.getElementById("mainForm").elements;
-        // console.log('forms', mainFormEls);
-        for (var i = 0; i < mainFormEls.length; i++) {
-            // mainFormEls[i];
-            if (mainFormEls[i].value === "") {
-                console.log('form field EMPTY!!');
-                replaceCalculationResultNaN();
-            }
-            // console.log(mainFormEls[i]);
-            //if form input doesn't have a value, it's considered to be an empty string(""), as shown by:
-            // console.log('el 1:', typeof mainFormEls[0].value);
-            // console.log('el 1:', mainFormEls[0].value === "");
-        }
-    }
-
-
-
 
     inputFields.toArray().forEach(function(element) {
         // console.log('element', element);
         // console.log('jQuery element', $(element));
         $(element).on("input", function() {
+          formChecker();
             createResultHeader();
+            // checkIfFormFieldsEmpty();
             // console.log('change');
 
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
@@ -178,23 +181,16 @@ var teddy = 'hi';
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-
-            function resultTablePushValue() {
-                // var creditEl = document.getElementById("creditTotalPush");
-                // creditEl.textContent(totalCostInCash);
-                // console.log('credit test', credit.textContent);
-                // console.log('teddy', totalCostInCash);
-
-                // if (totalCostInCash === "") {
-                //   cashEl.text("jklasd");
-                // }
-
-
-                cashEl.text(totalCostInCash.toFixed(2));
-                console.log('creditEl', creditEl);
-                creditEl.text(totalCostInCredit.toFixed(2));
-            }
-
+            //
+            // function resultTablePushValue() {
+            //     // var creditEl = document.getElementById("creditTotalPush");
+            //     // creditEl.textContent(totalCostInCash);
+            //     // console.log('credit test', credit.textContent);
+            //     // console.log('teddy', totalCostInCash);
+            //     cashEl.text('hi there');
+            //
+            // }
+            //
 
 
 
@@ -216,7 +212,13 @@ var teddy = 'hi';
             createHorzLineBreak();
             // checkForm(cashPrice);
             // createTableDynamically();
-            resultTablePushValue();
+
+
+
+            // resultTablePushValue();
+
+
+
 
             // console.log('checkForm result', checkForm(cashPrice));
             amtSavedFinalMsg();
