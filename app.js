@@ -16,6 +16,7 @@ var main = function() {
     var monentaryUnitString;
     var monentaryConversion;
 
+var teddy = 'hi';
     //change to reset button
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -27,8 +28,6 @@ var main = function() {
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
     var creditEl = $("#creditTableData");
-
-
     // console.log('test jQuery ', inputFields);
 
     function createResultHeader() {
@@ -60,7 +59,7 @@ var main = function() {
     }
 
     function checkForm(form) {
-      console.log('checkForm fxn running...');
+        console.log('checkForm fxn running...');
         if (cashPrice === "") {
             alert("Error: Input is empty!");
             // form.inputfield.focus();
@@ -80,72 +79,77 @@ var main = function() {
     }
 
     function amtSavedFinalMsg() {
-      // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
-      //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
-      // var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
-      var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
+        // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+        //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
+        // var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
+        var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
 
-//It will be 2.72 dollars less if you pay using cash.
-//You will pay 2.72 dollars less if you use cash.
-      console.log('msgArray', msgArray);
-      var msgArrayJoined = msgArray.join("");
-      if (monentaryConversion > 0) {
-        calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-      }
-      else {
-        calculationResultContainerEl.append(finalMsgEl.text('No difference.'));
-      }
+        //It will be 2.72 dollars less if you pay using cash.
+        //You will pay 2.72 dollars less if you use cash.
+        console.log('msgArray', msgArray);
+        var msgArrayJoined = msgArray.join("");
+        if (monentaryConversion > 0) {
+            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+        } else {
+            calculationResultContainerEl.append(finalMsgEl.text('No difference.'));
+        }
     }
 
+    //you can just create HTML for this, no need for fxn:
     var horzLineBreak;
+
     function createHorzLineBreak() {
-      //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
-      //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
-      // console.log('horzLineBreak', horzLineBreak === undefined);
-      if (horzLineBreak === undefined) {
-          horzLineBreak = $("<hr>");
-          calculationResultContainerEl.append(horzLineBreak);
-      }
+        //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+        //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+        // console.log('horzLineBreak', horzLineBreak === undefined);
+        if (horzLineBreak === undefined) {
+            horzLineBreak = $("<hr>");
+            calculationResultContainerEl.append(horzLineBreak);
+        }
     }
 
-function showResultContainer() {
-      //makes result container visible. First, capture element:
-      var capturedElement = document.getElementById("showMe");
-      //then make visible:
-      capturedElement.style.visibility = "visible";
+    function showResultContainer() {
+        //makes result container visible. First, capture element:
+        var capturedElement = document.getElementById("showMe");
+        //then make visible:
+        capturedElement.style.visibility = "visible";
     }
 
-function replaceCalculationResultNaN () {
-  cashEl.text("dfsgsdfg");
-  creditEl.text("");
-}
+    function replaceCalculationResultNaN() {
+      console.log('replaceCalculationResultNaN fxn running...');
+      //works:
+      // calculationResultContainerEl.text("sdfsdfw");
+      cashEl.text("");
+      creditEl.text("");
 
-
-var formFieldEmpty;
-function checkIfFormFieldsEmpty () {
-  var mainFormEls = document.getElementById("mainForm").elements;
-  console.log('forms', mainFormEls);
-
-  for (var i = 0; i < mainFormEls.length; i++) {
-    // mainFormEls[i];
-    if (mainFormEls[i].value === "") {
-      console.log('form field empty!');
-      replaceCalculationResultNaN();
-
+        // cashEl.text("dfsgsdfg");
+        // creditEl.text("");
     }
-    // console.log(mainFormEls[i]);
-    //if form input doesn't have a value, it's considered to be an empty string(""), as shown by:
-    console.log('el 1:', typeof mainFormEls[0].value);
-    console.log('el 1:', mainFormEls[0].value === "");
-  }
-}
+
+
+    var formFieldEmpty;
+    function checkIfFormFieldsEmpty() {
+        var mainFormEls = document.getElementById("mainForm").elements;
+        // console.log('forms', mainFormEls);
+        for (var i = 0; i < mainFormEls.length; i++) {
+            // mainFormEls[i];
+            if (mainFormEls[i].value === "") {
+                console.log('form field EMPTY!!');
+                replaceCalculationResultNaN();
+            }
+            // console.log(mainFormEls[i]);
+            //if form input doesn't have a value, it's considered to be an empty string(""), as shown by:
+            // console.log('el 1:', typeof mainFormEls[0].value);
+            // console.log('el 1:', mainFormEls[0].value === "");
+        }
+    }
 
     inputFields.toArray().forEach(function(element) {
         // console.log('element', element);
         // console.log('jQuery element', $(element));
         $(element).on("input", function() {
-          checkIfFormFieldsEmpty();
-          createResultHeader();
+            checkIfFormFieldsEmpty();
+            createResultHeader();
             // console.log('change');
 
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
@@ -172,20 +176,19 @@ function checkIfFormFieldsEmpty () {
             differenceInCentsPositive = Math.abs(differenceInCents);
 
 
+            function resultTablePushValue() {
+                // var creditEl = document.getElementById("creditTotalPush");
+                // creditEl.textContent(totalCostInCash);
+                // console.log('credit test', credit.textContent);
+                // console.log('teddy', totalCostInCash);
 
-                function resultTablePushValue () {
-                  // var creditEl = document.getElementById("creditTotalPush");
-                  // creditEl.textContent(totalCostInCash);
-                  // console.log('credit test', credit.textContent);
-                  console.log('teddy', totalCostInCash);
-
-                  if (totalCostInCash === "") {
-                    cashEl.text("jklasd");
-                  }
-                  cashEl.text(totalCostInCash.toFixed(2));
-                  console.log('creditEl', creditEl);
-                  creditEl.text(totalCostInCredit.toFixed(2));
-                }
+                // if (totalCostInCash === "") {
+                //   cashEl.text("jklasd");
+                // }
+                cashEl.text(totalCostInCash.toFixed(2));
+                console.log('creditEl', creditEl);
+                creditEl.text(totalCostInCredit.toFixed(2));
+            }
 
 
             //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
@@ -231,8 +234,8 @@ $(document).ready(main);
 
 //ERROR:
 //prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
-  ///bank discoiunt can be 0, that's okay. but maybe point out that it defeats purpose of app.
-  //whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
+///bank discoiunt can be 0, that's okay. but maybe point out that it defeats purpose of app.
+//whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
 
 //user puts 234235.234. and it will still work wtf
 //can put neg num
@@ -286,9 +289,6 @@ $(document).ready(main);
 
 
 
-
-
-
 //
 
 
@@ -297,39 +297,39 @@ $(document).ready(main);
 
 
 
-            //
-            // function createTableDynamically() {
-            //   //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
-            //   //will populate in the table automatically without having to target them using ids.
-            //     ///careful, you need to reset both arrays or else it will keep adding data to it when user
-            //     ///clicks on calculate button.
-            //     priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
-            //     tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
-            //     ////dynamically create HTML table when user clicks on calculate button:
-            //     var table = '';
-            //     var rows = 4;
-            //     var cols = 2;
-            //     var arrayIndex = 0;
-            //     //outside loop creates the rows (4 rows total)
-            //     for (var r = 0; r < rows; r++) {
-            //         table += "<tr>";
-            //         //inside loop creates the table data (2 td created every inner loop run)
-            //         for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
-            //             table += "<td>" + tableDataArray[arrayIndex] + "</td>";
-            //             table += "<td>" + priceArray[arrayIndex] + "</td>";
-            //         }
-            //         //when inner loop exits, arrayIndex incremented. this way we can iterate through
-            //         //the arrays
-            //         arrayIndex++;
-            //         table += "</tr>";
-            //     }
-            //     //the variable 'table' is a huge long string of html and text. The code below appends this
-            //     //into the calculationResultContainerEl (a div)
-            //     calculationResultContainerEl.append(table);
-            //     // calculationResultContainerEl.append(conclusionElement);
-            // }
-            //
-            //
+//
+// function createTableDynamically() {
+//   //the purpose of this table is so that individual calculation results(cashPrice, creditPrice),
+//   //will populate in the table automatically without having to target them using ids.
+//     ///careful, you need to reset both arrays or else it will keep adding data to it when user
+//     ///clicks on calculate button.
+//     priceArray.push(totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount, differenceInCents);
+//     tableDataArray.push("Total Cash", "Total Credit", "Total Credit with Discount.", "Difference");
+//     ////dynamically create HTML table when user clicks on calculate button:
+//     var table = '';
+//     var rows = 4;
+//     var cols = 2;
+//     var arrayIndex = 0;
+//     //outside loop creates the rows (4 rows total)
+//     for (var r = 0; r < rows; r++) {
+//         table += "<tr>";
+//         //inside loop creates the table data (2 td created every inner loop run)
+//         for (var tdCreator = 0; tdCreator < 1; tdCreator++) {
+//             table += "<td>" + tableDataArray[arrayIndex] + "</td>";
+//             table += "<td>" + priceArray[arrayIndex] + "</td>";
+//         }
+//         //when inner loop exits, arrayIndex incremented. this way we can iterate through
+//         //the arrays
+//         arrayIndex++;
+//         table += "</tr>";
+//     }
+//     //the variable 'table' is a huge long string of html and text. The code below appends this
+//     //into the calculationResultContainerEl (a div)
+//     calculationResultContainerEl.append(table);
+//     // calculationResultContainerEl.append(conclusionElement);
+// }
+//
+//
 
 
 
