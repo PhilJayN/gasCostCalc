@@ -92,7 +92,7 @@ var main = function() {
         if (monentaryConversion > 0) {
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
         } else {
-            calculationResultContainerEl.append(finalMsgEl.text('No difference.'));
+            calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
         }
     }
 
@@ -129,14 +129,36 @@ var main = function() {
 
 
     inputFields.toArray().forEach(function(element) {
+      // var eachInputEl = $(element);
 
+      // console.log('eachInputEl', eachInputEl);
+      // console.log('element len', element.length);
+      // for (var i = 0; i < eachInputEl.length; i++) {
+      //   console.log('element loop', eachInputEl[i].value);
+      //
+      //
+      //               if (eachInputEl.value === "") {
+      //                 console.log('found empty element');
+      //                   cashEl.text('');
+      //                 }
+      //               if (element.value !== "") {
+      //                 // console.log('type of', typeof totalCostInCash);
+      //                 // cashEl.text(totalCostInCash);
+      //                 // creditEl.text(totalCostInCredit);
+      //               }
+      // }
         // console.log('jQuery element', $(element));
+        //use jQuery to get a reference to the element in array...
+        //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
+          console.log('element', element);
+          // var hold = element;
+          // console.log('asdfjkl', hold);
 
 
             // formChecker();
             createResultHeader();
-            // checkIfFormFieldsEmpty();
+            // checkIfFormFieldsEmpty();py
             // console.log('change');
 
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
@@ -148,6 +170,10 @@ var main = function() {
             // console.log('typeof', typeof +cashPrice);
             // console.log('cp', typeof +cashPrice);
             // console.log('true or false', +cashPrice === -2.63);
+            // console.log('element', element.value);
+            // console.log('element', element.value === "");
+            // cashEl.text('');
+
 
             //calculations:
             var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
@@ -162,6 +188,25 @@ var main = function() {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
+            //check if input fields are empty, then result field is empty. otherwise put in the calc. results
+                        if (cashPrice === "" || gallons === "") {
+                          cashEl.text('');
+                        }
+                        else {
+                          cashEl.text(totalCostInCash.toFixed(2));
+                        }
+
+                        if (creditPrice === "" || gallons === "") {
+                          creditEl.text('');
+                        }
+                        else {
+                          creditEl.text(totalCostInCredit.toFixed(2));
+                        }
+
+                        // if (cashPrice === "" && creditPrice === "") {
+                        //   // calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
+                        // }
+
             //
             // function resultTablePushValue() {
             //     // var creditEl = document.getElementById("creditTotalPush");
@@ -173,45 +218,41 @@ var main = function() {
             // }
             //
 
-            console.log('element', element.value);
 
-            console.log('element', element.value === "");
-
-            if (element.value === "") {
-              console.log('found empty element');
-                cashEl.text('');
-            }
-            if (element.value !== "") {
-              console.log('type of', typeof totalCostInCash);
-              cashEl.text(totalCostInCash);
-
-                // cashEl.text(totalCostInCash);
-                creditEl.text(totalCostInCredit);
-
-            }
-
-            function formChecker() {
-                var mainFormEls = document.getElementById("mainForm").elements;
-                console.log('forms', mainFormEls);
-                // console.log('forms', mainFormEls.length);
-                for (var i = 0; i < mainFormEls.length; i++) {
-                    mainFormEls[i];
-                    // console.log('main form els', mainFormEls[i]);
-                    console.log('main form els value:', mainFormEls[i].value);
-                    console.log('main form val blank', mainFormEls[i].value === "");
-                    if (mainFormEls[i].value === "") {
-                        console.log('one of the form field is EMPTY!!');
-                        cashEl.text('blank!');
-                        cashEl.text('blank!');
-                    } else {
-                        // cashEl.text('else');
-                        // console.log('totalCostInCash', totalCostInCash);
-                        // cashEl.text(totalCostInCash.toFixed(2));
-                        // console.log('creditEl', creditEl);
-                        // creditEl.text(totalCostInCredit.toFixed(2));
-                    }
-                }
-            }
+            //
+            // if (element.value === "") {
+            //   console.log('found empty element');
+            //     cashEl.text('');
+            //     creditEl.text('');
+            //   }
+            // if (element.value !== "") {
+            //   console.log('type of', typeof totalCostInCash);
+            //   cashEl.text(totalCostInCash);
+            //   creditEl.text(totalCostInCredit);
+            // }
+            //
+            // function formChecker() {
+            //     var mainFormEls = document.getElementById("mainForm").elements;
+            //     console.log('forms', mainFormEls);
+            //     // console.log('forms', mainFormEls.length);
+            //     for (var i = 0; i < mainFormEls.length; i++) {
+            //         mainFormEls[i];
+            //         // console.log('main form els', mainFormEls[i]);
+            //         console.log('main form els value:', mainFormEls[i].value);
+            //         console.log('main form val blank', mainFormEls[i].value === "");
+            //         if (mainFormEls[i].value === "") {
+            //             console.log('one of the form field is EMPTY!!');
+            //             cashEl.text('blank!');
+            //             cashEl.text('blank!');
+            //         } else {
+            //             // cashEl.text('else');
+            //             // console.log('totalCostInCash', totalCostInCash);
+            //             // cashEl.text(totalCostInCash.toFixed(2));
+            //             // console.log('creditEl', creditEl);
+            //             // creditEl.text(totalCostInCredit.toFixed(2));
+            //         }
+            //     }
+            // }
 
 
 
@@ -233,12 +274,7 @@ var main = function() {
             // checkForm(cashPrice);
             // createTableDynamically();
 
-
-
             // resultTablePushValue();
-
-
-
 
             // console.log('checkForm result', checkForm(cashPrice));
             amtSavedFinalMsg();
