@@ -1,6 +1,5 @@
 //Dependencies: jQuery
 // -------------------------------------------------------------------------
-
 // -------------------------------------------------------------------------
 // Main function
 // ------------------------------------------------------------------------
@@ -16,10 +15,33 @@ var main = function() {
     var monentaryUnitString;
     var monentaryConversion;
 
-    //change to reset button
+    var cashPrice, creditPrice, bankDiscount, gallons;
+    var totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount;
+    var inputFieldsStatus = {
+        "cashFieldEmpty": "",
+        "creditFieldEmpty": "",
+        "bankDiscountFieldEmpty": "",
+        "gallonsFieldEmpty": "",
+        "allFieldsEmpty": ""
+    };
+
+    var testObj = {};
+
+    testObj[0] = 'one';
+    console.log(testObj);
+
+    // console.log(inputFieldsStatus);
+    // inputFieldsStatus["cashFieldEmpty"] = true;
+    // console.log(inputFieldsStatus);
+    console.log(inputFieldsStatus[0]);
+
+
+    // inputFieldsStatus['new'] = 'hi';
+    // inputFieldsStatus['ohne'] = 'sflujkhi';
+    //
+    //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
-
     var resultTable = $("<table>");
     var conclusionElement = $("<p>");
     var headerEl = $("<h3>");
@@ -28,8 +50,6 @@ var main = function() {
     var cashEl = $("#cashTableData");
     var creditEl = $("#creditTableData");
     // console.log('test jQuery ', inputFields);
-
-
 
     function createResultHeader() {
         //create the result string ONLY[[[[]]]] if it's empty (first time)
@@ -58,35 +78,30 @@ var main = function() {
             monentaryConversion = differenceInCentsPositive / 100;
         }
     }
-    //
-    // function checkForm(form) {
-    //     console.log('checkForm fxn running...');
-    //     if (cashPrice === "") {
-    //         alert("Error: Input is empty!");
-    //         // form.inputfield.focus();
-    //         return false;
-    //     }
-    //     // validation fails if the input has negative sign
-    //     var re = /[-]/;
-    //     // var re = /^[0-9.]+$/;
-    //     var foundNegVal = re.test(cashPrice);
-    //     console.log(foundNegVal);
-    //     if (foundNegVal === true) {
-    //         console.log('check input, you have a negative as a value!');
-    //         return false;
-    //     }
-    //     // // validation was successful
-    //     // return true;
-    // }
+
+    function checkForm(form) {
+        console.log('checkForm fxn running...');
+        if (cashPrice === "") {
+            alert("Error: Input is empty!");
+            // form.inputfield.focus();
+            return false;
+        }
+        // validation fails if the input has negative sign
+        var re = /[-]/;
+        // var re = /^[0-9.]+$/;
+        var foundNegVal = re.test(cashPrice);
+        console.log(foundNegVal);
+        if (foundNegVal === true) {
+            console.log('check input, you have a negative as a value!');
+            return false;
+        }
+        // // validation was successful
+        // return true;
+    }
 
     function amtSavedFinalMsg() {
-        // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
         //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
-        // var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
         var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
-
-        //It will be 2.72 dollars less if you pay using cash.
-        //You will pay 2.72 dollars less if you use cash.
         console.log('msgArray', msgArray);
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
@@ -94,6 +109,10 @@ var main = function() {
         } else {
             calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
         }
+    }
+
+    function pleaseCheckFieldMsg() {
+      calculationResultContainerEl.append(finalMsgEl.text("Please check input fields"));
     }
 
     //you can just create HTML for this, no need for fxn:
@@ -109,76 +128,83 @@ var main = function() {
         }
     }
 
-    function replaceCalculationResultNaN() {
-        console.log('replaceCalculationResultNaN fxn running...');
+    function clearNaN_String() {
+        console.log('clearNaNString fxn running...');
         //works:
         // calculationResultContainerEl.text("sdfsdfw");
         cashEl.text("");
         creditEl.text("");
-
-        // cashEl.text("dfsgsdfg");
-        // creditEl.text("");
     }
 
     function showResultContainer() {
         //makes result container visible. First, capture element:
-        var capturedElement = document.getElementById("showMe");
+        var capturedElement = document.getElementById("resultContainerDiv");
         //then make visible:
         capturedElement.style.visibility = "visible";
     }
 
+    function hideResultContainer() {
+        var capturedElement = document.getElementById("resultContainerDiv");
+        capturedElement.style.visibility = "hidden";
+    }
+
 
     inputFields.toArray().forEach(function(element) {
-      // var eachInputEl = $(element);
+        // var eachInputEl = $(element);
 
-      // console.log('eachInputEl', eachInputEl);
-      // console.log('element len', element.length);
-      // for (var i = 0; i < eachInputEl.length; i++) {
-      //   console.log('element loop', eachInputEl[i].value);
-      //
-      //
-      //               if (eachInputEl.value === "") {
-      //                 console.log('found empty element');
-      //                   cashEl.text('');
-      //                 }
-      //               if (element.value !== "") {
-      //                 // console.log('type of', typeof totalCostInCash);
-      //                 // cashEl.text(totalCostInCash);
-      //                 // creditEl.text(totalCostInCredit);
-      //               }
-      // }
+        // console.log('eachInputEl', eachInputEl);
+        // console.log('element len', element.length);
+        // for (var i = 0; i < eachInputEl.length; i++) {
+        //   console.log('element loop', eachInputEl[i].value);
+        //
+        //
+        //               if (eachInputEl.value === "") {
+        //                 console.log('found empty element');
+        //                   cashEl.text('');
+        //                 }
+        //               if (element.value !== "") {
+        //                 // console.log('type of', typeof totalCostInCash);
+        //                 // cashEl.text(totalCostInCash);
+        //                 // creditEl.text(totalCostInCredit);
+        //               }
+        // }
         // console.log('jQuery element', $(element));
+
         //use jQuery to get a reference to the element in array...
+        //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-          console.log('element', element);
-          // var hold = element;
-          // console.log('asdfjkl', hold);
-
-
+            console.log('element', element);
             // formChecker();
-            createResultHeader();
-            // checkIfFormFieldsEmpty();py
-            // console.log('change');
 
+            // if (element.value === "") {
+            //   inputFieldsStatus["cashFieldEmpty"] = true;
+            // }
+            // else {
+            //   inputFieldsStatus["cashFieldEmpty"] = false;
+            // }
+            //
+
+
+            createResultHeader();
+
+            //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
-            var cashPrice = document.getElementById("cashPrice").value;
-            var creditPrice = document.getElementById("creditPrice").value;
-            var bankDiscount = document.getElementById("bankDiscount").value;
-            var gallons = document.getElementById("gallonsNeeded").value;
+            cashPrice = document.getElementById("cashPrice").value;
+            creditPrice = document.getElementById("creditPrice").value;
+            bankDiscount = document.getElementById("bankDiscount").value;
+            gallons = document.getElementById("gallonsNeeded").value;
             //don't delete:
             // console.log('typeof', typeof +cashPrice);
             // console.log('cp', typeof +cashPrice);
             // console.log('true or false', +cashPrice === -2.63);
             // console.log('element', element.value);
             // console.log('element', element.value === "");
-            // cashEl.text('');
 
-
-            //calculations:
-            var totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
-            var totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
-            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
+            //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
+            totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
+            totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
+            totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
             //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
             differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
@@ -188,24 +214,31 @@ var main = function() {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
+
+
             //check if input fields are empty, then result field is empty. otherwise put in the calc. results
-                        if (cashPrice === "" || gallons === "") {
-                          cashEl.text('');
-                        }
-                        else {
-                          cashEl.text(totalCostInCash.toFixed(2));
-                        }
+            if (cashPrice === "" || gallons === "") {
+              cashEl.text('');
+            }
+            else {
+              cashEl.text(totalCostInCash.toFixed(2));
+            }
+            //works, but using ternary operator:
+            // var cashElResult = (cashPrice === "" || gallons === "") ? cashEl.text("") : cashEl.text(totalCostInCash.toFixed(2));
 
-                        if (creditPrice === "" || gallons === "") {
-                          creditEl.text('');
-                        }
-                        else {
-                          creditEl.text(totalCostInCredit.toFixed(2));
-                        }
+            if (creditPrice === "" || gallons === "") {
+                creditEl.text('');
+            } else {
+                creditEl.text(totalCostInCredit.toFixed(2));
+            }
 
-                        // if (cashPrice === "" && creditPrice === "") {
-                        //   // calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
-                        // }
+
+            // var test = (bankDiscount === "") ? creditEl.text('') : ;
+
+
+            // if (cashPrice === "" && creditPrice === "") {
+            //   // calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
+            // }
 
             //
             // function resultTablePushValue() {
@@ -218,8 +251,6 @@ var main = function() {
             // }
             //
 
-
-            //
             // if (element.value === "") {
             //   console.log('found empty element');
             //     cashEl.text('');
@@ -256,11 +287,6 @@ var main = function() {
 
 
 
-
-            //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
-            // calculationResultContainerEl.append("<p>totalCostInCash</p>");
-
-
             //DO NOT delete, useful:
             // console.log('totalCostInCash', totalCostInCash);
             // console.log('totalCostInCredit', totalCostInCredit);
@@ -284,6 +310,7 @@ var main = function() {
         });
     });
 }; ///end of main function:
+
 $(document).ready(main);
 ///end of document ready function
 
@@ -315,6 +342,8 @@ $(document).ready(main);
 
 
 //MORE FEATURES:
+//red border around empty str fields . just becareful, might be obtrusive and annoying.
+//hide result container if all input fields empty.
 //BIGGEST: prevent user entering in stupid # in input
 //either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
 //..occur when it's alwaysgreen. maybe little icons or pics.
@@ -356,12 +385,10 @@ $(document).ready(main);
 
 
 
-//
-
-
-
-
-
+// var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
+// var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
+//It will be 2.72 dollars less if you pay using cash.
+//You will pay 2.72 dollars less if you use cash.
 
 
 //
@@ -494,10 +521,10 @@ $(document).ready(main);
 //         var horzLineBreak = $("<hr>");
 //         calculationResultContainerEl.append(horzLineBreak);
 //         // calculationResultContainerEl.style.visibility = "visible";
-//         // var showMe = document.getElementsByClassName("calculationResultContainer");
+//         // var resultContainerDiv = document.getElementsByClassName("calculationResultContainer");
 //
 //         //makes result container visible. First, capture element:
-//         var capturedElement = document.getElementById("showMe");
+//         var capturedElement = document.getElementById("resultContainerDiv");
 //         //then, show visibility:
 //         capturedElement.style.visibility = "visible";
 //         ///closing of calculate button function:

@@ -11,23 +11,11 @@
     visibility: hidden;
     text-align: center;
 
-
-
     /*DELETE LATER AFTER DEBUGGING*/
 float: left;
-border: 1px solid blue;
+/*max-height: 930px;*/
 
-}
-
-
-body {
-  background-color: #E3E3E3;
-  margin: 2px auto;
-  /*width: 500px;*/
-}
-
-p {
-  text-align: center;
+/*border: 1px solid green;*/
 }
 
 .formFields {
@@ -43,8 +31,18 @@ p {
 /*DELETE LATER AFTER DEBUGGING*/
 float: left;
 
-
 }
+
+body {
+  background-color: #E3E3E3;
+  margin: 2px auto;
+  /*width: 500px;*/
+}
+
+p {
+  text-align: center;
+}
+
 
 h2, h3, p {
   color: rgb(110, 180, 49);
