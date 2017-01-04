@@ -105,7 +105,7 @@ var main = function() {
     }
 
     function pleaseCheckFieldMsg() {
-      calculationResultContainerEl.append(finalMsgEl.text("Please check input fields"));
+      calculationResultContainerEl.append(finalMsgEl.text("Please check input field"));
     }
 
     //you can just create HTML for this, no need for fxn:
@@ -198,6 +198,14 @@ var main = function() {
             bankDiscount = document.getElementById("bankDiscount").value;
             gallons = document.getElementById("gallonsNeeded").value;
 
+                  var cashPriceEl = document.getElementById("cashPrice");
+                  console.log('dinosaur', cashPriceEl);
+                  var creditPriceEl = document.getElementById("creditPrice");
+                  var bankDiscountEl = document.getElementById("bankDiscount");
+                  var gallonsEl = document.getElementById("gallonsNeeded");
+
+
+
             console.log('elementValOninput', element.value);
             console.log('cashPrice inside', cashPrice === "");
 
@@ -226,26 +234,42 @@ var main = function() {
 
             // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
 
+
+            // for (var i = 0; i < inputFields.length; i++) {
+            //   inputFields[i].style.backgroundColor = "tomato";
+            // }
             if (cashPrice === "") {
               cashEl.text('');
+              // cashPriceEl.style.backgroundColor = "red";
+              cashPriceEl.style.border = "thick solid red";
               pleaseCheckFieldMsg();
             }
             else if (creditPrice === "") {
               creditEl.text('');
+              // creditPriceEl.style.border = "thick solid #0000FF";
+              creditPriceEl.style.border = "thick solid red";
               pleaseCheckFieldMsg();
             }
             else if (bankDiscount === "") {
+              bankDiscountEl.style.border = "thick solid red";
               pleaseCheckFieldMsg();
             }
             else if (gallons === "") {
               cashEl.text('');
               creditEl.text('');
+              gallonsEl.style.border = "thick solid red";
               pleaseCheckFieldMsg();
             }
             else {
               cashEl.text(totalCostInCash.toFixed(2));
               creditEl.text(totalCostInCredit.toFixed(2));
               amtSavedFinalMsg();
+              cashPriceEl.style.border = "none";
+              creditPriceEl.style.border = "none";
+              bankDiscountEl.style.border = "none";
+              gallonsEl.style.border = "none";
+
+
             }
 
 
