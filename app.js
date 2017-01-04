@@ -161,7 +161,6 @@ var main = function() {
     // }
     // console.log('jQuery element', $(element));
 
-
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
         console.log('element valueee', element.value);
@@ -169,6 +168,7 @@ var main = function() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
+
 
             // if (element.value === "") {
             //   calculationResultContainerEl.append(finalMsgEl.text("Please check input fields"));
@@ -230,13 +230,15 @@ var main = function() {
               cashEl.text('');
               pleaseCheckFieldMsg();
             }
-            else {
-              cashEl.text(totalCostInCash.toFixed(2));
-              creditEl.text(totalCostInCredit.toFixed(2));
-              amtSavedFinalMsg();
+            else if (creditPrice === "") {
+              creditEl.text('');
+              pleaseCheckFieldMsg();
             }
-
-            if (creditPrice === "") {
+            else if (bankDiscount === "") {
+              pleaseCheckFieldMsg();
+            }
+            else if (gallons === "") {
+              cashEl.text('');
               creditEl.text('');
               pleaseCheckFieldMsg();
             }
@@ -245,6 +247,13 @@ var main = function() {
               creditEl.text(totalCostInCredit.toFixed(2));
               amtSavedFinalMsg();
             }
+
+
+            // else {
+            //   cashEl.text(totalCostInCash.toFixed(2));
+            //   creditEl.text(totalCostInCredit.toFixed(2));
+            //   amtSavedFinalMsg();
+            // }
             // if (gallons === "") {
             //   console.log('gallons', gallons);
             //   cashEl.text('');
