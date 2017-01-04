@@ -25,20 +25,17 @@ var main = function() {
         "allFieldsEmpty": ""
     };
 
-    var testObj = {};
-
-    testObj[0] = 'one';
-    console.log(testObj);
-
+    // var testObj = {};
+    // testObj[0] = 'one';
+    // console.log(testObj);
     // console.log(inputFieldsStatus);
     // inputFieldsStatus["cashFieldEmpty"] = true;
     // console.log(inputFieldsStatus);
-    console.log(inputFieldsStatus[0]);
-
-
+    // console.log(inputFieldsStatus[0]);
     // inputFieldsStatus['new'] = 'hi';
     // inputFieldsStatus['ohne'] = 'sflujkhi';
-    //
+
+
     //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
@@ -49,10 +46,11 @@ var main = function() {
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
     var creditEl = $("#creditTableData");
-    // console.log('test jQuery ', inputFields);
+    console.log('test jQuery ', inputFields.length);
+    console.log('tester', inputFields.toArray().length);
 
     function createResultHeader() {
-        //create the result string ONLY[[[[]]]] if it's empty (first time)
+        //create the result string ONLYif it's empty (first time)
         //we do NOT want the result header created if it already exists
         if (resultHeader === "") {
             console.log('resultHeader is empty, so creating header...');
@@ -78,14 +76,8 @@ var main = function() {
             monentaryConversion = differenceInCentsPositive / 100;
         }
     }
-
     function checkForm(form) {
         console.log('checkForm fxn running...');
-        if (cashPrice === "") {
-            alert("Error: Input is empty!");
-            // form.inputfield.focus();
-            return false;
-        }
         // validation fails if the input has negative sign
         var re = /[-]/;
         // var re = /^[0-9.]+$/;
@@ -106,9 +98,10 @@ var main = function() {
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-        } else {
-            calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
         }
+        // else {
+        //     calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
+        // }
     }
 
     function pleaseCheckFieldMsg() {
@@ -149,32 +142,42 @@ var main = function() {
     }
 
 
+
+    // console.log('eachInputEl', eachInputEl.value);
+
+    // for (var i = 0; i < eachInputEl.length; i++) {
+    //   console.log('element loop', eachInputEl[i].value);
+    //
+    //
+    //               if (eachInputEl.value === "") {
+    //                 console.log('found empty element');
+    //                   cashEl.text('');
+    //                 }
+    //               if (element.value !== "") {
+    //                 // console.log('type of', typeof totalCostInCash);
+    //                 // cashEl.text(totalCostInCash);
+    //                 // creditEl.text(totalCostInCredit);
+    //               }
+    // }
+    // console.log('jQuery element', $(element));
+
+
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
-
-        // console.log('eachInputEl', eachInputEl);
-        // console.log('element len', element.length);
-        // for (var i = 0; i < eachInputEl.length; i++) {
-        //   console.log('element loop', eachInputEl[i].value);
-        //
-        //
-        //               if (eachInputEl.value === "") {
-        //                 console.log('found empty element');
-        //                   cashEl.text('');
-        //                 }
-        //               if (element.value !== "") {
-        //                 // console.log('type of', typeof totalCostInCash);
-        //                 // cashEl.text(totalCostInCash);
-        //                 // creditEl.text(totalCostInCredit);
-        //               }
-        // }
-        // console.log('jQuery element', $(element));
-
+        console.log('element valueee', element.value);
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-            console.log('element', element);
+
+            // if (element.value === "") {
+            //   calculationResultContainerEl.append(finalMsgEl.text("Please check input fields"));
+            // }
+            // else {
+            //   amtSavedFinalMsg();
+            // } // console.log('element len', element.length);
+
+
             // formChecker();
 
             // if (element.value === "") {
@@ -194,6 +197,10 @@ var main = function() {
             creditPrice = document.getElementById("creditPrice").value;
             bankDiscount = document.getElementById("bankDiscount").value;
             gallons = document.getElementById("gallonsNeeded").value;
+
+            console.log('elementValOninput', element.value);
+            console.log('cashPrice inside', cashPrice === "");
+
             //don't delete:
             // console.log('typeof', typeof +cashPrice);
             // console.log('cp', typeof +cashPrice);
@@ -215,25 +222,68 @@ var main = function() {
             differenceInCentsPositive = Math.abs(differenceInCents);
 
 
+            // var test = (bankDiscount === "") ? creditEl.text('') : ;
 
-            //check if input fields are empty, then result field is empty. otherwise put in the calc. results
-            if (cashPrice === "" || gallons === "") {
+            // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
+
+            if (cashPrice === "") {
               cashEl.text('');
+              pleaseCheckFieldMsg();
             }
             else {
               cashEl.text(totalCostInCash.toFixed(2));
-            }
-            //works, but using ternary operator:
-            // var cashElResult = (cashPrice === "" || gallons === "") ? cashEl.text("") : cashEl.text(totalCostInCash.toFixed(2));
-
-            if (creditPrice === "" || gallons === "") {
-                creditEl.text('');
-            } else {
-                creditEl.text(totalCostInCredit.toFixed(2));
+              creditEl.text(totalCostInCredit.toFixed(2));
+              amtSavedFinalMsg();
             }
 
+            if (creditPrice === "") {
+              creditEl.text('');
+              pleaseCheckFieldMsg();
+            }
+            else {
+              cashEl.text(totalCostInCash.toFixed(2));
+              creditEl.text(totalCostInCredit.toFixed(2));
+              amtSavedFinalMsg();
+            }
+            // if (gallons === "") {
+            //   console.log('gallons', gallons);
+            //   cashEl.text('');
+            //   creditEl.text('');
+            //   pleaseCheckFieldMsg();
+            // }
+            // else {
+            //   cashEl.text(totalCostInCash.toFixed(2));
+            //   creditEl.text(totalCostInCredit.toFixed(2));
+            //   amtSavedFinalMsg();
+            // }
+            // if (bankDiscount === "") {
+            //   cashEl.text('');
+            //   creditEl.text('');
+            //   pleaseCheckFieldMsg();
+            // }
+            // else {
+            //   cashEl.text(totalCostInCash.toFixed(2));
+            //   creditEl.text(totalCostInCredit.toFixed(2));
+            //   amtSavedFinalMsg();
+            // }
 
-            // var test = (bankDiscount === "") ? creditEl.text('') : ;
+
+            // //check if input fields are empty, then result field is empty. otherwise put in the calc. results
+            // if (cashPrice === "" || gallons === "") {
+            //   cashEl.text('');
+            // }
+            // else {
+            //   cashEl.text(totalCostInCash.toFixed(2));
+            // }
+            // //works, but using ternary operator:
+            // // var cashElResult = (cashPrice === "" || gallons === "") ? cashEl.text("") : cashEl.text(totalCostInCash.toFixed(2));
+            //
+            // if (creditPrice === "" || gallons === "") {
+            //     creditEl.text('');
+            // } else {
+            //     creditEl.text(totalCostInCredit.toFixed(2));
+            // }
+
 
 
             // if (cashPrice === "" && creditPrice === "") {
@@ -303,7 +353,7 @@ var main = function() {
             // resultTablePushValue();
 
             // console.log('checkForm result', checkForm(cashPrice));
-            amtSavedFinalMsg();
+            // amtSavedFinalMsg();
             //should call visible element very last step when all is fine and dandy:
             showResultContainer();
 
@@ -313,6 +363,18 @@ var main = function() {
 
 $(document).ready(main);
 ///end of document ready function
+
+
+
+
+
+
+
+
+///meeet q:
+//max and maxlength attribute not working, can't prevent user typing
+//modular design.
+
 
 
 /////---------------------NOTES--------------------------------////
@@ -334,6 +396,7 @@ $(document).ready(main);
 //user puts 234235.234. and it will still work wtf
 //can put neg num
 //pressing calcuate > 1 time will not keep result history, and won't show final conclusion msg.
+//limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
 
 
 //Test
@@ -384,6 +447,34 @@ $(document).ready(main);
 
 
 
+
+
+
+
+
+
+
+
+
+// function checkForm(form) {
+//     console.log('checkForm fxn running...');
+//     if (cashPrice === "") {
+//         alert("Error: Input is empty!");
+//         // form.inputfield.focus();
+//         return false;
+//     }
+//     // validation fails if the input has negative sign
+//     var re = /[-]/;
+//     // var re = /^[0-9.]+$/;
+//     var foundNegVal = re.test(cashPrice);
+//     console.log(foundNegVal);
+//     if (foundNegVal === true) {
+//         console.log('check input, you have a negative as a value!');
+//         return false;
+//     }
+//     // // validation was successful
+//     // return true;
+// }
 
 // var msgArray = ['You can save ', monentaryConversion, monentaryUnitString, ' by using ', cashOrCreditString];
 // var msgArray = ['It will be ', monentaryConversion, monentaryUnitString, ' less if you pay using ', cashOrCreditString];
