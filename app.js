@@ -26,6 +26,8 @@ var main = function() {
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
     var creditEl = $("#creditTableData");
+    var creditWDiscEl = $("#creditDiscTableData");
+
     console.log('test jQuery ', inputFields.length);
     console.log('tester', inputFields.toArray().length);
 
@@ -183,6 +185,8 @@ var main = function() {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
+            pluralOrNot();
+
             // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
 
             // for (var i = 0; i < inputFields.length; i++) {
@@ -239,7 +243,6 @@ var main = function() {
             // console.log('type differenceInCents', typeof differenceInCents);
             // console.log('differenceInCentsPositive', differenceInCentsPositive);
 
-            pluralOrNot();
             createHorzLineBreak();
             // checkForm(cashPrice);
             // createTableDynamically();
