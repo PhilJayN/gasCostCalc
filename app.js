@@ -6,8 +6,6 @@
 var main = function() {
     "use strict";
 
-    var priceArray = [];
-    var tableDataArray = [];
     var resultHeader = "";
     var differenceInCents;
     var differenceInCentsPositive;
@@ -17,24 +15,6 @@ var main = function() {
 
     var cashPrice, creditPrice, bankDiscount, gallons;
     var totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount;
-    var inputFieldsStatus = {
-        "cashFieldEmpty": "",
-        "creditFieldEmpty": "",
-        "bankDiscountFieldEmpty": "",
-        "gallonsFieldEmpty": "",
-        "allFieldsEmpty": ""
-    };
-
-    // var testObj = {};
-    // testObj[0] = 'one';
-    // console.log(testObj);
-    // console.log(inputFieldsStatus);
-    // inputFieldsStatus["cashFieldEmpty"] = true;
-    // console.log(inputFieldsStatus);
-    // console.log(inputFieldsStatus[0]);
-    // inputFieldsStatus['new'] = 'hi';
-    // inputFieldsStatus['ohne'] = 'sflujkhi';
-
 
     //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
@@ -76,6 +56,7 @@ var main = function() {
             monentaryConversion = differenceInCentsPositive / 100;
         }
     }
+
     function checkForm(form) {
         console.log('checkForm fxn running...');
         // validation fails if the input has negative sign
@@ -98,14 +79,14 @@ var main = function() {
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+        } else {
+            calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
+            //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
-        // else {
-        //     calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
-        // }
     }
 
     function pleaseCheckFieldMsg() {
-      calculationResultContainerEl.append(finalMsgEl.text("Please check input field"));
+        calculationResultContainerEl.append(finalMsgEl.text("Please check input field"));
     }
 
     //you can just create HTML for this, no need for fxn:
@@ -141,8 +122,6 @@ var main = function() {
         capturedElement.style.visibility = "hidden";
     }
 
-
-
     // console.log('eachInputEl', eachInputEl.value);
 
     // for (var i = 0; i < eachInputEl.length; i++) {
@@ -168,29 +147,7 @@ var main = function() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-
-
-            // if (element.value === "") {
-            //   calculationResultContainerEl.append(finalMsgEl.text("Please check input fields"));
-            // }
-            // else {
-            //   amtSavedFinalMsg();
-            // } // console.log('element len', element.length);
-
-
-            // formChecker();
-
-            // if (element.value === "") {
-            //   inputFieldsStatus["cashFieldEmpty"] = true;
-            // }
-            // else {
-            //   inputFieldsStatus["cashFieldEmpty"] = false;
-            // }
-            //
-
-
             createResultHeader();
-
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             cashPrice = document.getElementById("cashPrice").value;
@@ -198,13 +155,10 @@ var main = function() {
             bankDiscount = document.getElementById("bankDiscount").value;
             gallons = document.getElementById("gallonsNeeded").value;
 
-                  var cashPriceEl = document.getElementById("cashPrice");
-                  console.log('dinosaur', cashPriceEl);
-                  var creditPriceEl = document.getElementById("creditPrice");
-                  var bankDiscountEl = document.getElementById("bankDiscount");
-                  var gallonsEl = document.getElementById("gallonsNeeded");
-
-
+            var cashPriceEl = document.getElementById("cashPrice");
+            var creditPriceEl = document.getElementById("creditPrice");
+            var bankDiscountEl = document.getElementById("bankDiscount");
+            var gallonsEl = document.getElementById("gallonsNeeded");
 
             console.log('elementValOninput', element.value);
             console.log('cashPrice inside', cashPrice === "");
@@ -229,77 +183,38 @@ var main = function() {
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-
-            // var test = (bankDiscount === "") ? creditEl.text('') : ;
-
             // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
-
 
             // for (var i = 0; i < inputFields.length; i++) {
             //   inputFields[i].style.backgroundColor = "tomato";
             // }
             if (cashPrice === "") {
-              cashEl.text('');
-              // cashPriceEl.style.backgroundColor = "red";
-              cashPriceEl.style.border = "thick solid red";
-              pleaseCheckFieldMsg();
+                cashEl.text('');
+                // cashPriceEl.style.backgroundColor = "red";
+                cashPriceEl.style.border = "thick solid red";
+                pleaseCheckFieldMsg();
+            } else if (creditPrice === "") {
+                creditEl.text('');
+                // creditPriceEl.style.border = "thick solid #0000FF";
+                creditPriceEl.style.border = "thick solid red";
+                pleaseCheckFieldMsg();
+            } else if (bankDiscount === "") {
+                bankDiscountEl.style.border = "thick solid red";
+                pleaseCheckFieldMsg();
+            } else if (gallons === "") {
+                cashEl.text('');
+                creditEl.text('');
+                gallonsEl.style.border = "thick solid red";
+                pleaseCheckFieldMsg();
+            } else {
+                cashEl.text(totalCostInCash.toFixed(2));
+                creditEl.text(totalCostInCredit.toFixed(2));
+                amtSavedFinalMsg();
+                cashPriceEl.style.border = "none";
+                creditPriceEl.style.border = "none";
+                bankDiscountEl.style.border = "none";
+                gallonsEl.style.border = "none";
             }
-            else if (creditPrice === "") {
-              creditEl.text('');
-              // creditPriceEl.style.border = "thick solid #0000FF";
-              creditPriceEl.style.border = "thick solid red";
-              pleaseCheckFieldMsg();
-            }
-            else if (bankDiscount === "") {
-              bankDiscountEl.style.border = "thick solid red";
-              pleaseCheckFieldMsg();
-            }
-            else if (gallons === "") {
-              cashEl.text('');
-              creditEl.text('');
-              gallonsEl.style.border = "thick solid red";
-              pleaseCheckFieldMsg();
-            }
-            else {
-              cashEl.text(totalCostInCash.toFixed(2));
-              creditEl.text(totalCostInCredit.toFixed(2));
-              amtSavedFinalMsg();
-              cashPriceEl.style.border = "none";
-              creditPriceEl.style.border = "none";
-              bankDiscountEl.style.border = "none";
-              gallonsEl.style.border = "none";
-
-
-            }
-
-
-            // else {
-            //   cashEl.text(totalCostInCash.toFixed(2));
-            //   creditEl.text(totalCostInCredit.toFixed(2));
-            //   amtSavedFinalMsg();
-            // }
-            // if (gallons === "") {
-            //   console.log('gallons', gallons);
-            //   cashEl.text('');
-            //   creditEl.text('');
-            //   pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   cashEl.text(totalCostInCash.toFixed(2));
-            //   creditEl.text(totalCostInCredit.toFixed(2));
-            //   amtSavedFinalMsg();
-            // }
-            // if (bankDiscount === "") {
-            //   cashEl.text('');
-            //   creditEl.text('');
-            //   pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   cashEl.text(totalCostInCash.toFixed(2));
-            //   creditEl.text(totalCostInCredit.toFixed(2));
-            //   amtSavedFinalMsg();
-            // }
-
 
             // //check if input fields are empty, then result field is empty. otherwise put in the calc. results
             // if (cashPrice === "" || gallons === "") {
@@ -316,60 +231,6 @@ var main = function() {
             // } else {
             //     creditEl.text(totalCostInCredit.toFixed(2));
             // }
-
-
-
-            // if (cashPrice === "" && creditPrice === "") {
-            //   // calculationResultContainerEl.append(finalMsgEl.text("Please put in values in input fields for calculation to start."));
-            // }
-
-            //
-            // function resultTablePushValue() {
-            //     // var creditEl = document.getElementById("creditTotalPush");
-            //     // creditEl.textContent(totalCostInCash);
-            //     // console.log('credit test', credit.textContent);
-            //     // console.log('teddy', totalCostInCash);
-            //     cashEl.text('hi there');
-            //
-            // }
-            //
-
-            // if (element.value === "") {
-            //   console.log('found empty element');
-            //     cashEl.text('');
-            //     creditEl.text('');
-            //   }
-            // if (element.value !== "") {
-            //   console.log('type of', typeof totalCostInCash);
-            //   cashEl.text(totalCostInCash);
-            //   creditEl.text(totalCostInCredit);
-            // }
-            //
-            // function formChecker() {
-            //     var mainFormEls = document.getElementById("mainForm").elements;
-            //     console.log('forms', mainFormEls);
-            //     // console.log('forms', mainFormEls.length);
-            //     for (var i = 0; i < mainFormEls.length; i++) {
-            //         mainFormEls[i];
-            //         // console.log('main form els', mainFormEls[i]);
-            //         console.log('main form els value:', mainFormEls[i].value);
-            //         console.log('main form val blank', mainFormEls[i].value === "");
-            //         if (mainFormEls[i].value === "") {
-            //             console.log('one of the form field is EMPTY!!');
-            //             cashEl.text('blank!');
-            //             cashEl.text('blank!');
-            //         } else {
-            //             // cashEl.text('else');
-            //             // console.log('totalCostInCash', totalCostInCash);
-            //             // cashEl.text(totalCostInCash.toFixed(2));
-            //             // console.log('creditEl', creditEl);
-            //             // creditEl.text(totalCostInCredit.toFixed(2));
-            //         }
-            //     }
-            // }
-
-
-
             //DO NOT delete, useful:
             // console.log('totalCostInCash', totalCostInCash);
             // console.log('totalCostInCredit', totalCostInCredit);
@@ -389,16 +250,11 @@ var main = function() {
             // amtSavedFinalMsg();
             //should call visible element very last step when all is fine and dandy:
             showResultContainer();
-
         });
     });
 }; ///end of main function:
-
 $(document).ready(main);
 ///end of document ready function
-
-
-
 
 
 
@@ -486,7 +342,50 @@ $(document).ready(main);
 
 
 
+// function resultTablePushValue() {
+//     // var creditEl = document.getElementById("creditTotalPush");
+//     // creditEl.textContent(totalCostInCash);
+//     // console.log('credit test', credit.textContent);
+//     // console.log('teddy', totalCostInCash);
+//     cashEl.text('hi there');
+//
+// }
+//
 
+// function formChecker() {
+//     var mainFormEls = document.getElementById("mainForm").elements;
+//     console.log('forms', mainFormEls);
+//     // console.log('forms', mainFormEls.length);
+//     for (var i = 0; i < mainFormEls.length; i++) {
+//         mainFormEls[i];
+//         // console.log('main form els', mainFormEls[i]);
+//         console.log('main form els value:', mainFormEls[i].value);
+//         console.log('main form val blank', mainFormEls[i].value === "");
+//         if (mainFormEls[i].value === "") {
+//             console.log('one of the form field is EMPTY!!');
+//             cashEl.text('blank!');
+//             cashEl.text('blank!');
+//         } else {
+//             // cashEl.text('else');
+//             // console.log('totalCostInCash', totalCostInCash);
+//             // cashEl.text(totalCostInCash.toFixed(2));
+//             // console.log('creditEl', creditEl);
+//             // creditEl.text(totalCostInCredit.toFixed(2));
+//         }
+//     }
+// }
+
+
+
+
+//
+// var inputFieldsStatus = {
+//     "cashFieldEmpty": "",
+//     "creditFieldEmpty": "",
+//     "bankDiscountFieldEmpty": "",
+//     "gallonsFieldEmpty": "",
+//     "allFieldsEmpty": ""
+// };
 
 
 // function checkForm(form) {
