@@ -245,7 +245,13 @@ var main = function() {
             // console.log('checkForm result', checkForm(cashPrice));
             // amtSavedFinalMsg();
             //should call visible element very last step when all is fine and dandy:
+
+
             showResultContainer();
+
+
+
+
         });
     });
 }; ///end of main function:

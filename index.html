@@ -3,16 +3,17 @@
 <!-- The whole point of this app is to see at which point it's cheapert
 to pay with cash or pay with credit that has a reward for buying gas. -->
 <!-- to see whether it's cheaper to pay for gas with cash or credit if and ONLY IF that CC has a bank discount -->
+
 <head>
     <title>ssdfjkl</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-        <article class="example">
-            <form action="index.html" method="post" id="mainForm">
-              <!-- <h2>Info</h2> -->
-                <!-- <ul class="formFields">
+    <article class="example">
+        <form action="index.html" method="post" id="mainForm">
+            <!-- <h2>Info</h2> -->
+            <!-- <ul class="formFields">
                         <li>
                           <label for="cashPrice">Cash Price $</label>
                           <input id="cashPrice" type="number" step="0.01" min="0"  />
@@ -36,69 +37,65 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                 </ul> -->
 
 
+            <ul class="formFields">
+                <h4>Station Price</h4>
+                <li>
+                    <label for="cashPrice">Cash $</label>
+                    <input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
+                    <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
 
+                </li>
 
+                <li>
+                    <label for="creditPrice">Credit $</label>
+                    <input type="number" step="0.01" min="0.01" id="creditPrice" value="2.85" />
+                </li>
 
-                <ul class="formFields">
-                  <p>
-                    Station Price
-                  </p>
-                        <li>
-                          <label for="cashPrice">Cash $</label>
-                          <input type="number" step="0.01" min="0.01" id="cashPrice"  value="2.75" maxlength="3"/>
-                          <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
-
-                        </li>
-
-                        <li>
-                          <label for="creditPrice">Credit $</label>
-                            <input type="number" step="0.01" min="0.01" id="creditPrice" value="2.85" />
-                        </li>
-
-                        <hr>
-                        <p>
+                <hr>
+                <h4>
                           Additional Info
-                        </p>
-                        <li>
-                          <!-- most banks give 1-5% cashback-->
-<!--you CAN put discount to be 0. it just means discount isn't considered at all in calc-->
-                          <label for="bankDiscount">Bank Discount %</label>
-                          <input type="number" step="1" min="0.01" id="bankDiscount" value="3" />
-                        </li>
+                        </h4>
+                <li>
+                    <!-- most banks give 1-5% cashback-->
+                    <!--you CAN put discount to be 0. it just means discount isn't considered at all in calc-->
+                    <label for="bankDiscount">Bank Discount %</label>
+                    <input type="number" step="1" min="0.01" id="bankDiscount" value="3" />
+                </li>
 
-                        <li>
-                          <label for="gallonsNeeded"> Gallons Needed</label>
-                          <input type="number" step="1" min="0.01" id="gallonsNeeded" value="9" />
-                        </li>
+                <li>
+                    <label for="gallonsNeeded"> Gallons Needed</label>
+                    <input type="number" step="1" min="0.01" id="gallonsNeeded" value="9" />
+                </li>
 
-                </ul>
-            </form>
+            </ul>
+        </form>
 
-            <!-- results container: -->
-            <div class="calculationResultContainer" id="resultContainerDiv">
-              <h3>Result</h3>
-              <table>
+        <!-- results container: -->
+        <div class="calculationResultContainer" id="resultContainerDiv">
+            <h4>Total</h4>
+            <table>
                 <tr class="cashRowTitle">
-                  <td>Cash Total $</td>
-                  <td id="cashTableData"></td>
+                    <td>Cash $</td>
+                    <td id="cashTableData"></td>
                 </tr>
                 <tr class="creditRowTitle">
-                  <td>Credit Total $</td>
-                  <td id="creditTableData"></td>
+                    <td>Credit $</td>
+                    <td id="creditTableData"></td>
                 </tr>
                 <tr class="discountInc">
-                  <td>Credit Total Disc. Inc.$</td>
-                  <td id="creditDiscTableData"></td>
+                    <td>Credit w/ </br> Discount $</td>
+                    <td id="creditDiscTableData"></td>
                 </tr>
-              </table>
-              <hr>
-            </div>
+            </table>
+            <hr>
+            <h4>Result</h4>
+        </div>
 
 
-            <!-- turn calc btn into reset buttonn -->
-            <button class="calculateBtn">Calculate</button>
+        <!-- turn calc btn into reset buttonn -->
+        <button class="calculateBtn">Calculate</button>
 
-        </article>
+    </article>
 
 
 
@@ -110,7 +107,6 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
 </body>
 
 </html>
-
 
 
 

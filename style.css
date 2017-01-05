@@ -6,7 +6,9 @@
     border-radius: 5px;
     box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
     padding: 12px;
-    visibility: hidden;
+
+    /*visibility: hidden;*/
+
     text-align: center;
 
     /*DELETE LATER AFTER DEBUGGING*/
@@ -47,9 +49,11 @@ p {
 }
 
 
-h2, h3, p {
+h4 {
   color: rgb(110, 180, 49);
   font-weight: 800;
+  text-align: center;
+
   /*nice orange*/
   /*color: #FFCC00;
   color: #F3A51B;*/
