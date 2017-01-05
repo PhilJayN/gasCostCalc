@@ -1,12 +1,9 @@
 //Dependencies: jQuery
 // -------------------------------------------------------------------------
-// -------------------------------------------------------------------------
-// Main function
-// ------------------------------------------------------------------------
 var main = function() {
     "use strict";
 
-    var resultHeader = "";
+    // var resultHeader = "";
     var differenceInCents;
     var differenceInCentsPositive;
     var cashOrCreditString;
@@ -19,9 +16,9 @@ var main = function() {
     //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
-    var resultTable = $("<table>");
+    // var resultTable = $("<table>");
     var conclusionElement = $("<p>");
-    var headerEl = $("<h3>");
+    // var headerEl = $("<h3>");
     var finalMsgEl = $("<p>");
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
@@ -30,18 +27,6 @@ var main = function() {
 
     console.log('test jQuery ', inputFields.length);
     console.log('tester', inputFields.toArray().length);
-
-    function createResultHeader() {
-        //create the result string ONLYif it's empty (first time)
-        //we do NOT want the result header created if it already exists
-        if (resultHeader === "") {
-            console.log('resultHeader is empty, so creating header...');
-            resultHeader = resultHeader + "Result";
-            // calculationResultContainer.append("<h4>Result</h4>");
-            calculationResultContainerEl.append(headerEl);
-            headerEl.text(resultHeader);
-        }
-    }
 
     function pluralOrNot() {
         if (differenceInCentsPositive <= 1) {
@@ -92,19 +77,6 @@ var main = function() {
         calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start."));
     }
 
-    //you can just create HTML for this, no need for fxn:
-    var horzLineBreak;
-
-    function createHorzLineBreak() {
-        //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
-        //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
-        // console.log('horzLineBreak', horzLineBreak === undefined);
-        if (horzLineBreak === undefined) {
-            horzLineBreak = $("<hr>");
-            calculationResultContainerEl.append(horzLineBreak);
-        }
-    }
-
     function clearNaN_String() {
         console.log('clearNaNString fxn running...');
         //works:
@@ -125,24 +97,9 @@ var main = function() {
         capturedElement.style.visibility = "hidden";
     }
 
-    // console.log('eachInputEl', eachInputEl.value);
-
-    // for (var i = 0; i < eachInputEl.length; i++) {
-    //   console.log('element loop', eachInputEl[i].value);
-    //
-    //
-    //               if (eachInputEl.value === "") {
-    //                 console.log('found empty element');
-    //                   cashEl.text('');
-    //                 }
-    //               if (element.value !== "") {
-    //                 // console.log('type of', typeof totalCostInCash);
-    //                 // cashEl.text(totalCostInCash);
-    //                 // creditEl.text(totalCostInCredit);
-    //               }
-    // }
-    // console.log('jQuery element', $(element));
-
+// function borderResetToNone () {
+//
+// }
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
         console.log('element valueee', element.value);
@@ -150,7 +107,6 @@ var main = function() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-            createResultHeader();
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             cashPrice = document.getElementById("cashPrice").value;
@@ -195,37 +151,67 @@ var main = function() {
             // }
 
 
-
-            // cashPriceEl.style.backgroundColor = "red";
-            if (cashPrice === "") {
-                cashEl.text('');
-                cashPriceEl.style.border = "thick solid red";
-                pleaseCheckFieldMsg();
-            } else if (creditPrice === "") {
-                creditEl.text('');
-                creditWDiscEl.text('');
-                creditPriceEl.style.border = "thick solid red";
-                pleaseCheckFieldMsg();
-            } else if (bankDiscount === "") {
-                creditWDiscEl.text('');
-                bankDiscountEl.style.border = "thick solid red";
-                pleaseCheckFieldMsg();
-            } else if (gallons === "") {
-                cashEl.text('');
-                creditEl.text('');
-                creditWDiscEl.text('');
-                gallonsEl.style.border = "thick solid red";
-                pleaseCheckFieldMsg();
-            } else {
-                cashEl.text(totalCostInCash.toFixed(2));
-                creditEl.text(totalCostInCredit.toFixed(2));
-                creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-                amtSavedFinalMsg();
-                cashPriceEl.style.border = "none";
-                creditPriceEl.style.border = "none";
-                bankDiscountEl.style.border = "none";
-                gallonsEl.style.border = "none";
-            }
+                        // cashPriceEl.style.backgroundColor = "red";
+                        if (cashPrice === "") {
+                            cashEl.text('');
+                            cashPriceEl.style.border = "medium solid tomato";
+                            pleaseCheckFieldMsg();
+                        } else if (creditPrice === "") {
+                            creditEl.text('');
+                            creditWDiscEl.text('');
+                            creditPriceEl.style.border = "medium solid tomato";
+                            pleaseCheckFieldMsg();
+                        } else if (bankDiscount === "") {
+                            creditWDiscEl.text('');
+                            bankDiscountEl.style.border = "medium solid tomato";
+                            pleaseCheckFieldMsg();
+                        } else if (gallons === "") {
+                            cashEl.text('');
+                            creditEl.text('');
+                            creditWDiscEl.text('');
+                            gallonsEl.style.border = "medium solid tomato";
+                            pleaseCheckFieldMsg();
+                        } else {
+                            cashEl.text(totalCostInCash.toFixed(2));
+                            creditEl.text(totalCostInCredit.toFixed(2));
+                            creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                            amtSavedFinalMsg();
+                            cashPriceEl.style.border = "none";
+                            creditPriceEl.style.border = "none";
+                            bankDiscountEl.style.border = "none";
+                            gallonsEl.style.border = "none";
+                        }
+            //
+            // // cashPriceEl.style.backgroundColor = "red";
+            // if (cashPrice === "") {
+            //     cashEl.text('');
+            //     cashPriceEl.style.border = "thick solid red";
+            //     pleaseCheckFieldMsg();
+            // } else if (creditPrice === "") {
+            //     creditEl.text('');
+            //     creditWDiscEl.text('');
+            //     creditPriceEl.style.border = "thick solid red";
+            //     pleaseCheckFieldMsg();
+            // } else if (bankDiscount === "") {
+            //     creditWDiscEl.text('');
+            //     bankDiscountEl.style.border = "thick solid red";
+            //     pleaseCheckFieldMsg();
+            // } else if (gallons === "") {
+            //     cashEl.text('');
+            //     creditEl.text('');
+            //     creditWDiscEl.text('');
+            //     gallonsEl.style.border = "thick solid red";
+            //     pleaseCheckFieldMsg();
+            // } else {
+            //     cashEl.text(totalCostInCash.toFixed(2));
+            //     creditEl.text(totalCostInCredit.toFixed(2));
+            //     creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //     amtSavedFinalMsg();
+            //     cashPriceEl.style.border = "none";
+            //     creditPriceEl.style.border = "none";
+            //     bankDiscountEl.style.border = "none";
+            //     gallonsEl.style.border = "none";
+            // }
 
             // //check if input fields are empty, then result field is empty. otherwise put in the calc. results
             // if (cashPrice === "" || gallons === "") {
@@ -250,7 +236,7 @@ var main = function() {
             // console.log('type differenceInCents', typeof differenceInCents);
             // console.log('differenceInCentsPositive', differenceInCentsPositive);
 
-            createHorzLineBreak();
+            // createHorzLineBreak();
             // checkForm(cashPrice);
             // createTableDynamically();
 
@@ -330,9 +316,52 @@ $(document).ready(main);
 
 
 
+//123
+//
 
 
+// console.log('eachInputEl', eachInputEl.value);
 
+// for (var i = 0; i < eachInputEl.length; i++) {
+//   console.log('element loop', eachInputEl[i].value);
+//
+//
+//               if (eachInputEl.value === "") {
+//                 console.log('found empty element');
+//                   cashEl.text('');
+//                 }
+//               if (element.value !== "") {
+//                 // console.log('type of', typeof totalCostInCash);
+//                 // cashEl.text(totalCostInCash);
+//                 // creditEl.text(totalCostInCredit);
+//               }
+// }
+// console.log('jQuery element', $(element));
+
+// //you can just create HTML for this, no need for fxn:
+// var horzLineBreak;
+// function createHorzLineBreak() {
+//     //ONLY create a horzLineBreak if it doesn't exist.Important to declare horzLineBreak var...
+//     //OUTSIDE this fxn. this way it doesn't reset itself when fxn is called repeatedly
+//     // console.log('horzLineBreak', horzLineBreak === undefined);
+//     if (horzLineBreak === undefined) {
+//         horzLineBreak = $("<hr>");
+//         calculationResultContainerEl.append(horzLineBreak);
+//     }
+// }
+
+    //
+    // function createResultHeader() {
+    //     //create the result string ONLYif it's empty (first time)
+    //     //we do NOT want the result header created if it already exists
+    //     if (resultHeader === "") {
+    //         console.log('resultHeader is empty, so creating header...');
+    //         resultHeader = resultHeader + "Result";
+    //         // calculationResultContainer.append("<h4>Result</h4>");
+    //         calculationResultContainerEl.append(headerEl);
+    //         headerEl.text(resultHeader);
+    //     }
+    // }
 
 
 // function resultTablePushValue() {

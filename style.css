@@ -31,6 +31,11 @@ float: left;
 
 }
 
+/*Disable huge blue border that shows in in Chrome when selecting on input fields*/
+input:focus {
+    outline:none;
+}
+
 body {
   background-color: #E3E3E3;
   margin: 2px auto;
