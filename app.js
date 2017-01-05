@@ -76,7 +76,8 @@ var main = function() {
 
     function amtSavedFinalMsg() {
         //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
-        var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
+        // var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
+        var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less from your total bill if you use ', cashOrCreditString];
         console.log('msgArray', msgArray);
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
@@ -88,7 +89,7 @@ var main = function() {
     }
 
     function pleaseCheckFieldMsg() {
-        calculationResultContainerEl.append(finalMsgEl.text("Please check input field"));
+        calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start."));
     }
 
     //you can just create HTML for this, no need for fxn:
@@ -192,27 +193,33 @@ var main = function() {
             // for (var i = 0; i < inputFields.length; i++) {
             //   inputFields[i].style.backgroundColor = "tomato";
             // }
+
+
+
+            // cashPriceEl.style.backgroundColor = "red";
             if (cashPrice === "") {
                 cashEl.text('');
-                // cashPriceEl.style.backgroundColor = "red";
                 cashPriceEl.style.border = "thick solid red";
                 pleaseCheckFieldMsg();
             } else if (creditPrice === "") {
                 creditEl.text('');
-                // creditPriceEl.style.border = "thick solid #0000FF";
+                creditWDiscEl.text('');
                 creditPriceEl.style.border = "thick solid red";
                 pleaseCheckFieldMsg();
             } else if (bankDiscount === "") {
+                creditWDiscEl.text('');
                 bankDiscountEl.style.border = "thick solid red";
                 pleaseCheckFieldMsg();
             } else if (gallons === "") {
                 cashEl.text('');
                 creditEl.text('');
+                creditWDiscEl.text('');
                 gallonsEl.style.border = "thick solid red";
                 pleaseCheckFieldMsg();
             } else {
                 cashEl.text(totalCostInCash.toFixed(2));
                 creditEl.text(totalCostInCredit.toFixed(2));
+                creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
                 amtSavedFinalMsg();
                 cashPriceEl.style.border = "none";
                 creditPriceEl.style.border = "none";
@@ -281,15 +288,14 @@ $(document).ready(main);
 //and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
 
 //ERROR:
-//prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
-///bank discoiunt can be 0, that's okay. but maybe point out that it defeats purpose of app.
-//whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
+//DONE //prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
+//DONE //whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
 
+//USER input restriction:
+//entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
 //user puts 234235.234. and it will still work wtf
 //can put neg num
-//pressing calcuate > 1 time will not keep result history, and won't show final conclusion msg.
 //limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
-
 
 //Test
 //DONE if more than 99 cents, then it should convert to dollars
@@ -297,45 +303,29 @@ $(document).ready(main);
 
 
 //MORE FEATURES:
-//red border around empty str fields . just becareful, might be obtrusive and annoying.
-//hide result container if all input fields empty.
-//BIGGEST: prevent user entering in stupid # in input
 //either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
 //..occur when it's alwaysgreen. maybe little icons or pics.
-//finalMsg jumps is jerky when going from cents to dollars due to space limitation?
-
 //reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"
 //also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
 //when pressing reset"
-//toggle clear results container!
-//button that clears all calculation, right now refresh is the way.
+
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
-//put gals in table
-//change input fields to look like gas station electronic #
 //if input field empty, or error, focus on box and change color.
 //area to put common bank discounts for various banks: chase 1-5%, boa, discover, etc... maybe a
 //...dropbox menu for these banks.
 
 
-//USER input restriction:
-//entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
-
 //FEATURES - FUTURE if time:
+//change input fields to look like gas station electronic #
 //if bankDiscount input is > 15%, do a description box that says "no bank in existence will give customers more than 15% CB"
 //automatically calculate by using slides instead of pressing calc button.
 //do you like math prompt? if yes, show them calculation
-//kickback points consideration, or other rewards, optional choice for users.
 
 
 //challenges i had to think about:
 //keeping calcuations to only pennies makes calculations consistent,
 //so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
 //then i coiuld convert .3254534534 ` to dollars. `
-
-
-
-
-
 
 
 
