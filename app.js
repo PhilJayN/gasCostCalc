@@ -154,32 +154,32 @@ var main = function() {
                         // cashPriceEl.style.backgroundColor = "red";
                         if (cashPrice === "") {
                             cashEl.text('');
-                            cashPriceEl.style.border = "medium solid tomato";
+                            cashPriceEl.style.border = "thin solid tomato";
                             pleaseCheckFieldMsg();
                         } else if (creditPrice === "") {
                             creditEl.text('');
                             creditWDiscEl.text('');
-                            creditPriceEl.style.border = "medium solid tomato";
+                            creditPriceEl.style.border = "thin solid tomato";
                             pleaseCheckFieldMsg();
                         } else if (bankDiscount === "") {
                             creditWDiscEl.text('');
-                            bankDiscountEl.style.border = "medium solid tomato";
+                            bankDiscountEl.style.border = "thin solid tomato";
                             pleaseCheckFieldMsg();
                         } else if (gallons === "") {
                             cashEl.text('');
                             creditEl.text('');
                             creditWDiscEl.text('');
-                            gallonsEl.style.border = "medium solid tomato";
+                            gallonsEl.style.border = "thin solid tomato";
                             pleaseCheckFieldMsg();
                         } else {
                             cashEl.text(totalCostInCash.toFixed(2));
                             creditEl.text(totalCostInCredit.toFixed(2));
                             creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
                             amtSavedFinalMsg();
-                            cashPriceEl.style.border = "none";
-                            creditPriceEl.style.border = "none";
-                            bankDiscountEl.style.border = "none";
-                            gallonsEl.style.border = "none";
+                            // cashPriceEl.style.border = "none";
+                            // creditPriceEl.style.border = "none";
+                            // bankDiscountEl.style.border = "none";
+                            // gallonsEl.style.border = "none";
                         }
             //
             // // cashPriceEl.style.backgroundColor = "red";
@@ -295,6 +295,7 @@ $(document).ready(main);
 
 
 //MORE FEATURES:
+//change color of "please complete form to tomato."
 //either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
 //..occur when it's alwaysgreen. maybe little icons or pics.
 //reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"

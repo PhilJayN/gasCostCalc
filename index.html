@@ -19,14 +19,18 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                     <label for="cashPrice">Cash</label>
 
 
-                    <span></span><input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
+                    <span>&nbsp;&nbsp;$</span>
+                    <input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
                     <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
 
                 </li>
 
                 <li>
                     <!-- <i class="fa fa-credit-card"></i> -->
-                    <span></span><label for="creditPrice">Credit</label>
+
+                    <label for="creditPrice">Credit</label>
+                    <span>&nbsp;&nbsp;$</span>
+
                     <input type="number" step="0.01" min="0.01" id="creditPrice" value="2.85" />
                 </li>
 
@@ -37,12 +41,16 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                 <li>
                     <!-- most banks give 1-5% cashback-->
                     <!--you CAN put discount to be 0. it just means discount isn't considered at all in calc-->
-                    <label for="bankDiscount">Bank Discount</label>
+                    <label for="bankDiscount">Discount</label>
+                    <span>%</span>
+
                     <input type="number" step="1" min="0.01" id="bankDiscount" value="3" />
                 </li>
 
                 <li>
-                    <label for="gallonsNeeded"> Gallons Needed</label>
+                    <label for="gallonsNeeded"> Gallons</label>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+
                     <input type="number" step="1" min="0.01" id="gallonsNeeded" value="9" />
                 </li>
 

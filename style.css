@@ -5,7 +5,7 @@ body {
   /*border: 1px solid tomato;*/
   /*overflow: auto;*/
   /*width: 500px;*/
-  font-size:16px;
+  font-size: 18px;
 }
 
 article {
@@ -22,9 +22,9 @@ article {
   /*allows form and div, to position themselves in middle:*/
  margin: 5px auto;
   padding: 0 15px;
-  width:190px;
+  width:250px;
   /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
-  height:300px;
+  height:320px;
   /*min-width:200px;
   max-width:540px;
   min-height: 385px;
@@ -36,11 +36,6 @@ article {
      /*text-align: center;*/
 }
 
-/*p {
-  text-align: center;
-  max-width: 160px;
-}*/
-
 h4 {
   color: rgb(110, 180, 49);
   font-weight: 800;
@@ -50,18 +45,57 @@ h4 {
   color: #F3A51B;*/
 }
 
+.formFields li {
+  /*border: 1px solid goldenrod;*/
+  list-style-type:none;
+/*this li element has 2 floated children. this prevents the header under from jumping around:*/
+  overflow: auto;
+
+}
+
+.formFields label{
+  /*background-color:red;*/
+  width: 120px;
+  /*float both input and label elements left so they are closer together, less space in middle:*/
+    float: left;
+    margin-right:6px;
+  /*border: 1px solid blue;*/
+  padding: 3px;
+}
+
 input {
-width: 45px;
-font-size:12px;
-border-radius:2px;
-padding: 1px;
+width: 55px;
+font-size:15px;
+border-radius:5px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+background: #fff;
+border: 1px solid #ccc;
+padding: 3px;
+margin-bottom: 5px;
+outline: none;
+
+/*border: 1px solid green;*/
 /*float both input and label elements left so they are closer together, less space in middle*/
 float:left;
 }
 
+#bankDiscount {
+  width: 57px;
+}
+
+#gallonsNeeded {
+  width: 57px;
+  margin-left: 1px;
+}
+
 /*Disable huge blue border that shows in in Chrome when selecting on input fields*/
 input:focus {
-    /*outline:none;*/
+    /*outline-color:red;*/
+    border: 1px solid #56b4ef;
+    box-shadow: 0px 0px 3px 1px #c8def0;
+    /*border: 1px solid red;*/
+
 }
 
 /*.fa {
@@ -77,22 +111,9 @@ text-align:right;
 }
 
 
-.formFields li {
-  /*border: 1px solid goldenrod;*/
-  list-style-type:none;
-/*this li element has 2 floated children. this prevents the header under from jumping around:*/
-  overflow: auto;
-
-}
-
-
-.formFields label{
-  /*background-color:red;*/
-  width: 110px;
-  /*float both input and label elements left so they are closer together, less space in middle:*/
-    float: left;
-margin-right:6px;
-  /*border: 1px solid blue;*/
+span {
+  float: left;
+  padding: 3px
 }
 
 table{
