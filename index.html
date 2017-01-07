@@ -16,27 +16,28 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
             <ul class="formFields">
                 <h4>Station Price</h4>
                 <li>
-                    <!-- <i class="fa fa-money"></i> -->
-                    <label for="cashPrice">Cash $</label>
-                    <input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
+                    <label for="cashPrice">Cash</label>
+
+
+                    <span></span><input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
                     <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
 
                 </li>
 
                 <li>
                     <!-- <i class="fa fa-credit-card"></i> -->
-                    <label for="creditPrice">Credit $</label>
+                    <span></span><label for="creditPrice">Credit</label>
                     <input type="number" step="0.01" min="0.01" id="creditPrice" value="2.85" />
                 </li>
 
-                <hr>
+                <!-- <hr> -->
                 <h4>
                           Additional Info
                         </h4>
                 <li>
                     <!-- most banks give 1-5% cashback-->
                     <!--you CAN put discount to be 0. it just means discount isn't considered at all in calc-->
-                    <label for="bankDiscount">Bank Discount %</label>
+                    <label for="bankDiscount">Bank Discount</label>
                     <input type="number" step="1" min="0.01" id="bankDiscount" value="3" />
                 </li>
 
@@ -65,7 +66,7 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                     <td id="creditDiscTableData"></td>
                 </tr>
             </table>
-            <hr>
+            <!-- <hr> -->
             <h4>Result</h4>
         </div>
 

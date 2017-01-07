@@ -23,6 +23,8 @@ article {
  margin: 5px auto;
   padding: 0 15px;
   width:190px;
+  /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
+  height:300px;
   /*min-width:200px;
   max-width:540px;
   min-height: 385px;
@@ -51,13 +53,15 @@ h4 {
 input {
 width: 45px;
 font-size:12px;
-border-radius:1px;
-/*padding: 0px;*/
+border-radius:2px;
+padding: 1px;
+/*float both input and label elements left so they are closer together, less space in middle*/
+float:left;
 }
 
 /*Disable huge blue border that shows in in Chrome when selecting on input fields*/
 input:focus {
-    outline:none;
+    /*outline:none;*/
 }
 
 /*.fa {
@@ -66,7 +70,7 @@ input:focus {
 
 ul {
   padding:0;
-text-align:center;
+text-align:right;
 /*margin: auto;*/
   /*border: 1px solid cyan;*/
 /*margin: auto;*/
@@ -76,18 +80,24 @@ text-align:center;
 .formFields li {
   /*border: 1px solid goldenrod;*/
   list-style-type:none;
+/*this li element has 2 floated children. this prevents the header under from jumping around:*/
+  overflow: auto;
 
 }
 
 
 .formFields label{
   /*background-color:red;*/
-  width: 120px;
-  float: left;
+  width: 110px;
+  /*float both input and label elements left so they are closer together, less space in middle:*/
+    float: left;
+margin-right:6px;
   /*border: 1px solid blue;*/
 }
 
-
+table{
+  text-align:right;
+}
 
 
 
