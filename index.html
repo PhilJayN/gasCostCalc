@@ -3,6 +3,7 @@
 <!-- The whole point of this app is to see at which point it's cheapert
 to pay with cash or pay with credit that has a reward for buying gas. -->
 <!-- to see whether it's cheaper to pay for gas with cash or credit if and ONLY IF that CC has a bank discount -->
+<!--to see whether it would cost less to pay for gas with cash or with credit card that has cashback.-->
 
 <head>
     <title>gas</title>
@@ -18,7 +19,7 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                 <li>
                     <label for="cashPrice">Cash</label>
 
-
+                    <!--The dollar sign takes up more pixel space, so need to use &nbsp; for whitespace-->
                     <span>&nbsp;&nbsp;$</span>
                     <input type="number" step="0.01" min="0.01" id="cashPrice" value="2.75" maxlength="3" />
                     <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
@@ -44,7 +45,7 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
                     <label for="bankDiscount">Discount</label>
                     <span>%</span>
 
-                    <input type="number" step="1" min="0.01" id="bankDiscount" value="3" />
+                    <input type="number" step=".01" min="0.01" id="bankDiscount" value="3" />
                 </li>
 
                 <li>

@@ -106,7 +106,7 @@ var main = function() {
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
-        $(element).on("input", function() {
+        $(element).on("change", function() {
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             cashPrice = document.getElementById("cashPrice").value;
