@@ -11,6 +11,7 @@ var main = function() {
     var monentaryConversion;
 
     var cashPrice, creditPrice, bankDiscount, gallons;
+    var cashPriceEl, creditPriceEl, bankDiscountEl, gallonsEl;
     var totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount;
 
     //make sure to append some of these to the DOM, otherwise they will dangle
@@ -97,6 +98,34 @@ var main = function() {
         capturedElement.style.visibility = "hidden";
     }
 
+
+
+        function testFormChecker() {
+            var mainFormEls = document.getElementById("mainForm").elements;
+            console.log('forms', mainFormEls.length);
+            for (var i = 0; i < mainFormEls.length; i++) {
+                mainFormEls[i];
+                // console.log('main form els', mainFormEls[i]);
+                console.log('main form els value:', mainFormEls[i].value);
+                console.log('main form val blank', mainFormEls[i].value === "");
+                if (mainFormEls[i].value === "") {
+                    console.log('one of the form field is EMPTY!!');
+                    cashEl.text('blank!');
+                    cashEl.text('blank!');
+                } else {
+                  console.log('all good!');
+                    // cashEl.text('else');
+                    // console.log('totalCostInCash', totalCostInCash);
+                    // cashEl.text(totalCostInCash.toFixed(2));
+                    // console.log('creditEl', creditEl);
+                    // creditEl.text(totalCostInCredit.toFixed(2));
+                }
+              }
+
+        }
+
+
+
 // function borderResetToNone () {
 //
 // }
@@ -106,7 +135,9 @@ var main = function() {
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
-        $(element).on("change", function() {
+        $(element).on("input", function() {
+          console.log('testFormChecker', testFormChecker);
+
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
             cashPrice = document.getElementById("cashPrice").value;
@@ -114,10 +145,15 @@ var main = function() {
             bankDiscount = document.getElementById("bankDiscount").value;
             gallons = document.getElementById("gallonsNeeded").value;
 
-            var cashPriceEl = document.getElementById("cashPrice");
-            var creditPriceEl = document.getElementById("creditPrice");
-            var bankDiscountEl = document.getElementById("bankDiscount");
-            var gallonsEl = document.getElementById("gallonsNeeded");
+            // var cashPriceEl = document.getElementById("cashPrice");
+            // var creditPriceEl = document.getElementById("creditPrice");
+            // var bankDiscountEl = document.getElementById("bankDiscount");
+            // var gallonsEl = document.getElementById("gallonsNeeded");
+
+            cashPriceEl = document.getElementById("cashPrice");
+            creditPriceEl = document.getElementById("creditPrice");
+            bankDiscountEl = document.getElementById("bankDiscount");
+            gallonsEl = document.getElementById("gallonsNeeded");
 
             console.log('elementValOninput', element.value);
             console.log('cashPrice inside', cashPrice === "");
@@ -150,37 +186,133 @@ var main = function() {
             //   inputFields[i].style.backgroundColor = "tomato";
             // }
 
+            //
+            //
+            // function setBorder(element) {
+            //   cashPriceEl.style.border = "1px solid #79c822";
+            // }
 
-                        // cashPriceEl.style.backgroundColor = "red";
-                        if (cashPrice === "") {
-                            cashEl.text('');
-                            cashPriceEl.style.border = "thin solid tomato";
-                            pleaseCheckFieldMsg();
-                        } else if (creditPrice === "") {
-                            creditEl.text('');
-                            creditWDiscEl.text('');
-                            creditPriceEl.style.border = "thin solid tomato";
-                            pleaseCheckFieldMsg();
-                        } else if (bankDiscount === "") {
-                            creditWDiscEl.text('');
-                            bankDiscountEl.style.border = "thin solid tomato";
-                            pleaseCheckFieldMsg();
-                        } else if (gallons === "") {
-                            cashEl.text('');
-                            creditEl.text('');
-                            creditWDiscEl.text('');
-                            gallonsEl.style.border = "thin solid tomato";
-                            pleaseCheckFieldMsg();
-                        } else {
-                            cashEl.text(totalCostInCash.toFixed(2));
-                            creditEl.text(totalCostInCredit.toFixed(2));
-                            creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-                            amtSavedFinalMsg();
-                            // cashPriceEl.style.border = "none";
-                            // creditPriceEl.style.border = "none";
-                            // bankDiscountEl.style.border = "none";
-                            // gallonsEl.style.border = "none";
-                        }
+
+
+                    function testFormChecker() {
+                        var mainFormEls = document.getElementById("mainForm").elements;
+                        console.log('forms', mainFormEls.length);
+                                  console.log('forms el', mainFormEls[2].value);
+               for (var i = 0; i < mainFormEls.length; i++) {
+                console.log('iterate els:', mainFormEls[i]);
+                 if (mainFormEls[i].value === "") {
+                 mainFormEls[i].style.border = "thin solid cyan";
+                 }
+                 else {
+                 mainFormEls[i].style.border = "thin solid black";
+
+                 }
+               }
+             }
+               testFormChecker();
+
+
+
+
+
+
+
+
+
+
+            // function validateForm () {
+            //   console.log('cashPriceEl should be', cashPriceEl);
+            //   // cashPriceEl.style.backgroundColor = "red";
+            //   if (cashPriceEl.value === "") {
+            //     console.log('this lthis this', this);
+            //       cashEl.text('');
+            //       cashPriceEl.style.border = "thin solid tomato";
+            //       pleaseCheckFieldMsg();
+            //     }
+            //     // else if (cashPriceEl !== ""){
+            //     //       cashEl.text(totalCostInCash.toFixed(2));
+            //     //       amtSavedFinalMsg();
+            //     //       cashPriceEl.style.border = "1px solid #79c822";
+            //     //       // creditPriceEl.style.border = "none";
+            //     //       // bankDiscountEl.style.border = "none";
+            //     //       // gallonsEl.style.border = "none";
+            //     // }
+            //
+            //
+            //
+            //
+            //     // if (creditPriceEl.value === "") {
+            //
+            //     //     creditEl.text('');
+            //     //     creditWDiscEl.text('');
+            //     //     creditPriceEl.style.border = "1px solid tomato";
+            //     //     pleaseCheckFieldMsg();
+            //     //   }
+            //     //
+            //     //
+            //     //   else if (creditPriceEl !== ""){
+            //     //         creditEl.text(totalCostInCredit.toFixed(2));
+            //     //         creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //     //
+            //     //         amtSavedFinalMsg();
+            //     //         creditPriceEl.style.border = "1px solid #79c822";
+            //     //         // creditPriceEl.style.border = "none";
+            //     //         // bankDiscountEl.style.border = "none";
+            //     //         // gallonsEl.style.border = "none";
+            //     //   }
+            //
+            //
+            //     // else if (cashPriceEl.value !== "") {
+            //     //       cashEl.text(totalCostInCash.toFixed(2));
+            //     //       amtSavedFinalMsg();
+            //     //       cashPriceEl.style.border = "1px solid #79c822";
+            //     //       // creditPriceEl.style.border = "none";
+            //     //       // bankDiscountEl.style.border = "none";
+            //     //       // gallonsEl.style.border = "none";
+            //     // }
+            //
+            //
+            //               // }
+            //
+            //   // else if (bankDiscount === "") {
+            //   //     creditWDiscEl.text('');
+            //   //     bankDiscountEl.style.border = "thin solid tomato";
+            //   //     pleaseCheckFieldMsg();
+            //   // } else if (gallons === "") {
+            //   //     cashEl.text('');
+            //   //     creditEl.text('');
+            //   //     creditWDiscEl.text('');
+            //   //     gallonsEl.style.border = "thin solid tomato";
+            //   //     pleaseCheckFieldMsg();
+            //   // } else {
+            //   //     cashEl.text(totalCostInCash.toFixed(2));
+            //   //     creditEl.text(totalCostInCredit.toFixed(2));
+            //   //     creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //   //     amtSavedFinalMsg();
+            //   //     // cashPriceEl.style.border = "none";
+            //   //     // creditPriceEl.style.border = "none";
+            //   //     // bankDiscountEl.style.border = "none";
+            //   //     // gallonsEl.style.border = "none";
+            //   // }
+            //
+            // }
+
+
+            // validateForm();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //
             // // cashPriceEl.style.backgroundColor = "red";
             // if (cashPrice === "") {
