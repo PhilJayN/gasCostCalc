@@ -100,35 +100,35 @@ var main = function() {
 
 
 
-        function testFormChecker() {
-            var mainFormEls = document.getElementById("mainForm").elements;
-            console.log('forms', mainFormEls.length);
-            for (var i = 0; i < mainFormEls.length; i++) {
-                mainFormEls[i];
-                // console.log('main form els', mainFormEls[i]);
-                console.log('main form els value:', mainFormEls[i].value);
-                console.log('main form val blank', mainFormEls[i].value === "");
-                if (mainFormEls[i].value === "") {
-                    console.log('one of the form field is EMPTY!!');
-                    cashEl.text('blank!');
-                    cashEl.text('blank!');
-                } else {
-                  console.log('all good!');
-                    // cashEl.text('else');
-                    // console.log('totalCostInCash', totalCostInCash);
-                    // cashEl.text(totalCostInCash.toFixed(2));
-                    // console.log('creditEl', creditEl);
-                    // creditEl.text(totalCostInCredit.toFixed(2));
-                }
-              }
-
+    function testFormChecker() {
+        var mainFormEls = document.getElementById("mainForm").elements;
+        console.log('forms', mainFormEls.length);
+        for (var i = 0; i < mainFormEls.length; i++) {
+            mainFormEls[i];
+            // console.log('main form els', mainFormEls[i]);
+            console.log('main form els value:', mainFormEls[i].value);
+            console.log('main form val blank', mainFormEls[i].value === "");
+            if (mainFormEls[i].value === "") {
+                console.log('one of the form field is EMPTY!!');
+                cashEl.text('blank!');
+                cashEl.text('blank!');
+            } else {
+                console.log('all good!');
+                // cashEl.text('else');
+                // console.log('totalCostInCash', totalCostInCash);
+                // cashEl.text(totalCostInCash.toFixed(2));
+                // console.log('creditEl', creditEl);
+                // creditEl.text(totalCostInCredit.toFixed(2));
+            }
         }
 
+    }
 
 
-// function borderResetToNone () {
-//
-// }
+
+    // function borderResetToNone () {
+    //
+    // }
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
         console.log('element valueee', element.value);
@@ -136,7 +136,7 @@ var main = function() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-          console.log('testFormChecker', testFormChecker);
+            // console.log('elemente!!!', element);
 
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
@@ -180,6 +180,129 @@ var main = function() {
 
             pluralOrNot();
 
+
+
+                        var cashInputField = {
+                          cashEl : document.getElementById("cashPrice"),
+                          valueEmpty : false,
+
+                          setEmpty : function() {
+                            this.valueEmpty = true;
+                          },
+
+                          setFull : function() {
+                            this.valueEmpty = false;
+                          },
+
+                          init : function() {
+                            if (this.cashEl.value === "") {
+                              this.setEmpty();
+                            }
+                            else {
+                              this.setFull();
+                            }
+                          }
+                          // isNotEmpty = function() {
+                          //   this.valueEmpty = false;
+                          // }
+                        };
+                        cashInputField.init();
+
+                        console.log('testing CASH value', cashInputField.cashEl.value);
+
+                        if (cashInputField.valueEmpty === true) {
+                          cashPriceEl.style.border = "1px solid tomato";
+                          pleaseCheckFieldMsg();
+                        }
+                        else {
+                          cashPriceEl.style.border = "1px solid blue";
+                          amtSavedFinalMsg();
+                        }
+
+
+            // console.log('element val', element.value);
+            // if (element.value === "") {
+            //   // element.style.backgroundColor = "tomato";
+            //   element.style.border = "1px solid red";
+            //                         cashEl.text("asdjkl");
+            //                         creditEl.text("234rjk");
+            //                         creditWDiscEl.text("uio");
+            //                         pleaseCheckFieldMsg();
+            // }
+
+
+            ///IN PROGRESS:
+            // if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
+            //   element.style.border = "1px solid red";
+            //   pleaseCheckFieldMsg();
+            // }
+            //
+            // else if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
+            //
+            //     element.style.border = "1px solid red";
+            //     cashEl.text("asdjkl");
+            //     creditEl.text("234rjk");
+            //     creditWDiscEl.text("uio");
+            //     pleaseCheckFieldMsg();
+            // }
+            // else {
+            //   element.style.border = "1px solid blue";
+            //   amtSavedFinalMsg();
+            //
+            // }
+
+            //
+            // else if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
+            //     element.style.border = "1px solid red";
+            //     cashEl.text("asdjkl");
+            //     creditEl.text("234rjk");
+            //     creditWDiscEl.text("uio");
+            //     pleaseCheckFieldMsg();
+            // }
+            //
+            // else {
+            //     element.style.border = "1px solid blue";
+            //
+            //     amtSavedFinalMsg();
+            // }
+
+            // if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+            //     element.style.border = "1px solid blue";
+            //                           // cashEl.text("asdjkl");
+            //                           // creditEl.text("234rjk");
+            //                           // creditWDiscEl.text("uio");
+            //                           amtSavedFinalMsg();
+            //
+            //   }
+            //
+
+
+
+            //
+            // // console.log('element val', element.value);
+            // if (element.value === "") {
+            //   // element.style.backgroundColor = "tomato";
+            //   element.style.border = "1px solid red";
+            //                         cashEl.text("asdjkl");
+            //                         creditEl.text("234rjk");
+            //                         creditWDiscEl.text("uio");
+            //                         pleaseCheckFieldMsg();
+            // }
+            // else {
+            //   if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+            //     element.style.border = "1px solid blue";
+            //                           // cashEl.text("asdjkl");
+            //                           // creditEl.text("234rjk");
+            //                           // creditWDiscEl.text("uio");
+            //                           amtSavedFinalMsg();
+            //
+            //   }
+            //
+            //
+            // }
+
+
+
             // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
 
             // for (var i = 0; i < inputFields.length; i++) {
@@ -194,26 +317,93 @@ var main = function() {
 
 
 
-                    function testFormChecker() {
-                        var mainFormEls = document.getElementById("mainForm").elements;
-                        console.log('forms', mainFormEls.length);
-                                  console.log('forms el', mainFormEls[2].value);
-               for (var i = 0; i < mainFormEls.length; i++) {
-                console.log('iterate els:', mainFormEls[i]);
-                 if (mainFormEls[i].value === "") {
-                 mainFormEls[i].style.border = "thin solid cyan";
-                 }
-                 else {
-                 mainFormEls[i].style.border = "thin solid black";
-
-                 }
-               }
-             }
-               testFormChecker();
 
 
 
 
+
+            //
+            // function checkFormForBlank() {
+            //     var mainFormEls = document.getElementById("mainForm").elements;
+            //     // console.log('forms', mainFormEls.length);
+            //     // console.log('forms el', mainFormEls[2].value);
+            //     for (var i = 0; i < mainFormEls.length; i++) {
+            //         console.log('iterate els:', mainFormEls[i]);
+            //         if (mainFormEls[i].value === "") {
+            //             mainFormEls[i].style.border = "thin solid tomato";
+            //             // cashEl.text("asdjkl");
+            //             //                     creditEl.text("234rjk");
+            //             //                     creditWDiscEl.text("uio");
+            //                                 pleaseCheckFieldMsg();
+            //         }
+            //     }
+            // }
+            //
+            // function restoreFormFields() {
+            //   var mainFormEls = document.getElementById("mainForm").elements;
+            //   for (var i = 0; i < mainFormEls.length; i++) {
+            //       console.log('iterate els:', mainFormEls[i]);
+            //
+            //                if (mainFormEls[i].value !== "") {
+            //                   mainFormEls[i].style.border = "1px solid #ccc";
+            //                         cashEl.text(totalCostInCash.toFixed(2));
+            //                         creditEl.text(totalCostInCredit.toFixed(2));
+            //                         creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //                         amtSavedFinalMsg();
+            //               }
+            //
+            //   }
+            //
+            // }
+            // checkFormForBlank();
+            // restoreFormFields();
+
+
+
+
+
+
+
+
+
+            // else if (mainFormEls[i].value !== "")  {
+            //     mainFormEls[i].style.border = "thin solid black";
+            //     amtSavedFinalMsg();
+            //
+            // }
+
+
+
+
+            //
+            //  function formValidator() {
+            //      var mainFormEls = document.getElementById("mainForm").elements;
+            //      console.log('forms', mainFormEls);
+            //      for (var i = 0; i < mainFormEls.length; i++) {
+            //          console.log('iterate els:', mainFormEls[i]);
+            //          // console.log('one');
+            //          // console.log('two');
+            //
+            //              if (mainFormEls[i] === "") {
+            //                 mainFormEls[i].style.border = "1px solid tomato";
+            //                       cashEl.text("asdjkl");
+            //                       creditEl.text("234rjk");
+            //                       creditWDiscEl.text("uio");
+            //                       pleaseCheckFieldMsg();
+            //             }
+            //         //
+            //        //   if (mainFormEls[i] !== "") {
+            //        //      mainFormEls[i].style.border = "1px solid #ccc";
+            //        //            cashEl.text(totalCostInCash.toFixed(2));
+            //        //            creditEl.text(totalCostInCredit.toFixed(2));
+            //        //            creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //        //            amtSavedFinalMsg();
+            //        //  }
+            //
+            //      }
+            //
+            //  }
+            //  formValidator();
 
 
 
@@ -299,11 +489,6 @@ var main = function() {
 
 
             // validateForm();
-
-
-
-
-
 
 
 
@@ -489,18 +674,18 @@ $(document).ready(main);
 //     }
 // }
 
-    //
-    // function createResultHeader() {
-    //     //create the result string ONLYif it's empty (first time)
-    //     //we do NOT want the result header created if it already exists
-    //     if (resultHeader === "") {
-    //         console.log('resultHeader is empty, so creating header...');
-    //         resultHeader = resultHeader + "Result";
-    //         // calculationResultContainer.append("<h4>Result</h4>");
-    //         calculationResultContainerEl.append(headerEl);
-    //         headerEl.text(resultHeader);
-    //     }
-    // }
+//
+// function createResultHeader() {
+//     //create the result string ONLYif it's empty (first time)
+//     //we do NOT want the result header created if it already exists
+//     if (resultHeader === "") {
+//         console.log('resultHeader is empty, so creating header...');
+//         resultHeader = resultHeader + "Result";
+//         // calculationResultContainer.append("<h4>Result</h4>");
+//         calculationResultContainerEl.append(headerEl);
+//         headerEl.text(resultHeader);
+//     }
+// }
 
 
 // function resultTablePushValue() {
