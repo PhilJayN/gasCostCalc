@@ -210,14 +210,178 @@ var main = function() {
 
                         console.log('testing CASH value', cashInputField.cashEl.value);
 
-                        if (cashInputField.valueEmpty === true) {
-                          cashPriceEl.style.border = "1px solid tomato";
-                          pleaseCheckFieldMsg();
-                        }
-                        else {
-                          cashPriceEl.style.border = "1px solid blue";
-                          amtSavedFinalMsg();
-                        }
+                        var creditInputField = {
+                          creditEl : document.getElementById("creditPrice"),
+                          valueEmpty : false,
+
+                          setEmpty : function() {
+                            this.valueEmpty = true;
+                          },
+
+                          setFull : function() {
+                            this.valueEmpty = false;
+                          },
+
+                          init : function() {
+                            if (this.creditEl.value === "") {
+                              this.setEmpty();
+                            }
+                            else {
+                              this.setFull();
+                            }
+                          }
+                          // isNotEmpty = function() {
+                          //   this.valueEmpty = false;
+                          // }
+                        };
+                        creditInputField.init();
+
+
+
+                        // if (cashInputField.valueEmpty === true && creditInputField === true) {
+                        //   cashPriceEl.style.border = "1px solid tomato";
+                        //   creditPriceEl.style.border = "1px solid tomato";
+                        //   pleaseCheckFieldMsg();
+                        // }
+
+
+                        //
+                        function dangerBorderAll() {
+                            var mainFormEls = document.getElementById("mainForm").elements;
+                            // console.log('forms', mainFormEls.length);
+                            // console.log('forms el', mainFormEls[2].value);
+                            for (var i = 0; i < mainFormEls.length; i++) {
+                                console.log('iterate els:', mainFormEls[i]);
+
+                                  mainFormEls[i].style.border = "thin solid tomato";
+                                    // cashEl.text("asdjkl");
+                                    //                     creditEl.text("234rjk");
+                                    //                     creditWDiscEl.text("uio");
+                                }
+                            }
+
+                            function clearBorder() {
+                                var mainFormEls = document.getElementById("mainForm").elements;
+                                // console.log('forms', mainFormEls.length);
+                                // console.log('forms el', mainFormEls[2].value);
+                                for (var i = 0; i < mainFormEls.length; i++) {
+                                      mainFormEls[i].style.border = "thin solid yellow";
+                                        // cashEl.text("asdjkl");
+                                        //                     creditEl.text("234rjk");
+                                        //                     creditWDiscEl.text("uio");
+                                    }
+                                }
+
+
+
+
+                                if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
+                                  dangerBorderAll();
+                                  pleaseCheckFieldMsg();
+                                }
+                                if (cashPrice === "") {
+                                    cashPriceEl.style.border = "1px solid tomato";
+                                    pleaseCheckFieldMsg();
+                                }
+                                else {
+                                  cashPriceEl.style.border = "1px solid blue";
+                                }
+
+                                if (creditPrice === "") {
+                                    creditPriceEl.style.border = "1px solid tomato";
+                                    pleaseCheckFieldMsg();
+                                }
+                                else {
+                                  creditPriceEl.style.border = "1px solid blue";
+                                }
+                                if (bankDiscount === "") {
+                                    bankDiscountEl.style.border = "1px solid tomato";
+                                    pleaseCheckFieldMsg();
+                                }
+                                else {
+                                  bankDiscountEl.style.border = "1px solid blue";
+                                }
+                                if (gallons === "") {
+                                    gallonsEl.style.border = "1px solid tomato";
+                                    pleaseCheckFieldMsg();
+                                }
+                                else {
+                                  gallonsEl.style.border = "1px solid blue";
+                                }
+
+                                if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+                                    element.style.border = "1px solid blue";
+                                                          // cashEl.text("asdjkl");
+                                                          // creditEl.text("234rjk");
+                                                          // creditWDiscEl.text("uio");
+                                                          amtSavedFinalMsg();
+
+                                  }
+
+
+
+                        // if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
+                        //   dangerBorderAll();
+                        //   pleaseCheckFieldMsg();
+                        // }
+                        // if (cashPrice === "") {
+                        //     cashPriceEl.style.border = "1px solid tomato";
+                        //     pleaseCheckFieldMsg();
+                        // }
+                        // else {
+                        //   cashPriceEl.style.border = "1px solid blue";
+                        //   amtSavedFinalMsg();
+                        // }
+                        //
+                        // if (creditPrice === "") {
+                        //     creditPriceEl.style.border = "1px solid tomato";
+                        //     pleaseCheckFieldMsg();
+                        // }
+                        // else {
+                        //   creditPriceEl.style.border = "1px solid blue";
+                        //   amtSavedFinalMsg();
+                        // }
+                        // if (bankDiscount === "") {
+                        //     bankDiscountEl.style.border = "1px solid tomato";
+                        //     pleaseCheckFieldMsg();
+                        // }
+                        // else {
+                        //   bankDiscountEl.style.border = "1px solid blue";
+                        //   amtSavedFinalMsg();
+                        // }
+                        // if (gallons === "") {
+                        //     gallonsEl.style.border = "1px solid tomato";
+                        //     pleaseCheckFieldMsg();
+                        // }
+                        // else {
+                        //   gallonsEl.style.border = "1px solid blue";
+                        //   amtSavedFinalMsg();
+                        // }
+
+                        // else if () {
+                        //
+                        // }
+
+
+                        // else {
+                        //   element.style.border = "1px solid blue";
+                        //
+                        // }
+                        // else if (element.value === "") {
+                        //   element.style.border = "1px solid tomato";
+                        // }
+
+                        // else if (cashInputField.valueEmpty === true || creditInputField === true) {
+                        //   cashPriceEl.style.border = "1px solid tomato";
+                        //   creditPriceEl.style.border = "1px solid tomato";
+                        //   pleaseCheckFieldMsg();
+                        // }
+                        // else {
+                        //   cashPriceEl.style.border = "1px solid blue";
+                        //   creditPriceEl.style.border = "1px solid blue";
+                        //
+                        //   amtSavedFinalMsg();
+                        // }
 
 
             // console.log('element val', element.value);
