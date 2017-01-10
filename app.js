@@ -132,18 +132,78 @@ var main = function() {
 
     }
 
+    function limitInput(inputField, inputCount, inputMaxLen) {
 
 
-    // function borderResetToNone () {
-    //
-    // }
+    }
+
+//     function limitInput() {
+//         var mainFormEls = document.getElementById("mainForm").elements;
+//         // console.log('forms', mainFormEls.length);
+//         // console.log('forms el', mainFormEls[2].value);
+//         for (var i = 0; i < mainFormEls.length; i++) {
+//             // console.log('iterate els:', mainFormEls[i]);
+// if (mainFormEls[i].value.length > 4) {
+//   mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
+//
+// }
+//
+//             // mainFormEls[i].style.border = "thin solid tomato";
+//         }
+//     }
+
+function oldValues () {
+  var oldValues = [];
+}
+
+function limitInput() {
+    var mainFormEls = document.getElementById("mainForm").elements;
+    // console.log('forms', mainFormEls.length);
+    // console.log('forms el', mainFormEls[2].value);
+    var oldValue = [];
+    console.log('limit inpu mainFormEls', mainFormEls[0].value);
+    for (var i = 0; i < mainFormEls.length; i++) {
+        // console.log('iterate els:', mainFormEls[i]);
+          // oldValue = parseFloat(mainFormEls[i].value);
+          // if (oldValue < .02 || oldValue > 40) {
+          //     mainFormEls[i].value = oldValue;
+          //
+          // }
+          var currentVal = parseFloat(mainFormEls[i].value);
+          console.log('currentVal', currentVal);
+
+  if (parseFloat(mainFormEls[i].value) <= 0 || parseFloat(mainFormEls[i].value) > 40 ) {
+  // mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
+  mainFormEls[i].value = testArr;
+  //msg to user max # reached.
+
+}
+
+        // mainFormEls[i].style.border = "thin solid tomato";
+    }
+}
+
+
+var testArr ;
+
+
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
-        console.log('element valueee', element.value);
+        $(element).on("keydown", function() {
+
+          testArr = element.value;
+
+          console.log('before input val', testArr);
+
+        });
+        // console.log('element valueee arr', testArr);
+
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
+
+          limitInput();
             // console.log('elemente!!!', element);
 
             //put these variables here so that the values changes everytime input fields change.
@@ -163,8 +223,8 @@ var main = function() {
             bankDiscountEl = document.getElementById("bankDiscount");
             gallonsEl = document.getElementById("gallonsNeeded");
 
-            console.log('elementValOninput', element.value);
-            console.log('cashPrice inside', cashPrice === "");
+            // console.log('elementValOninput', element.value);
+            // console.log('cashPrice inside', cashPrice === "");
 
             //don't delete:
             // console.log('typeof', typeof +cashPrice);
