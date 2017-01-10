@@ -272,24 +272,37 @@ var main = function() {
                                     }
                                 }
 
-
-
-
-                                if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
-                                  dangerBorderAll();
-                                  pleaseCheckFieldMsg();
+                                function insertValIntoTable() {
+                                  cashEl.text(totalCostInCash.toFixed(2));
+                                  creditEl.text(totalCostInCredit.toFixed(2));
+                                  creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
                                 }
+
+                                function clearTable() {
+                                  cashEl.text("");
+                                  creditEl.text("");
+                                  creditWDiscEl.text("");
+                                }
+
+                                // not needed if you use all "ifs" for 4 input fields:
+                                // if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
+                                //   dangerBorderAll();
+                                //   pleaseCheckFieldMsg();
+                                //   clearTable();
+                                // }
+
                                 if (cashPrice === "") {
                                     cashPriceEl.style.border = "1px solid tomato";
                                     pleaseCheckFieldMsg();
+                                    clearTable();
                                 }
                                 else {
                                   cashPriceEl.style.border = "1px solid blue";
                                 }
-
                                 if (creditPrice === "") {
                                     creditPriceEl.style.border = "1px solid tomato";
                                     pleaseCheckFieldMsg();
+                                    clearTable();
                                 }
                                 else {
                                   creditPriceEl.style.border = "1px solid blue";
@@ -309,14 +322,77 @@ var main = function() {
                                   gallonsEl.style.border = "1px solid blue";
                                 }
 
-                                if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
-                                    element.style.border = "1px solid blue";
-                                                          // cashEl.text("asdjkl");
-                                                          // creditEl.text("234rjk");
-                                                          // creditWDiscEl.text("uio");
-                                                          amtSavedFinalMsg();
 
+                                if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+                                                          cashEl.text(totalCostInCash.toFixed(2));
+                                                          creditEl.text(totalCostInCredit.toFixed(2));
+                                                          creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                                                          amtSavedFinalMsg();
                                   }
+
+
+                                                                //
+                                                                //  if (cashPrice !== "") {
+                                                                //   cashPriceEl.style.border = "1px solid blue";
+                                                                //   insertValIntoTable();
+                                                                // }
+
+                                // else if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+                                //   //loop thru and style all form to be not red:
+                                //     element.style.border = "1px solid blue";
+                                //                           // cashEl.text("asdjkl");
+                                //                           // creditEl.text("234rjk");
+                                //                           // creditWDiscEl.text("uio");
+                                //                           amtSavedFinalMsg();
+                                //
+                                //   }
+
+
+
+                                // else if (cashPrice !== "") {
+                                //   cashPriceEl.style.border = "1px solid blue";
+                                //   insertValIntoTable();
+                                //   amtSavedFinalMsg();
+                                // }
+                                //
+                                //
+                                // if (creditPrice === "") {
+                                //     creditPriceEl.style.border = "1px solid tomato";
+                                //     pleaseCheckFieldMsg();
+                                //     clearTable();
+                                // }
+                                // else if (creditPrice !== "") {
+                                //   creditPriceEl.style.border = "1px solid blue";
+                                //   insertValIntoTable();
+                                //   amtSavedFinalMsg();
+                                //
+                                // }
+                                //
+                                //
+                                //
+                                // if (bankDiscount === "") {
+                                //     bankDiscountEl.style.border = "1px solid tomato";
+                                //     pleaseCheckFieldMsg();
+                                // }
+                                // else {
+                                //   bankDiscountEl.style.border = "1px solid blue";
+                                // }
+                                // if (gallons === "") {
+                                //     gallonsEl.style.border = "1px solid tomato";
+                                //     pleaseCheckFieldMsg();
+                                // }
+                                // else {
+                                //   gallonsEl.style.border = "1px solid blue";
+                                // }
+                                //
+                                // if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+                                //     element.style.border = "1px solid blue";
+                                //                           // cashEl.text("asdjkl");
+                                //                           // creditEl.text("234rjk");
+                                //                           // creditWDiscEl.text("uio");
+                                //                           amtSavedFinalMsg();
+                                //
+                                //   }
 
 
 
@@ -521,10 +597,6 @@ var main = function() {
             // }
             // checkFormForBlank();
             // restoreFormFields();
-
-
-
-
 
 
 
