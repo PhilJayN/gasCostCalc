@@ -9,8 +9,8 @@ body {
 }
 
 article {
-  display: flex;
-  flex-wrap: wrap;
+    /*display: flex;
+    flex-wrap: wrap;*/
   /*width: 900px;*/
   width:480px;
   /*border: 4px solid blue;*/
@@ -35,6 +35,17 @@ article {
    box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
      text-align: center;
 }
+
+#mainForm {
+  float: right;
+  border: 1px solid red;
+}
+
+#resultContainerDiv {
+  float: right;
+  border: 1px solid blue;
+}
+
 
 h4 {
   /*original pastel green for header:*/
@@ -140,7 +151,6 @@ table, th, tr, td{
 }*/
 
 
-
 table {
   margin: auto;
   width: 210px;
@@ -167,11 +177,6 @@ th {
   background: #8eb870;
 }
 
-
-
-
-
-
 p {
   /*background: red;*/
   margin-left: 10px;
@@ -183,6 +188,26 @@ p {
 #errorMsg {
   color: tomato;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -945,41 +945,37 @@ $(document).ready(main);
 
 
 /////---------------------NOTES--------------------------------////
-
-
 // NOTE: final production:
 //fix html input steps, min, etc...
 
-//ERROR:
+//DONE:
 //DONE //prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
 //DONE //whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
+//DONE if more than 99 cents, then it should convert to dollars
+//DONE user puts 234235.234. and it will still work wtf
+//if input field empty, or error, focus on box and change color.
+
+
 
 //USER input restriction:
 //entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
-//user puts 234235.234. and it will still work wtf
-//can put neg num
 //limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
-
-//Test
-//DONE if more than 99 cents, then it should convert to dollars
 //when you increase gallons, the cost doesn't increase at same rate. it should though, right?
 
 
 //MORE FEATURES:
-//change color of "please complete form to tomato."
 //either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
 //..occur when it's alwaysgreen. maybe little icons or pics.
-//reset button to reset all input values to 0. will show: "Reset all input fields to default value. Continue?"
+//reset button to reset all input values to default, will show: "Reset all input fields to default value. Continue?"
 //also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
 //when pressing reset"
-
 //click to see how much money you can save over the month, years, by saviing only a few cents now.
-//if input field empty, or error, focus on box and change color.
 //area to put common bank discounts for various banks: chase 1-5%, boa, discover, etc... maybe a
 //...dropbox menu for these banks.
 
 
 //FEATURES - FUTURE if time:
+//restrict input value len. user can still tgype in 2.3434235345. not really needed but nice.
 //change input fields to look like gas station electronic #
 //if bankDiscount input is > 15%, do a description box that says "no bank in existence will give customers more than 15% CB"
 //automatically calculate by using slides instead of pressing calc button.
