@@ -18,7 +18,7 @@ var main = function() {
     var errorMsg = $("#errorMsg");
 
     // var resultTable = $("<table>");
-    var conclusionElement = $("<p>");
+    // var conclusionElement = $("<p>");
     // var headerEl = $("<h3>");
     var finalMsgEl = $("<p>");
 
@@ -92,7 +92,10 @@ var main = function() {
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
         } else {
             finalMsgEl.css("color", "black");
-            calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
+            // calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
+            calculationResultContainerEl.append(finalMsgEl.text("Check your inputs. Either there's not much of a difference in cash and credit, or discount and gallons too low or too high."));
+            calculationResultContainerEl.append(finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
+
             //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
     }
@@ -206,15 +209,22 @@ function clearErrorMsg() {
 
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
+                  // clearTable();
+                finalMsgEl.text("");
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
             //prevent user typing negative #:
             else if (parseFloat(mainFormEls[i].value) < 0) {
                 mainFormEls[i].value = '';
+                // clearTable();
+                errorMsg.text("Negative numbers not valid")
+                finalMsgEl.text("");
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             } else if (parseFloat(mainFormEls[i].value) === 0) {
                 // mainFormEls[i].value = '';
+                // clearTable();
                 errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
+                finalMsgEl.text("");
                 // hideFinalMsg();
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
