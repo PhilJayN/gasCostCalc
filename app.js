@@ -46,6 +46,26 @@ var main = function() {
         }
     }
 
+//     finalMsgEl.attr('id', 'finalMsg');
+//     var capturedElement = document.getElementById("finalMsg");
+//
+//     function hideFinalMsg() {
+//       // $( "p" ).addClass( "myClass yourClass" );
+// capturedElement.style.visibility = "hidden";
+//     }
+//
+//     function showFinalMsg() {
+//       capturedElement.style.visibility = "visible";
+//
+//     }
+
+
+
+    function hideResultContainer() {
+        var capturedElement = document.getElementById("resultContainerDiv");
+        capturedElement.style.visibility = "hidden";
+    }
+
     function checkForm(form) {
         console.log('checkForm fxn running...');
         // validation fails if the input has negative sign
@@ -95,7 +115,7 @@ var main = function() {
     }
 
     function showResultContainer() {
-        //makes result container visible. First, capture element:
+        //First, capture element:
         var capturedElement = document.getElementById("resultContainerDiv");
         //then make visible:
         capturedElement.style.visibility = "visible";
@@ -105,8 +125,6 @@ var main = function() {
         var capturedElement = document.getElementById("resultContainerDiv");
         capturedElement.style.visibility = "hidden";
     }
-
-
 
     function testFormChecker() {
         var mainFormEls = document.getElementById("mainForm").elements;
@@ -162,7 +180,6 @@ var main = function() {
 
 function clearErrorMsg() {
   errorMsg.text('');
-
 }
 
     function limitInput() {
@@ -181,14 +198,14 @@ function clearErrorMsg() {
             var currentVal = parseFloat(mainFormEls[i].value);
             console.log('currentVal', currentVal);
             if (currentVal > 40) {
-              errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 Reverting to original number...');
+              errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
               }
             // else {
             //   errorMsg.text("");
             // }
 
             if (parseFloat(mainFormEls[i].value) > 40) {
-                mainFormEls[i].value = testArr;
+                mainFormEls[i].value = elementVal;
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
             //prevent user typing negative #:
@@ -196,9 +213,9 @@ function clearErrorMsg() {
                 mainFormEls[i].value = '';
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-                mainFormEls[i].value = '';5
-                errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 Reverting to original number...');
-
+                // mainFormEls[i].value = '';
+                errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
+                // hideFinalMsg();
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
 
@@ -207,19 +224,18 @@ function clearErrorMsg() {
     }
 
 
-    var testArr;
-
+    var elementVal;
 
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
         $(element).on("keydown", function() {
 
-            testArr = element.value;
+            elementVal = element.value;
 
-            console.log('before input val', testArr);
+            console.log('before input val', elementVal);
 
         });
-        // console.log('element valueee arr', testArr);
+        // console.log('element valueee arr', elementVal);
 
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
@@ -420,10 +436,12 @@ function clearErrorMsg() {
                 cashEl.text(totalCostInCash.toFixed(2));
                 creditEl.text(totalCostInCredit.toFixed(2));
                 creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                // showFinalMsg();
                 amtSavedFinalMsg();
             }
 
-            showResultContainer();
+            // showResultContainer();
+            // hideResultContainer();
 
 
 limitInput();
