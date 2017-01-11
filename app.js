@@ -15,13 +15,12 @@ var main = function() {
     //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
-    // var errorMsgContainer = $(".errorMsg");
+    var errorMsg = $("#errorMsg");
 
     // var resultTable = $("<table>");
     var conclusionElement = $("<p>");
     // var headerEl = $("<h3>");
     var finalMsgEl = $("<p>");
-    // var errorMsgEl = $("<h5>");
 
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
@@ -79,7 +78,8 @@ var main = function() {
     }
 
     function pleaseCheckFieldMsg() {
-        calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start. Valid numbers: .1 - 40"));
+      // calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start. Valid numbers: .1 - 40"));
+        calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to auto start."));
         // console.log('calc result',calculationResultContainerEl );
         // finalMsgEl.style.color = "tomato";
         finalMsgEl.css("color", "tomato");
@@ -149,20 +149,21 @@ var main = function() {
     //     }
 
 
-    function outOfRange() {
-        var msgArray = ['Number entered: ', monentaryConversion, ' Out of range.', ];
-        console.log('msgArray', msgArray);
-        var msgArrayJoined = msgArray.join("");
-        if (monentaryConversion > 0) {
-            finalMsgEl.css("color", "black");
-            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
-        } else {
-            finalMsgEl.css("color", "black");
-            calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
-            //this happens when cash, cred are around .03 cents each, and bank discount is super high.
-        }
-    }
+    // function outOfRangeMsg() {
+    //     // var msgArray = ['Number entered: ', monentaryConversion, ' Out of range.', ];
+    //     // console.log('msgArray', msgArray);
+    //     // var msgArrayJoined = msgArray.join("");
+    //     // var msg = document.getElementById("errorMsg");
+    //     // msg.textContent('out range!');
+    //     errorMsg.text('out of range');
+    //
+    // }
+    //
 
+function clearErrorMsg() {
+  errorMsg.text('');
+
+}
 
     function limitInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
@@ -179,6 +180,12 @@ var main = function() {
             // }
             var currentVal = parseFloat(mainFormEls[i].value);
             console.log('currentVal', currentVal);
+            if (currentVal > 40) {
+              errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 Reverting to original number...');
+              }
+            // else {
+            //   errorMsg.text("");
+            // }
 
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = testArr;
@@ -189,7 +196,9 @@ var main = function() {
                 mainFormEls[i].value = '';
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-                mainFormEls[i].value = '';
+                mainFormEls[i].value = '';5
+                errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 Reverting to original number...');
+
                 //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
 
@@ -216,8 +225,9 @@ var main = function() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
+          clearErrorMsg();
 
-            limitInput();
+            // limitInput();
             // console.log('elemente!!!', element);
 
             //put these variables here so that the values changes everytime input fields change.
@@ -375,6 +385,7 @@ var main = function() {
                 cashPriceEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
+                clearErrorMsg();
             } else {
                 cashPriceEl.style.border = "1px solid #ccc";
             }
@@ -382,6 +393,7 @@ var main = function() {
                 creditPriceEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
+                clearErrorMsg();
             } else {
                 creditPriceEl.style.border = "1px solid #ccc";
             }
@@ -389,6 +401,7 @@ var main = function() {
                 bankDiscountEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
+                clearErrorMsg();
             } else {
                 bankDiscountEl.style.border = "1px solid #ccc";
             }
@@ -396,6 +409,8 @@ var main = function() {
                 gallonsEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
+                clearErrorMsg();
+
             } else {
                 gallonsEl.style.border = "1px solid #ccc";
             }
@@ -408,7 +423,10 @@ var main = function() {
                 amtSavedFinalMsg();
             }
 
+            showResultContainer();
 
+
+limitInput();
             //
             //  if (cashPrice !== "") {
             //   cashPriceEl.style.border = "1px solid blue";
@@ -878,7 +896,6 @@ var main = function() {
             //should call visible element very last step when all is fine and dandy:
 
 
-            showResultContainer();
 
 
 
@@ -900,15 +917,10 @@ $(document).ready(main);
 
 
 /////---------------------NOTES--------------------------------////
-////Final verdict: Have a button or checkbox that ask user: "All finished? click here for final discussion"
-//Maybe put this in an organized table, pros and cons,
-//people prob dont like to read long P!.  Typically, for most gas stations
-//in the South Bay area, cash prices are around ten cents less for many reasons.
-//One reason is to encourage people to get inside to buy snacks and spend more.
-//But hot Cheetos aside, you can save some money by paying with cash.
-//However, it depends on how much you value your time.
-//Of course, paying by cash requires you to walk inside,
-//and possibly wait a while to pay, whereas credit card is usualy quicker and more convienient.
+
+
+// NOTE: final production:
+//fix html input steps, min, etc...
 
 //ERROR:
 //DONE //prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
@@ -949,7 +961,8 @@ $(document).ready(main);
 //challenges i had to think about:
 //keeping calcuations to only pennies makes calculations consistent,
 //so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
-//then i coiuld convert .3254534534 ` to dollars. `
+//then i coiuld convert .3254534534 ` to dollars.
+//form validation, code hard to keep track, of input fields.
 
 
 
