@@ -2,8 +2,6 @@
 // -------------------------------------------------------------------------
 var main = function() {
     "use strict";
-
-    // var resultHeader = "";
     var differenceInCents;
     var differenceInCentsPositive;
     var cashOrCreditString;
@@ -17,6 +15,8 @@ var main = function() {
     //make sure to append some of these to the DOM, otherwise they will dangle
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
+    // var errorMsgContainer = $(".errorMsg");
+
     // var resultTable = $("<table>");
     var conclusionElement = $("<p>");
     // var headerEl = $("<h3>");
@@ -69,17 +69,17 @@ var main = function() {
         console.log('msgArray', msgArray);
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
-          finalMsgEl.css("color", "black");
+            finalMsgEl.css("color", "black");
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
         } else {
-          finalMsgEl.css("color", "black");
+            finalMsgEl.css("color", "black");
             calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
             //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
     }
 
     function pleaseCheckFieldMsg() {
-        calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start."));
+        calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start. Valid numbers: .1 - 40"));
         // console.log('calc result',calculationResultContainerEl );
         // finalMsgEl.style.color = "tomato";
         finalMsgEl.css("color", "tomato");
@@ -132,68 +132,82 @@ var main = function() {
 
     }
 
-    function limitInput(inputField, inputCount, inputMaxLen) {
+
+    //     function limitInput() {
+    //         var mainFormEls = document.getElementById("mainForm").elements;
+    //         // console.log('forms', mainFormEls.length);
+    //         // console.log('forms el', mainFormEls[2].value);
+    //         for (var i = 0; i < mainFormEls.length; i++) {
+    //             // console.log('iterate els:', mainFormEls[i]);
+    // if (mainFormEls[i].value.length > 4) {
+    //   mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
+    //
+    // }
+    //
+    //             // mainFormEls[i].style.border = "thin solid tomato";
+    //         }
+    //     }
 
 
+    function outOfRange() {
+        var msgArray = ['Number entered: ', monentaryConversion, ' Out of range.', ];
+        console.log('msgArray', msgArray);
+        var msgArrayJoined = msgArray.join("");
+        if (monentaryConversion > 0) {
+            finalMsgEl.css("color", "black");
+            calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
+        } else {
+            finalMsgEl.css("color", "black");
+            calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
+            //this happens when cash, cred are around .03 cents each, and bank discount is super high.
+        }
     }
 
-//     function limitInput() {
-//         var mainFormEls = document.getElementById("mainForm").elements;
-//         // console.log('forms', mainFormEls.length);
-//         // console.log('forms el', mainFormEls[2].value);
-//         for (var i = 0; i < mainFormEls.length; i++) {
-//             // console.log('iterate els:', mainFormEls[i]);
-// if (mainFormEls[i].value.length > 4) {
-//   mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
-//
-// }
-//
-//             // mainFormEls[i].style.border = "thin solid tomato";
-//         }
-//     }
 
-function oldValues () {
-  var oldValues = [];
-}
+    function limitInput() {
+        var mainFormEls = document.getElementById("mainForm").elements;
+        // console.log('forms', mainFormEls.length);
+        // console.log('forms el', mainFormEls[2].value);
+        var oldValue = [];
+        console.log('limit inpu mainFormEls', mainFormEls[0].value);
+        for (var i = 0; i < mainFormEls.length; i++) {
+            // console.log('iterate els:', mainFormEls[i]);
+            // oldValue = parseFloat(mainFormEls[i].value);
+            // if (oldValue < .02 || oldValue > 40) {
+            //     mainFormEls[i].value = oldValue;
+            //
+            // }
+            var currentVal = parseFloat(mainFormEls[i].value);
+            console.log('currentVal', currentVal);
 
-function limitInput() {
-    var mainFormEls = document.getElementById("mainForm").elements;
-    // console.log('forms', mainFormEls.length);
-    // console.log('forms el', mainFormEls[2].value);
-    var oldValue = [];
-    console.log('limit inpu mainFormEls', mainFormEls[0].value);
-    for (var i = 0; i < mainFormEls.length; i++) {
-        // console.log('iterate els:', mainFormEls[i]);
-          // oldValue = parseFloat(mainFormEls[i].value);
-          // if (oldValue < .02 || oldValue > 40) {
-          //     mainFormEls[i].value = oldValue;
-          //
-          // }
-          var currentVal = parseFloat(mainFormEls[i].value);
-          console.log('currentVal', currentVal);
+            if (parseFloat(mainFormEls[i].value) > 40) {
+                mainFormEls[i].value = testArr;
+                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
+            }
+            //prevent user typing negative #:
+            else if (parseFloat(mainFormEls[i].value) < 0) {
+                mainFormEls[i].value = '';
+                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
+            } else if (parseFloat(mainFormEls[i].value) === 0) {
+                mainFormEls[i].value = '';
+                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
+            }
 
-  if (parseFloat(mainFormEls[i].value) <= 0 || parseFloat(mainFormEls[i].value) > 40 ) {
-  // mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
-  mainFormEls[i].value = testArr;
-  //msg to user max # reached.
-
-}
-
-        // mainFormEls[i].style.border = "thin solid tomato";
+            // mainFormEls[i].style.border = "thin solid tomato";
+        }
     }
-}
 
 
-var testArr ;
+    var testArr;
 
 
     inputFields.toArray().forEach(function(element) {
         // var eachInputEl = $(element);
         $(element).on("keydown", function() {
 
-          testArr = element.value;
+            testArr = element.value;
 
-          console.log('before input val', testArr);
+            console.log('before input val', testArr);
 
         });
         // console.log('element valueee arr', testArr);
@@ -203,7 +217,7 @@ var testArr ;
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
 
-          limitInput();
+            limitInput();
             // console.log('elemente!!!', element);
 
             //put these variables here so that the values changes everytime input fields change.
