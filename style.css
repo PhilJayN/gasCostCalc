@@ -12,7 +12,7 @@ article {
     /*display: flex;
     flex-wrap: wrap;*/
   /*width: 900px;*/
-  width:480px;
+  width:530px;
   /*border: 4px solid blue;*/
 /*allows article to be centered*/
   margin: auto;
@@ -20,7 +20,7 @@ article {
 
 #mainForm, #resultContainerDiv {
   /*allows form and div, to position themselves in middle:*/
- margin: 5px auto;
+ margin: 3px 3px;
   padding: 0 0px;
   width:250px;
   /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
@@ -36,15 +36,16 @@ article {
      text-align: center;
 }
 
-#mainForm {
-  float: right;
-  border: 1px solid red;
-}
+  #mainForm {
+    float: left;
+    /*margin-left: 3px;*/
+    /*border: 1px solid red;*/
+  }
 
-#resultContainerDiv {
-  float: right;
-  border: 1px solid blue;
-}
+  #resultContainerDiv {
+    float: left;
+    /*border: 1px solid blue;*/
+  }
 
 
 h4 {
