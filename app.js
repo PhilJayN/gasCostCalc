@@ -16,18 +16,12 @@ var main = function() {
     var $calculateButtonEl = $(".calculateBtn");
     var calculationResultContainerEl = $(".calculationResultContainer");
     var errorMsg = $("#errorMsg");
-
-    // var resultTable = $("<table>");
-    // var conclusionElement = $("<p>");
-    // var headerEl = $("<h3>");
     var finalMsgEl = $("<p>");
-
     var inputFields = $(".formFields li input");
     var cashEl = $("#cashTableData");
     var creditEl = $("#creditTableData");
     var creditWDiscEl = $("#creditDiscTableData");
 
-    console.log('test jQuery ', inputFields.length);
     console.log('tester', inputFields.toArray().length);
 
     function pluralOrNot() {
@@ -46,44 +40,8 @@ var main = function() {
         }
     }
 
-//     finalMsgEl.attr('id', 'finalMsg');
-//     var capturedElement = document.getElementById("finalMsg");
-//
-//     function hideFinalMsg() {
-//       // $( "p" ).addClass( "myClass yourClass" );
-// capturedElement.style.visibility = "hidden";
-//     }
-//
-//     function showFinalMsg() {
-//       capturedElement.style.visibility = "visible";
-//
-//     }
-
-
-
-    function hideResultContainer() {
-        var capturedElement = document.getElementById("resultContainerDiv");
-        capturedElement.style.visibility = "hidden";
-    }
-
-    function checkForm(form) {
-        console.log('checkForm fxn running...');
-        // validation fails if the input has negative sign
-        var re = /[-]/;
-        // var re = /^[0-9.]+$/;
-        var foundNegVal = re.test(cashPrice);
-        console.log(foundNegVal);
-        if (foundNegVal === true) {
-            console.log('check input, you have a negative as a value!');
-            return false;
-        }
-        // // validation was successful
-        // return true;
-    }
-
     function amtSavedFinalMsg() {
         //IMPORTANT: to keep it consistent, msg will favor any form of payment that cost LESS!!
-        // var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less if you use ', cashOrCreditString];
         var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less from your total bill if you use ', cashOrCreditString];
         console.log('msgArray', msgArray);
         var msgArrayJoined = msgArray.join("");
@@ -92,29 +50,14 @@ var main = function() {
             calculationResultContainerEl.append(finalMsgEl.text(msgArrayJoined));
         } else {
             finalMsgEl.css("color", "black");
-            // calculationResultContainerEl.append(finalMsgEl.text("Amount saved too small because there's not much difference in cash and credit price, or bank disc too high, or gallons too low a number."));
-            calculationResultContainerEl.append(finalMsgEl.text("Check your inputs. Either there's not much of a difference in cash and credit, or discount and gallons too low or too high."));
             calculationResultContainerEl.append(finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
-
             //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
     }
 
     function pleaseCheckFieldMsg() {
-      // calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to start. Valid numbers: .1 - 40"));
         calculationResultContainerEl.append(finalMsgEl.text("Please complete form for calculations to auto start."));
-        // console.log('calc result',calculationResultContainerEl );
-        // finalMsgEl.style.color = "tomato";
         finalMsgEl.css("color", "tomato");
-        // document.getElementById("myH1").style.color = "red";
-    }
-
-    function clearNaN_String() {
-        console.log('clearNaNString fxn running...');
-        //works:
-        // calculationResultContainerEl.text("sdfsdfw");
-        cashEl.text("");
-        creditEl.text("");
     }
 
     function showResultContainer() {
@@ -129,115 +72,40 @@ var main = function() {
         capturedElement.style.visibility = "hidden";
     }
 
-    function testFormChecker() {
-        var mainFormEls = document.getElementById("mainForm").elements;
-        console.log('forms', mainFormEls.length);
-        for (var i = 0; i < mainFormEls.length; i++) {
-            mainFormEls[i];
-            // console.log('main form els', mainFormEls[i]);
-            console.log('main form els value:', mainFormEls[i].value);
-            console.log('main form val blank', mainFormEls[i].value === "");
-            if (mainFormEls[i].value === "") {
-                console.log('one of the form field is EMPTY!!');
-                cashEl.text('blank!');
-                cashEl.text('blank!');
-            } else {
-                console.log('all good!');
-                // cashEl.text('else');
-                // console.log('totalCostInCash', totalCostInCash);
-                // cashEl.text(totalCostInCash.toFixed(2));
-                // console.log('creditEl', creditEl);
-                // creditEl.text(totalCostInCredit.toFixed(2));
-            }
-        }
-
+    function clearErrorMsg() {
+        errorMsg.text('');
     }
-
-
-    //     function limitInput() {
-    //         var mainFormEls = document.getElementById("mainForm").elements;
-    //         // console.log('forms', mainFormEls.length);
-    //         // console.log('forms el', mainFormEls[2].value);
-    //         for (var i = 0; i < mainFormEls.length; i++) {
-    //             // console.log('iterate els:', mainFormEls[i]);
-    // if (mainFormEls[i].value.length > 4) {
-    //   mainFormEls[i].value = mainFormEls[i].value.substring(0,4);
-    //
-    // }
-    //
-    //             // mainFormEls[i].style.border = "thin solid tomato";
-    //         }
-    //     }
-
-
-    // function outOfRangeMsg() {
-    //     // var msgArray = ['Number entered: ', monentaryConversion, ' Out of range.', ];
-    //     // console.log('msgArray', msgArray);
-    //     // var msgArrayJoined = msgArray.join("");
-    //     // var msg = document.getElementById("errorMsg");
-    //     // msg.textContent('out range!');
-    //     errorMsg.text('out of range');
-    //
-    // }
-    //
-
-function clearErrorMsg() {
-  errorMsg.text('');
-}
 
     function limitInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
-        // console.log('forms', mainFormEls.length);
-        // console.log('forms el', mainFormEls[2].value);
         var oldValue = [];
         console.log('limit inpu mainFormEls', mainFormEls[0].value);
         for (var i = 0; i < mainFormEls.length; i++) {
-            // console.log('iterate els:', mainFormEls[i]);
-            // oldValue = parseFloat(mainFormEls[i].value);
-            // if (oldValue < .02 || oldValue > 40) {
-            //     mainFormEls[i].value = oldValue;
-            //
-            // }
             var currentVal = parseFloat(mainFormEls[i].value);
             console.log('currentVal', currentVal);
             if (currentVal > 40) {
-              errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
-              }
-            // else {
-            //   errorMsg.text("");
-            // }
+                errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
+            }
 
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
-                  // clearTable();
                 finalMsgEl.text("");
-                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
             //prevent user typing negative #:
             else if (parseFloat(mainFormEls[i].value) < 0) {
                 mainFormEls[i].value = '';
-                // clearTable();
                 errorMsg.text("Negative numbers not valid")
                 finalMsgEl.text("");
-                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-                // mainFormEls[i].value = '';
-                // clearTable();
                 errorMsg.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
                 finalMsgEl.text("");
-                // hideFinalMsg();
-                //msg to user max # reached. you wanted to enter [current num they put]. that is out of range.
             }
-
-            // mainFormEls[i].style.border = "thin solid tomato";
         }
     }
-
 
     var elementVal;
 
     inputFields.toArray().forEach(function(element) {
-        // var eachInputEl = $(element);
         $(element).on("keydown", function() {
 
             elementVal = element.value;
@@ -251,10 +119,7 @@ function clearErrorMsg() {
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
-          clearErrorMsg();
-
-            // limitInput();
-            // console.log('elemente!!!', element);
+            clearErrorMsg();
 
             //put these variables here so that the values changes everytime input fields change.
             //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
@@ -263,19 +128,10 @@ function clearErrorMsg() {
             bankDiscount = document.getElementById("bankDiscount").value;
             gallons = document.getElementById("gallonsNeeded").value;
 
-            // var cashPriceEl = document.getElementById("cashPrice");
-            // var creditPriceEl = document.getElementById("creditPrice");
-            // var bankDiscountEl = document.getElementById("bankDiscount");
-            // var gallonsEl = document.getElementById("gallonsNeeded");
-
             cashPriceEl = document.getElementById("cashPrice");
             creditPriceEl = document.getElementById("creditPrice");
             bankDiscountEl = document.getElementById("bankDiscount");
             gallonsEl = document.getElementById("gallonsNeeded");
-
-            // console.log('elementValOninput', element.value);
-            // console.log('cashPrice inside', cashPrice === "");
-
             //don't delete:
             // console.log('typeof', typeof +cashPrice);
             // console.log('cp', typeof +cashPrice);
@@ -297,8 +153,6 @@ function clearErrorMsg() {
             differenceInCentsPositive = Math.abs(differenceInCents);
 
             pluralOrNot();
-
-
 
             var cashInputField = {
                 cashEl: document.getElementById("cashPrice"),
@@ -323,45 +177,7 @@ function clearErrorMsg() {
                     //   this.valueEmpty = false;
                     // }
             };
-            cashInputField.init();
 
-            console.log('testing CASH value', cashInputField.cashEl.value);
-
-            var creditInputField = {
-                creditEl: document.getElementById("creditPrice"),
-                valueEmpty: false,
-
-                setEmpty: function() {
-                    this.valueEmpty = true;
-                },
-
-                setFull: function() {
-                    this.valueEmpty = false;
-                },
-
-                init: function() {
-                        if (this.creditEl.value === "") {
-                            this.setEmpty();
-                        } else {
-                            this.setFull();
-                        }
-                    }
-                    // isNotEmpty = function() {
-                    //   this.valueEmpty = false;
-                    // }
-            };
-            creditInputField.init();
-
-
-
-            // if (cashInputField.valueEmpty === true && creditInputField === true) {
-            //   cashPriceEl.style.border = "1px solid tomato";
-            //   creditPriceEl.style.border = "1px solid tomato";
-            //   pleaseCheckFieldMsg();
-            // }
-
-
-            //
             function dangerBorderAll() {
                 var mainFormEls = document.getElementById("mainForm").elements;
                 // console.log('forms', mainFormEls.length);
@@ -370,21 +186,13 @@ function clearErrorMsg() {
                     console.log('iterate els:', mainFormEls[i]);
 
                     mainFormEls[i].style.border = "thin solid tomato";
-                    // cashEl.text("asdjkl");
-                    //                     creditEl.text("234rjk");
-                    //                     creditWDiscEl.text("uio");
                 }
             }
 
             function clearBorder() {
                 var mainFormEls = document.getElementById("mainForm").elements;
-                // console.log('forms', mainFormEls.length);
-                // console.log('forms el', mainFormEls[2].value);
                 for (var i = 0; i < mainFormEls.length; i++) {
                     mainFormEls[i].style.border = "thin solid yellow";
-                    // cashEl.text("asdjkl");
-                    //                     creditEl.text("234rjk");
-                    //                     creditWDiscEl.text("uio");
                 }
             }
 
@@ -446,487 +254,10 @@ function clearErrorMsg() {
                 cashEl.text(totalCostInCash.toFixed(2));
                 creditEl.text(totalCostInCredit.toFixed(2));
                 creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-                // showFinalMsg();
                 amtSavedFinalMsg();
             }
 
-            // showResultContainer();
-            // hideResultContainer();
-
-
-limitInput();
-            //
-            //  if (cashPrice !== "") {
-            //   cashPriceEl.style.border = "1px solid blue";
-            //   insertValIntoTable();
-            // }
-
-            // else if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
-            //   //loop thru and style all form to be not red:
-            //     element.style.border = "1px solid blue";
-            //                           // cashEl.text("asdjkl");
-            //                           // creditEl.text("234rjk");
-            //                           // creditWDiscEl.text("uio");
-            //                           amtSavedFinalMsg();
-            //
-            //   }
-
-
-
-            // else if (cashPrice !== "") {
-            //   cashPriceEl.style.border = "1px solid blue";
-            //   insertValIntoTable();
-            //   amtSavedFinalMsg();
-            // }
-            //
-            //
-            // if (creditPrice === "") {
-            //     creditPriceEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            //     clearTable();
-            // }
-            // else if (creditPrice !== "") {
-            //   creditPriceEl.style.border = "1px solid blue";
-            //   insertValIntoTable();
-            //   amtSavedFinalMsg();
-            //
-            // }
-            //
-            //
-            //
-            // if (bankDiscount === "") {
-            //     bankDiscountEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   bankDiscountEl.style.border = "1px solid blue";
-            // }
-            // if (gallons === "") {
-            //     gallonsEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   gallonsEl.style.border = "1px solid blue";
-            // }
-            //
-            // if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
-            //     element.style.border = "1px solid blue";
-            //                           // cashEl.text("asdjkl");
-            //                           // creditEl.text("234rjk");
-            //                           // creditWDiscEl.text("uio");
-            //                           amtSavedFinalMsg();
-            //
-            //   }
-
-
-
-            // if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
-            //   dangerBorderAll();
-            //   pleaseCheckFieldMsg();
-            // }
-            // if (cashPrice === "") {
-            //     cashPriceEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   cashPriceEl.style.border = "1px solid blue";
-            //   amtSavedFinalMsg();
-            // }
-            //
-            // if (creditPrice === "") {
-            //     creditPriceEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   creditPriceEl.style.border = "1px solid blue";
-            //   amtSavedFinalMsg();
-            // }
-            // if (bankDiscount === "") {
-            //     bankDiscountEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   bankDiscountEl.style.border = "1px solid blue";
-            //   amtSavedFinalMsg();
-            // }
-            // if (gallons === "") {
-            //     gallonsEl.style.border = "1px solid tomato";
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   gallonsEl.style.border = "1px solid blue";
-            //   amtSavedFinalMsg();
-            // }
-
-            // else if () {
-            //
-            // }
-
-
-            // else {
-            //   element.style.border = "1px solid blue";
-            //
-            // }
-            // else if (element.value === "") {
-            //   element.style.border = "1px solid tomato";
-            // }
-
-            // else if (cashInputField.valueEmpty === true || creditInputField === true) {
-            //   cashPriceEl.style.border = "1px solid tomato";
-            //   creditPriceEl.style.border = "1px solid tomato";
-            //   pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   cashPriceEl.style.border = "1px solid blue";
-            //   creditPriceEl.style.border = "1px solid blue";
-            //
-            //   amtSavedFinalMsg();
-            // }
-
-
-            // console.log('element val', element.value);
-            // if (element.value === "") {
-            //   // element.style.backgroundColor = "tomato";
-            //   element.style.border = "1px solid red";
-            //                         cashEl.text("asdjkl");
-            //                         creditEl.text("234rjk");
-            //                         creditWDiscEl.text("uio");
-            //                         pleaseCheckFieldMsg();
-            // }
-
-
-            ///IN PROGRESS:
-            // if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
-            //   element.style.border = "1px solid red";
-            //   pleaseCheckFieldMsg();
-            // }
-            //
-            // else if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
-            //
-            //     element.style.border = "1px solid red";
-            //     cashEl.text("asdjkl");
-            //     creditEl.text("234rjk");
-            //     creditWDiscEl.text("uio");
-            //     pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   element.style.border = "1px solid blue";
-            //   amtSavedFinalMsg();
-            //
-            // }
-
-            //
-            // else if (cashPrice === "" && creditPrice === "" && bankDiscount === "" && gallons === "") {
-            //     element.style.border = "1px solid red";
-            //     cashEl.text("asdjkl");
-            //     creditEl.text("234rjk");
-            //     creditWDiscEl.text("uio");
-            //     pleaseCheckFieldMsg();
-            // }
-            //
-            // else {
-            //     element.style.border = "1px solid blue";
-            //
-            //     amtSavedFinalMsg();
-            // }
-
-            // if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
-            //     element.style.border = "1px solid blue";
-            //                           // cashEl.text("asdjkl");
-            //                           // creditEl.text("234rjk");
-            //                           // creditWDiscEl.text("uio");
-            //                           amtSavedFinalMsg();
-            //
-            //   }
-            //
-
-
-
-            //
-            // // console.log('element val', element.value);
-            // if (element.value === "") {
-            //   // element.style.backgroundColor = "tomato";
-            //   element.style.border = "1px solid red";
-            //                         cashEl.text("asdjkl");
-            //                         creditEl.text("234rjk");
-            //                         creditWDiscEl.text("uio");
-            //                         pleaseCheckFieldMsg();
-            // }
-            // else {
-            //   if (cashPrice !=="" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
-            //     element.style.border = "1px solid blue";
-            //                           // cashEl.text("asdjkl");
-            //                           // creditEl.text("234rjk");
-            //                           // creditWDiscEl.text("uio");
-            //                           amtSavedFinalMsg();
-            //
-            //   }
-            //
-            //
-            // }
-
-
-
-            // if (cashPrice === "" || creditPrice === "" || bankDiscount === "" || gallons === "") {
-
-            // for (var i = 0; i < inputFields.length; i++) {
-            //   inputFields[i].style.backgroundColor = "tomato";
-            // }
-
-            //
-            //
-            // function setBorder(element) {
-            //   cashPriceEl.style.border = "1px solid #79c822";
-            // }
-
-
-
-
-
-
-
-
-            //
-            // function checkFormForBlank() {
-            //     var mainFormEls = document.getElementById("mainForm").elements;
-            //     // console.log('forms', mainFormEls.length);
-            //     // console.log('forms el', mainFormEls[2].value);
-            //     for (var i = 0; i < mainFormEls.length; i++) {
-            //         console.log('iterate els:', mainFormEls[i]);
-            //         if (mainFormEls[i].value === "") {
-            //             mainFormEls[i].style.border = "thin solid tomato";
-            //             // cashEl.text("asdjkl");
-            //             //                     creditEl.text("234rjk");
-            //             //                     creditWDiscEl.text("uio");
-            //                                 pleaseCheckFieldMsg();
-            //         }
-            //     }
-            // }
-            //
-            // function restoreFormFields() {
-            //   var mainFormEls = document.getElementById("mainForm").elements;
-            //   for (var i = 0; i < mainFormEls.length; i++) {
-            //       console.log('iterate els:', mainFormEls[i]);
-            //
-            //                if (mainFormEls[i].value !== "") {
-            //                   mainFormEls[i].style.border = "1px solid #ccc";
-            //                         cashEl.text(totalCostInCash.toFixed(2));
-            //                         creditEl.text(totalCostInCredit.toFixed(2));
-            //                         creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //                         amtSavedFinalMsg();
-            //               }
-            //
-            //   }
-            //
-            // }
-            // checkFormForBlank();
-            // restoreFormFields();
-
-
-
-
-
-            // else if (mainFormEls[i].value !== "")  {
-            //     mainFormEls[i].style.border = "thin solid black";
-            //     amtSavedFinalMsg();
-            //
-            // }
-
-
-
-
-            //
-            //  function formValidator() {
-            //      var mainFormEls = document.getElementById("mainForm").elements;
-            //      console.log('forms', mainFormEls);
-            //      for (var i = 0; i < mainFormEls.length; i++) {
-            //          console.log('iterate els:', mainFormEls[i]);
-            //          // console.log('one');
-            //          // console.log('two');
-            //
-            //              if (mainFormEls[i] === "") {
-            //                 mainFormEls[i].style.border = "1px solid tomato";
-            //                       cashEl.text("asdjkl");
-            //                       creditEl.text("234rjk");
-            //                       creditWDiscEl.text("uio");
-            //                       pleaseCheckFieldMsg();
-            //             }
-            //         //
-            //        //   if (mainFormEls[i] !== "") {
-            //        //      mainFormEls[i].style.border = "1px solid #ccc";
-            //        //            cashEl.text(totalCostInCash.toFixed(2));
-            //        //            creditEl.text(totalCostInCredit.toFixed(2));
-            //        //            creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //        //            amtSavedFinalMsg();
-            //        //  }
-            //
-            //      }
-            //
-            //  }
-            //  formValidator();
-
-
-
-
-
-
-            // function validateForm () {
-            //   console.log('cashPriceEl should be', cashPriceEl);
-            //   // cashPriceEl.style.backgroundColor = "red";
-            //   if (cashPriceEl.value === "") {
-            //     console.log('this lthis this', this);
-            //       cashEl.text('');
-            //       cashPriceEl.style.border = "thin solid tomato";
-            //       pleaseCheckFieldMsg();
-            //     }
-            //     // else if (cashPriceEl !== ""){
-            //     //       cashEl.text(totalCostInCash.toFixed(2));
-            //     //       amtSavedFinalMsg();
-            //     //       cashPriceEl.style.border = "1px solid #79c822";
-            //     //       // creditPriceEl.style.border = "none";
-            //     //       // bankDiscountEl.style.border = "none";
-            //     //       // gallonsEl.style.border = "none";
-            //     // }
-            //
-            //
-            //
-            //
-            //     // if (creditPriceEl.value === "") {
-            //
-            //     //     creditEl.text('');
-            //     //     creditWDiscEl.text('');
-            //     //     creditPriceEl.style.border = "1px solid tomato";
-            //     //     pleaseCheckFieldMsg();
-            //     //   }
-            //     //
-            //     //
-            //     //   else if (creditPriceEl !== ""){
-            //     //         creditEl.text(totalCostInCredit.toFixed(2));
-            //     //         creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //     //
-            //     //         amtSavedFinalMsg();
-            //     //         creditPriceEl.style.border = "1px solid #79c822";
-            //     //         // creditPriceEl.style.border = "none";
-            //     //         // bankDiscountEl.style.border = "none";
-            //     //         // gallonsEl.style.border = "none";
-            //     //   }
-            //
-            //
-            //     // else if (cashPriceEl.value !== "") {
-            //     //       cashEl.text(totalCostInCash.toFixed(2));
-            //     //       amtSavedFinalMsg();
-            //     //       cashPriceEl.style.border = "1px solid #79c822";
-            //     //       // creditPriceEl.style.border = "none";
-            //     //       // bankDiscountEl.style.border = "none";
-            //     //       // gallonsEl.style.border = "none";
-            //     // }
-            //
-            //
-            //               // }
-            //
-            //   // else if (bankDiscount === "") {
-            //   //     creditWDiscEl.text('');
-            //   //     bankDiscountEl.style.border = "thin solid tomato";
-            //   //     pleaseCheckFieldMsg();
-            //   // } else if (gallons === "") {
-            //   //     cashEl.text('');
-            //   //     creditEl.text('');
-            //   //     creditWDiscEl.text('');
-            //   //     gallonsEl.style.border = "thin solid tomato";
-            //   //     pleaseCheckFieldMsg();
-            //   // } else {
-            //   //     cashEl.text(totalCostInCash.toFixed(2));
-            //   //     creditEl.text(totalCostInCredit.toFixed(2));
-            //   //     creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //   //     amtSavedFinalMsg();
-            //   //     // cashPriceEl.style.border = "none";
-            //   //     // creditPriceEl.style.border = "none";
-            //   //     // bankDiscountEl.style.border = "none";
-            //   //     // gallonsEl.style.border = "none";
-            //   // }
-            //
-            // }
-
-
-            // validateForm();
-
-
-
-
-
-
-
-
-
-            //
-            // // cashPriceEl.style.backgroundColor = "red";
-            // if (cashPrice === "") {
-            //     cashEl.text('');
-            //     cashPriceEl.style.border = "thick solid red";
-            //     pleaseCheckFieldMsg();
-            // } else if (creditPrice === "") {
-            //     creditEl.text('');
-            //     creditWDiscEl.text('');
-            //     creditPriceEl.style.border = "thick solid red";
-            //     pleaseCheckFieldMsg();
-            // } else if (bankDiscount === "") {
-            //     creditWDiscEl.text('');
-            //     bankDiscountEl.style.border = "thick solid red";
-            //     pleaseCheckFieldMsg();
-            // } else if (gallons === "") {
-            //     cashEl.text('');
-            //     creditEl.text('');
-            //     creditWDiscEl.text('');
-            //     gallonsEl.style.border = "thick solid red";
-            //     pleaseCheckFieldMsg();
-            // } else {
-            //     cashEl.text(totalCostInCash.toFixed(2));
-            //     creditEl.text(totalCostInCredit.toFixed(2));
-            //     creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //     amtSavedFinalMsg();
-            //     cashPriceEl.style.border = "none";
-            //     creditPriceEl.style.border = "none";
-            //     bankDiscountEl.style.border = "none";
-            //     gallonsEl.style.border = "none";
-            // }
-
-            // //check if input fields are empty, then result field is empty. otherwise put in the calc. results
-            // if (cashPrice === "" || gallons === "") {
-            //   cashEl.text('');
-            // }
-            // else {
-            //   cashEl.text(totalCostInCash.toFixed(2));
-            // }
-            // //works, but using ternary operator:
-            // // var cashElResult = (cashPrice === "" || gallons === "") ? cashEl.text("") : cashEl.text(totalCostInCash.toFixed(2));
-            //
-            // if (creditPrice === "" || gallons === "") {
-            //     creditEl.text('');
-            // } else {
-            //     creditEl.text(totalCostInCredit.toFixed(2));
-            // }
-            //DO NOT delete, useful:
-            // console.log('totalCostInCash', totalCostInCash);
-            // console.log('totalCostInCredit', totalCostInCredit);
-            // console.log('totalCostInCreditWDiscount', totalCostInCreditWDiscount);
-            // console.log('differenceInCents', differenceInCents);
-            // console.log('type differenceInCents', typeof differenceInCents);
-            // console.log('differenceInCentsPositive', differenceInCentsPositive);
-
-            // createHorzLineBreak();
-            // checkForm(cashPrice);
-            // createTableDynamically();
-
-            // resultTablePushValue();
-
-            // console.log('checkForm result', checkForm(cashPrice));
-            // amtSavedFinalMsg();
-            //should call visible element very last step when all is fine and dandy:
-
-
-
-
-
+            limitInput();
 
         });
     });
@@ -938,13 +269,10 @@ $(document).ready(main);
 
 
 
+/////---------------------NOTES--------------------------------////
 ///meeet q:
-//max and maxlength attribute not working, can't prevent user typing
 //modular design.
 
-
-
-/////---------------------NOTES--------------------------------////
 // NOTE: final production:
 //fix html input steps, min, etc...
 
@@ -993,6 +321,56 @@ $(document).ready(main);
 
 //123
 //
+
+    //
+    // function testFormChecker() {
+    //     var mainFormEls = document.getElementById("mainForm").elements;
+    //     console.log('forms', mainFormEls.length);
+    //     for (var i = 0; i < mainFormEls.length; i++) {
+    //         mainFormEls[i];
+    //         // console.log('main form els', mainFormEls[i]);
+    //         console.log('main form els value:', mainFormEls[i].value);
+    //         console.log('main form val blank', mainFormEls[i].value === "");
+    //         if (mainFormEls[i].value === "") {
+    //             console.log('one of the form field is EMPTY!!');
+    //             cashEl.text('blank!');
+    //             cashEl.text('blank!');
+    //         } else {
+    //             console.log('all good!');
+    //             // cashEl.text('else');
+    //             // console.log('totalCostInCash', totalCostInCash);
+    //             // cashEl.text(totalCostInCash.toFixed(2));
+    //             // console.log('creditEl', creditEl);
+    //             // creditEl.text(totalCostInCredit.toFixed(2));
+    //         }
+    //     }
+    //
+    // }
+
+
+//
+
+//
+// function clearNaN_String() {
+//     console.log('clearNaNString fxn running...');
+//     cashEl.text("");
+//     creditEl.text("");
+// }
+
+// function checkForm(form) {
+//     console.log('checkForm fxn running...');
+//     // validation fails if the input has negative sign
+//     var re = /[-]/;
+//     // var re = /^[0-9.]+$/;
+//     var foundNegVal = re.test(cashPrice);
+//     console.log(foundNegVal);
+//     if (foundNegVal === true) {
+//         console.log('check input, you have a negative as a value!');
+//         return false;
+//     }
+//     // // validation was successful
+//     // return true;
+// }
 
 
 // console.log('eachInputEl', eachInputEl.value);
