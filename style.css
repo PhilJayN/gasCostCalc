@@ -24,7 +24,7 @@ article {
   padding: 0 0px;
   width:250px;
   /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
-  height:365px;
+  height:420px;
   /*min-width:200px;
   max-width:540px;
   min-height: 385px;
@@ -186,7 +186,7 @@ p {
 
 }
 
-#errorMsg {
+#errorMsgEl {
   color: tomato;
 }
 

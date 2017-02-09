@@ -8,7 +8,6 @@ var main = function() {
     var monentaryUnitString;
     var monentaryConversion;
 
-    var cashPrice, creditPrice, bankDiscount, gallons;
     var cashPriceEl, creditPriceEl, bankDiscountEl, gallonsEl;
     var totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount;
 
@@ -104,16 +103,8 @@ var main = function() {
 
     $inputFieldsEl.toArray().forEach(function(element) {
         $(element).on("keydown", function() {
-
             elementVal = element.value;
-
-            console.log('before input val', elementVal);
-
         });
-
-        //use jQuery to get a reference to the element in array...
-        //code below will apply function to every element.
-        //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
             clearErrorMsg();
             //Note: if using .value on these, they return str, NOT a #!!
@@ -131,7 +122,7 @@ var main = function() {
             //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
             //money to use CC. iow, use cash! cash saves you more $$!
             cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
-            //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user neg. amt.
+            //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user negative amount:
             differenceInCentsPositive = Math.abs(differenceInCents);
 
             pluralOrNot();
@@ -139,8 +130,6 @@ var main = function() {
             function dangerBorderAll() {
                 var mainFormEls = document.getElementById("mainForm").elements;
                 for (var i = 0; i < mainFormEls.length; i++) {
-                    console.log('iterate els:', mainFormEls[i]);
-
                     mainFormEls[i].style.border = "thin solid tomato";
                 }
             }
@@ -204,62 +193,16 @@ var main = function() {
                 $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
                 amtSavedFinalMsg();
             }
-
             limitInput();
-
         });
     });
 }; ///end of main function:
 $(document).ready(main);
-///end of document ready function
 
-
-
-
-
-/////---------------------NOTES--------------------------------////
-///meeet q:
-//modular design.
-
-// NOTE: final production:
-//fix html input steps, min, etc...
-
-//DONE:
-//DONE //prevent this! or messes up your calc! if bankDiscount and gallons 0, it says "you can save 0 cents"
-//DONE //whenever station price is empty, result will display NaN. just set when the input field is NaN, set result to empty string.
-//DONE if more than 99 cents, then it should convert to dollars
+ // if bankDiscount and gallons 0, no error comes up.
 //DONE user puts 234235.234. and it will still work wtf
-//if input field empty, or error, focus on box and change color.
-
-
 
 //USER input restriction:
 //entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
 //limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
 //when you increase gallons, the cost doesn't increase at same rate. it should though, right?
-
-
-//MORE FEATURES:
-//either css change color of word "cash or credit" in finalMsg, because it's hard for user to see changes
-//..occur when it's alwaysgreen. maybe little icons or pics.
-//reset button to reset all input values to default, will show: "Reset all input fields to default value. Continue?"
-//also needs to have "never show me this popup ever again. if neverAnnoyMeAgain === true, then popup never comes up
-//when pressing reset"
-//click to see how much money you can save over the month, years, by saviing only a few cents now.
-//area to put common bank discounts for various banks: chase 1-5%, boa, discover, etc... maybe a
-//...dropbox menu for these banks.
-
-
-//FEATURES - FUTURE if time:
-//restrict input value len. user can still tgype in 2.3434235345. not really needed but nice.
-//change input fields to look like gas station electronic #
-//if bankDiscount input is > 15%, do a description box that says "no bank in existence will give customers more than 15% CB"
-//automatically calculate by using slides instead of pressing calc button.
-//do you like math prompt? if yes, show them calculation
-
-
-//challenges i had to think about:
-//keeping calcuations to only pennies makes calculations consistent,
-//so that i can convert more effectively to dollars. ex: keep differenceInCents consistent by storing only cents
-//then i coiuld convert .3254534534 ` to dollars.
-//form validation, code hard to keep track, of input fields.
