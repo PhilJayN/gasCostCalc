@@ -13,7 +13,7 @@ var main = function() {
     var totalCostInCash, totalCostInCredit, totalCostInCreditWDiscount;
 
     //append these to the DOM, otherwise they will dangle
-    var calculationResultContainerEl = $(".calculationResultContainer");
+    var $calcResultEl = $(".calculationResultContainer");
     var $errorMsgEl = $("#errorMsgEl");
     var $finalMsgEl = $("<p>");
     var $inputFieldsEl = $(".formFields li input");
@@ -44,16 +44,16 @@ var main = function() {
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
             $finalMsgEl.css("color", "black");
-            calculationResultContainerEl.append($finalMsgEl.text(msgArrayJoined));
+            $calcResultEl.append($finalMsgEl.text(msgArrayJoined));
         } else {
             $finalMsgEl.css("color", "black");
-            calculationResultContainerEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
+            $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
             //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
     }
 
     function pleaseCheckFieldMsg() {
-        calculationResultContainerEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
+        $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
         $finalMsgEl.css("color", "tomato");
     }
 
@@ -91,7 +91,7 @@ var main = function() {
             //prevent user typing negative #:
             else if (parseFloat(mainFormEls[i].value) < 0) {
                 mainFormEls[i].value = '';
-                $errorMsgEl.text("Negative numbers not valid")
+                $errorMsgEl.text("Negative numbers not valid");
                 $finalMsgEl.text("");
             } else if (parseFloat(mainFormEls[i].value) === 0) {
                 $errorMsgEl.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
@@ -110,36 +110,21 @@ var main = function() {
             console.log('before input val', elementVal);
 
         });
-        // console.log('element valueee arr', elementVal);
 
         //use jQuery to get a reference to the element in array...
         //code below will apply function to every element.
         //similar to how you capture element like this:   var headerEl = $("<h3>");
         $(element).on("input", function() {
             clearErrorMsg();
-
-            //put these variables here so that the values changes everytime input fields change.
-            //get IDs of elements, and values they hold to use for calculations, //returns str, NOT a #
-            cashPrice = document.getElementById("cashPrice").value;
-            creditPrice = document.getElementById("creditPrice").value;
-            bankDiscount = document.getElementById("bankDiscount").value;
-            gallons = document.getElementById("gallonsNeeded").value;
-
+            //Note: if using .value on these, they return str, NOT a #!!
             cashPriceEl = document.getElementById("cashPrice");
             creditPriceEl = document.getElementById("creditPrice");
             bankDiscountEl = document.getElementById("bankDiscount");
             gallonsEl = document.getElementById("gallonsNeeded");
-            //don't delete:
-            // console.log('typeof', typeof +cashPrice);
-            // console.log('cp', typeof +cashPrice);
-            // console.log('true or false', +cashPrice === -2.63);
-            // console.log('element', element.value);
-            // console.log('element', element.value === "");
 
-            //calculate total, simply the total of cash (cashPrice * gallons), and total Credit (creditPrice * gallons):
-            totalCostInCash = parseFloat(gallons) * parseFloat(cashPrice);
-            totalCostInCredit = parseFloat(gallons) * parseFloat(creditPrice);
-            totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscount / 100; //should be less than totalCostInCredit due to discount
+            totalCostInCash = parseFloat(gallonsEl.value) * parseFloat(cashPriceEl.value);
+            totalCostInCredit = parseFloat(gallonsEl.value) * parseFloat(creditPriceEl.value);
+            totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //should be less than totalCostInCredit due to discount
             //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
             differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
@@ -153,8 +138,6 @@ var main = function() {
 
             function dangerBorderAll() {
                 var mainFormEls = document.getElementById("mainForm").elements;
-                // console.log('forms', mainFormEls.length);
-                // console.log('forms el', mainFormEls[2].value);
                 for (var i = 0; i < mainFormEls.length; i++) {
                     console.log('iterate els:', mainFormEls[i]);
 
@@ -181,7 +164,7 @@ var main = function() {
                 $creditWDiscEl.text("");
             }
 
-            if (cashPrice === "") {
+            if (cashPriceEl.value === "") {
                 cashPriceEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
@@ -189,7 +172,7 @@ var main = function() {
             } else {
                 cashPriceEl.style.border = "1px solid #ccc";
             }
-            if (creditPrice === "") {
+            if (creditPriceEl.value === "") {
                 creditPriceEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
@@ -197,7 +180,7 @@ var main = function() {
             } else {
                 creditPriceEl.style.border = "1px solid #ccc";
             }
-            if (bankDiscount === "") {
+            if (bankDiscountEl.value === "") {
                 bankDiscountEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
@@ -205,7 +188,7 @@ var main = function() {
             } else {
                 bankDiscountEl.style.border = "1px solid #ccc";
             }
-            if (gallons === "") {
+            if (gallonsEl.value === "") {
                 gallonsEl.style.border = "1px solid tomato";
                 pleaseCheckFieldMsg();
                 clearTable();
@@ -215,7 +198,7 @@ var main = function() {
                 gallonsEl.style.border = "1px solid #ccc";
             }
 
-            if (cashPrice !== "" && creditPrice !== "" && bankDiscount !== "" && gallons !== "") {
+            if (cashPriceEl.value !== "" && creditPriceEl.value !== "" && bankDiscountEl.value !== "" && gallonsEl.value !== "") {
                 $cashEl.text(totalCostInCash.toFixed(2));
                 $creditEl.text(totalCostInCredit.toFixed(2));
                 $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
