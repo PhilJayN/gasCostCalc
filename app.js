@@ -45,7 +45,7 @@ var main = function() {
         }
     }
 
-    function pleaseCheckFieldMsg() {
+    function formIncompleteMsg() {
         $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
         $finalMsgEl.css("color", "tomato");
     }
@@ -54,12 +54,19 @@ var main = function() {
         $errorMsgEl.text('');
     }
 
+    function clearTable() {
+        $cashEl.text("");
+        $creditEl.text("");
+        $creditWDiscEl.text("");
+    }
+
     function limitInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
         for (var i = 0; i < mainFormEls.length; i++) {
             var currentVal = parseFloat(mainFormEls[i].value);
+            var outOfRangeMsg = 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
             if (currentVal > 40) {
-                $errorMsgEl.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
+              $errorMsgEl.text(outOfRangeMsg);
             }
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
@@ -71,7 +78,7 @@ var main = function() {
                 $errorMsgEl.text("Negative numbers not valid");
                 $finalMsgEl.text("");
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-                $errorMsgEl.text('Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ');
+              $errorMsgEl.text(outOfRangeMsg);
                 $finalMsgEl.text("");
             }
         }
@@ -104,15 +111,9 @@ var main = function() {
 
             pluralize();
 
-            function clearTable() {
-                $cashEl.text("");
-                $creditEl.text("");
-                $creditWDiscEl.text("");
-            }
-
             if (cashPriceEl.value === "") {
                 cashPriceEl.style.border = "1px solid tomato";
-                pleaseCheckFieldMsg();
+                formIncompleteMsg();
                 clearTable();
                 clearErrorMsg();
             } else {
@@ -120,7 +121,7 @@ var main = function() {
             }
             if (creditPriceEl.value === "") {
                 creditPriceEl.style.border = "1px solid tomato";
-                pleaseCheckFieldMsg();
+                formIncompleteMsg();
                 clearTable();
                 clearErrorMsg();
             } else {
@@ -128,7 +129,7 @@ var main = function() {
             }
             if (bankDiscountEl.value === "") {
                 bankDiscountEl.style.border = "1px solid tomato";
-                pleaseCheckFieldMsg();
+                formIncompleteMsg();
                 clearTable();
                 clearErrorMsg();
             } else {
@@ -136,7 +137,7 @@ var main = function() {
             }
             if (gallonsEl.value === "") {
                 gallonsEl.style.border = "1px solid tomato";
-                pleaseCheckFieldMsg();
+                formIncompleteMsg();
                 clearTable();
                 clearErrorMsg();
 
@@ -155,7 +156,3 @@ var main = function() {
     });
 }; ///end of main function:
 $(document).ready(main);
-
-//entered val must only have 2 decimals to the right. 2.545 dollars?
-//limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
-//when you increase gallons, the cost doesn't increase at same rate. it should though, right?

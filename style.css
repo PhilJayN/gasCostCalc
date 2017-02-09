@@ -95,8 +95,6 @@ border: 1px solid #ccc;
 padding: 3px;
 margin-bottom: 5px;
 outline: none;
-
-/*border: 1px solid green;*/
 /*float both input and label elements left so they are closer together, less space in middle*/
 float:left;
 }
