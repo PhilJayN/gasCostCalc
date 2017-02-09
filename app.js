@@ -4,8 +4,8 @@ var main = function() {
     "use strict";
     var differenceInCents;
     var differenceInCentsPositive;
-    var cashOrCreditString;
-    var monentaryUnitString;
+    var cashOrCreditStr;
+    var currencyUnitStr;
     var monentaryConversion;
 
     var $calcResultEl = $(".calculationResultContainer");
@@ -16,25 +16,25 @@ var main = function() {
     var $creditEl = $("#creditTableData");
     var $creditWDiscEl = $("#creditDiscTableData");
 
-    function pluralOrNot() {
+    function pluralize() {
         if (differenceInCentsPositive <= 1) {
-            monentaryUnitString = " cent";
+            currencyUnitStr = " cent";
             monentaryConversion = differenceInCentsPositive;
         } else if (differenceInCentsPositive <= 99) {
-            monentaryUnitString = " cents";
+            currencyUnitStr = " cents";
             monentaryConversion = differenceInCentsPositive;
         } else if (differenceInCentsPositive === 100) {
-            monentaryUnitString = " dollar";
+            currencyUnitStr = " dollar";
             monentaryConversion = differenceInCentsPositive / 100;
         } else if (differenceInCentsPositive >= 101) {
-            monentaryUnitString = " dollars";
+            currencyUnitStr = " dollars";
             monentaryConversion = differenceInCentsPositive / 100;
         }
     }
 
     function amtSavedFinalMsg() {
         //IMPORTANT: to keep it consistent, msg shown on screen will favor any form of payment that cost LESS!!
-        var msgArray = ['You will pay ', monentaryConversion, monentaryUnitString, ' less from your total bill if you use ', cashOrCreditString];
+        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less from your total bill if you use ', cashOrCreditStr];
         var msgArrayJoined = msgArray.join("");
         if (monentaryConversion > 0) {
             $finalMsgEl.css("color", "black");
@@ -42,7 +42,6 @@ var main = function() {
         } else {
             $finalMsgEl.css("color", "black");
             $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
-            //this happens when cash, cred are around .03 cents each, and bank discount is super high.
         }
     }
 
@@ -78,9 +77,10 @@ var main = function() {
         }
     }
 
+    var elementVal;
     $inputFieldsEl.toArray().forEach(function(element) {
         $(element).on("keydown", function() {
-            var elementVal = element.value;
+            elementVal = element.value;
         });
         $(element).on("input", function() {
             clearErrorMsg();
@@ -98,31 +98,11 @@ var main = function() {
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
             //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
             //money to use CC. iow, use cash! cash saves you more $$!
-            cashOrCreditString = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
+            cashOrCreditStr = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
             //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user negative amount:
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-            pluralOrNot();
-
-            function dangerBorderAll() {
-                var mainFormEls = document.getElementById("mainForm").elements;
-                for (var i = 0; i < mainFormEls.length; i++) {
-                    mainFormEls[i].style.border = "thin solid tomato";
-                }
-            }
-
-            function clearBorder() {
-                var mainFormEls = document.getElementById("mainForm").elements;
-                for (var i = 0; i < mainFormEls.length; i++) {
-                    mainFormEls[i].style.border = "thin solid yellow";
-                }
-            }
-
-            function insertValIntoTable() {
-                $cashEl.text(totalCostInCash.toFixed(2));
-                $creditEl.text(totalCostInCredit.toFixed(2));
-                $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            }
+            pluralize();
 
             function clearTable() {
                 $cashEl.text("");
@@ -176,8 +156,6 @@ var main = function() {
 }; ///end of main function:
 $(document).ready(main);
 
-
-//USER input restriction:
-//entered val must only have 2 decimals to the right. 2.545 dollars? wtf.
+//entered val must only have 2 decimals to the right. 2.545 dollars?
 //limit user from typing in a bunch of long numbers. html attribute maxlength doesn't prevent people from typing.
 //when you increase gallons, the cost doesn't increase at same rate. it should though, right?
