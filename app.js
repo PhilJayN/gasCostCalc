@@ -85,11 +85,11 @@ var main = function() {
     }
 
     var elementVal;
-    $inputFieldsEl.toArray().forEach(function(element) {
-        $(element).on("keydown", function() {
-            elementVal = element.value;
+    $inputFieldsEl.toArray().forEach(function(inputElement) {
+        $(inputElement).on("keydown", function() {
+            elementVal = inputElement.value;
         });
-        $(element).on("input", function() {
+        $(inputElement).on("input", function() {
             clearErrorMsg();
             //Note: if using .value on these, they return str, NOT a #!!
             var cashPriceEl = document.getElementById("cashPrice");
@@ -111,41 +111,16 @@ var main = function() {
 
             pluralize();
 
-            if (cashPriceEl.value === "") {
-                cashPriceEl.style.border = "1px solid tomato";
+            if (inputElement.value === "") {
+                inputElement.style.border = "1px solid tomato";
                 formIncompleteMsg();
                 clearTable();
                 clearErrorMsg();
             } else {
-                cashPriceEl.style.border = "1px solid #ccc";
-            }
-            if (creditPriceEl.value === "") {
-                creditPriceEl.style.border = "1px solid tomato";
-                formIncompleteMsg();
-                clearTable();
-                clearErrorMsg();
-            } else {
-                creditPriceEl.style.border = "1px solid #ccc";
-            }
-            if (bankDiscountEl.value === "") {
-                bankDiscountEl.style.border = "1px solid tomato";
-                formIncompleteMsg();
-                clearTable();
-                clearErrorMsg();
-            } else {
-                bankDiscountEl.style.border = "1px solid #ccc";
-            }
-            if (gallonsEl.value === "") {
-                gallonsEl.style.border = "1px solid tomato";
-                formIncompleteMsg();
-                clearTable();
-                clearErrorMsg();
-
-            } else {
-                gallonsEl.style.border = "1px solid #ccc";
+                inputElement.style.border = "1px solid #ccc";
             }
 
-            if (cashPriceEl.value !== "" && creditPriceEl.value !== "" && bankDiscountEl.value !== "" && gallonsEl.value !== "") {
+            if (inputElement.value !== "") {
                 $cashEl.text(totalCostInCash.toFixed(2));
                 $creditEl.text(totalCostInCredit.toFixed(2));
                 $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
@@ -156,3 +131,21 @@ var main = function() {
     });
 }; ///end of main function:
 $(document).ready(main);
+
+            //
+            //
+            // if (inputElement.value === "") {
+            //     inputElement.style.border = "1px solid tomato";
+            //     formIncompleteMsg();
+            //     clearTable();
+            //     clearErrorMsg();
+            // } else {
+            //     inputElement.style.border = "1px solid #ccc";
+            // }
+            //
+            // if (inputElement.value !== "") {
+            //     $cashEl.text(totalCostInCash.toFixed(2));
+            //     $creditEl.text(totalCostInCredit.toFixed(2));
+            //     $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+            //     amtSavedFinalMsg();
+            // }
