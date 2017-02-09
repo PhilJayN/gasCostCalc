@@ -66,7 +66,7 @@ var main = function() {
             var currentVal = parseFloat(mainFormEls[i].value);
             var outOfRangeMsg = 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
             if (currentVal > 40) {
-              $errorMsgEl.text(outOfRangeMsg);
+                $errorMsgEl.text(outOfRangeMsg);
             }
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
@@ -78,7 +78,7 @@ var main = function() {
                 $errorMsgEl.text("Negative numbers not valid");
                 $finalMsgEl.text("");
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-              $errorMsgEl.text(outOfRangeMsg);
+                $errorMsgEl.text(outOfRangeMsg);
                 $finalMsgEl.text("");
             }
         }
@@ -91,7 +91,6 @@ var main = function() {
         });
         $(inputElement).on("input", function() {
             clearErrorMsg();
-            //Note: if using .value on these, they return str, NOT a #!!
             var cashPriceEl = document.getElementById("cashPrice");
             var creditPriceEl = document.getElementById("creditPrice");
             var bankDiscountEl = document.getElementById("bankDiscount");
@@ -100,7 +99,7 @@ var main = function() {
             var totalCostInCash = parseFloat(gallonsEl.value) * parseFloat(cashPriceEl.value);
             var totalCostInCredit = parseFloat(gallonsEl.value) * parseFloat(creditPriceEl.value);
             var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //should be less than totalCostInCredit due to discount
-            //leave rounding till the VERY last step, otherwise JavaScript will give you more decimals
+            //leave rounding until the VERY last step, otherwise JavaScript will give you more decimals
             differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
             //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
@@ -111,6 +110,7 @@ var main = function() {
 
             pluralize();
 
+            // debugger;
             if (inputElement.value === "") {
                 inputElement.style.border = "1px solid tomato";
                 formIncompleteMsg();
@@ -119,8 +119,8 @@ var main = function() {
             } else {
                 inputElement.style.border = "1px solid #ccc";
             }
-
-            if (inputElement.value !== "") {
+            //display final msg and table results ONLY if all elements NOT empty
+            if (cashPriceEl.value !== "" && creditPriceEl.value !== "" && bankDiscountEl.value !== "" && gallonsEl.value !== "") {
                 $cashEl.text(totalCostInCash.toFixed(2));
                 $creditEl.text(totalCostInCredit.toFixed(2));
                 $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
@@ -129,23 +129,5 @@ var main = function() {
             limitInput();
         });
     });
-}; ///end of main function:
+};
 $(document).ready(main);
-
-            //
-            //
-            // if (inputElement.value === "") {
-            //     inputElement.style.border = "1px solid tomato";
-            //     formIncompleteMsg();
-            //     clearTable();
-            //     clearErrorMsg();
-            // } else {
-            //     inputElement.style.border = "1px solid #ccc";
-            // }
-            //
-            // if (inputElement.value !== "") {
-            //     $cashEl.text(totalCostInCash.toFixed(2));
-            //     $creditEl.text(totalCostInCredit.toFixed(2));
-            //     $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-            //     amtSavedFinalMsg();
-            // }
