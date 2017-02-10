@@ -33,12 +33,11 @@ var main = function() {
     }
 
     function amtSavedFinalMsg() {
-        //IMPORTANT: to keep it consistent, msg shown on screen will favor any form of payment that cost LESS!!
-        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less from your total bill if you use ', cashOrCreditStr];
-        var msgArrayJoined = msgArray.join("");
+        //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
+        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less if you use ', cashOrCreditStr];
         if (monentaryConversion > 0) {
             $finalMsgEl.css("color", "black");
-            $calcResultEl.append($finalMsgEl.text(msgArrayJoined));
+            $calcResultEl.append($finalMsgEl.text(msgArray.join("")));
         } else {
             $finalMsgEl.css("color", "black");
             $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
@@ -98,19 +97,17 @@ var main = function() {
 
             var totalCostInCash = parseFloat(gallonsEl.value) * parseFloat(cashPriceEl.value);
             var totalCostInCredit = parseFloat(gallonsEl.value) * parseFloat(creditPriceEl.value);
-            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //should be less than totalCostInCredit due to discount
-            //leave rounding until the VERY last step, otherwise JavaScript will give you more decimals
+            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //result should be less than totalCostInCredit due to discount
+            //leave rounding until the VERY last step!
             differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-            //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73) = neg!
-            //if totalCostInCreditWDiscount is GREATER than totalCostInCash, this means that you are paying more
-            //money to use CC. iow, use cash! cash saves you more $$!
+            //if totalCostInCreditWDiscount result is GREATER than totalCostInCash, you are paying more by using credit! Paying by cash saves more $$!
             cashOrCreditStr = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
-            //ALWAYS change to positive value, allow you to show in user msg. makes so sense to show user negative amount:
+            //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73)
+            //Therefore change to positive value, to prevent user confusion:
             differenceInCentsPositive = Math.abs(differenceInCents);
 
             pluralize();
 
-            // debugger;
             if (inputElement.value === "") {
                 inputElement.style.border = "1px solid tomato";
                 formIncompleteMsg();
