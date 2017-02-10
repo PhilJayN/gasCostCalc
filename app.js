@@ -5,36 +5,18 @@ var main = function() {
     var differenceInCentsPositive;
     var cashOrCreditStr;
 
-
     var currentVal;
-
-    var currencyUnitStr;
-    var monentaryConversion;
-
-    function pluralize() {
-        if (differenceInCentsPositive <= 1) {
-            currencyUnitStr = " cent";
-            monentaryConversion = differenceInCentsPositive;
-        } else if (differenceInCentsPositive <= 99) {
-            currencyUnitStr = " cents";
-            monentaryConversion = differenceInCentsPositive;
-        } else if (differenceInCentsPositive === 100) {
-            currencyUnitStr = " dollar";
-            monentaryConversion = differenceInCentsPositive / 100;
-        } else if (differenceInCentsPositive >= 101) {
-            currencyUnitStr = " dollars";
-            monentaryConversion = differenceInCentsPositive / 100;
-        }
-    }
 
     var displayMsg = {
         $calcResultEl: $(".calculationResultContainer"),
         $finalMsgEl: $("<p>"),
+        currencyUnitStr: undefined,
+        monentaryConversion: undefined,
 
         amtSaved: function() {
             //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
-            var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
-            if (monentaryConversion > 0) {
+            var msgArray = ['You will pay ', this.monentaryConversion, this.currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
+            if (this.monentaryConversion > 0) {
                 this.$finalMsgEl.css("color", "black");
                 this.$calcResultEl.append(this.$finalMsgEl.text(msgArray.join("")));
             } else {
@@ -48,6 +30,21 @@ var main = function() {
         },
         clearFinalMsg: function() {
             this.$finalMsgEl.text("");
+        },
+        pluralize: function() {
+          if (differenceInCentsPositive <= 1) {
+              this.currencyUnitStr = " cent";
+              this.monentaryConversion = differenceInCentsPositive;
+          } else if (differenceInCentsPositive <= 99) {
+              this.currencyUnitStr = " cents";
+              this.monentaryConversion = differenceInCentsPositive;
+          } else if (differenceInCentsPositive === 100) {
+              this.currencyUnitStr = " dollar";
+              this.monentaryConversion = differenceInCentsPositive / 100;
+          } else if (differenceInCentsPositive >= 101) {
+              this.currencyUnitStr = " dollars";
+              this.monentaryConversion = differenceInCentsPositive / 100;
+          }
         }
 
     };
@@ -113,7 +110,7 @@ var main = function() {
             //Therefore change to positive value, to prevent user confusion:
             differenceInCentsPositive = Math.abs(differenceInCents);
 
-            pluralize();
+            displayMsg.pluralize();
 
             var resultTable = {
                 $cashEl: $("#cashTableData"),
