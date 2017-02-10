@@ -2,17 +2,12 @@
 // -------------------------------------------------------------------------
 var main = function() {
     "use strict";
-    var differenceInCents;
     var differenceInCentsPositive;
     var cashOrCreditStr;
     var currencyUnitStr;
     var monentaryConversion;
     var currentVal;
 
-    var $calcResultEl = $(".calculationResultContainer");
-    var $errorMsgEl = $("#errorMsgEl");
-    var $finalMsgEl = $("<p>");
-    var $inputFieldsEl = $(".formFields li input");
     var $cashEl = $("#cashTableData");
     var $creditEl = $("#creditTableData");
     var $creditWDiscEl = $("#creditDiscTableData");
@@ -34,23 +29,31 @@ var main = function() {
     }
 
     var displayMsg = {
+      $calcResultEl: $(".calculationResultContainer"),
+      $finalMsgEl: $("<p>"),
+
       amtSaved: function() {
         //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
-        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less if you use ', cashOrCreditStr];
+        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
         if (monentaryConversion > 0) {
-          $finalMsgEl.css("color", "black");
-          $calcResultEl.append($finalMsgEl.text(msgArray.join("")));
+          this.$finalMsgEl.css("color", "black");
+          this.$calcResultEl.append(this.$finalMsgEl.text(msgArray.join("")));
         } else {
-          $finalMsgEl.css("color", "black");
-          $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
+          this.$finalMsgEl.css("color", "black");
+          this.$calcResultEl.append(this.$finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
         }
       },
         formIncomplete: function() {
-          $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
-          $finalMsgEl.css("color", "tomato");
+          this.$calcResultEl.append(this.$finalMsgEl.text("Please complete form for calculations to auto start."));
+          this.$finalMsgEl.css("color", "tomato");
+      },
+      clearFinalMsg: function() {
+        this.$finalMsgEl.text("");
       }
+
     };
 
+    var $errorMsgEl = $("#errorMsgEl");
     var errorMsg = {
       outOfRange: function () {
         return 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
@@ -78,21 +81,22 @@ var main = function() {
             }
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
-                $finalMsgEl.text("");
+                displayMsg.clearFinalMsg();
             }
             //prevent user from typing negative #:
             else if (parseFloat(mainFormEls[i].value) < 0) {
                 mainFormEls[i].value = '';
                 $errorMsgEl.text(errorMsg.negNumInvalid());
-                $finalMsgEl.text("");
+                displayMsg.clearFinalMsg();
             } else if (parseFloat(mainFormEls[i].value) === 0) {
                 $errorMsgEl.text(errorMsg.outOfRange());
-                $finalMsgEl.text("");
+                displayMsg.clearFinalMsg();
             }
         }
     }
 
     var elementVal;
+    var $inputFieldsEl = $(".formFields li input");
     $inputFieldsEl.toArray().forEach(function(inputElement) {
         $(inputElement).on("keydown", function() {
             elementVal = inputElement.value;
@@ -108,7 +112,7 @@ var main = function() {
             var totalCostInCredit = parseFloat(gallonsEl.value) * parseFloat(creditPriceEl.value);
             var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //result should be less than totalCostInCredit due to discount
             //leave rounding until the VERY last step!
-            differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
+            var differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
             //if totalCostInCreditWDiscount result is GREATER than totalCostInCash, you are paying more by using credit! Paying by cash saves more $$!
             cashOrCreditStr = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73)
