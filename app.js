@@ -2,21 +2,19 @@
 // -------------------------------------------------------------------------
 var main = function() {
     "use strict";
-    var differenceInCentsPositive;
+    var diffInCentsPositive;
     var cashOrCreditStr;
-
-    var currentVal;
 
     var displayMsg = {
         $calcResultEl: $(".calculationResultContainer"),
         $finalMsgEl: $("<p>"),
         currencyUnitStr: undefined,
-        monentaryConversion: undefined,
+        cents: undefined,
 
         amtSaved: function() {
             //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
-            var msgArray = ['You will pay ', this.monentaryConversion, this.currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
-            if (this.monentaryConversion > 0) {
+            var msgArray = ['You will pay ', this.cents, this.currencyUnitStr, ' less if you use ', cashOrCreditStr];
+            if (this.cents > 0) {
                 this.$finalMsgEl.css("color", "black");
                 this.$calcResultEl.append(this.$finalMsgEl.text(msgArray.join("")));
             } else {
@@ -32,23 +30,23 @@ var main = function() {
             this.$finalMsgEl.text("");
         },
         pluralize: function() {
-          if (differenceInCentsPositive <= 1) {
+          if (diffInCentsPositive <= 1) {
               this.currencyUnitStr = " cent";
-              this.monentaryConversion = differenceInCentsPositive;
-          } else if (differenceInCentsPositive <= 99) {
+              this.cents = diffInCentsPositive;
+          } else if (diffInCentsPositive <= 99) {
               this.currencyUnitStr = " cents";
-              this.monentaryConversion = differenceInCentsPositive;
-          } else if (differenceInCentsPositive === 100) {
+              this.cents = diffInCentsPositive;
+          } else if (diffInCentsPositive === 100) {
               this.currencyUnitStr = " dollar";
-              this.monentaryConversion = differenceInCentsPositive / 100;
-          } else if (differenceInCentsPositive >= 101) {
+              this.cents = diffInCentsPositive / 100;
+          } else if (diffInCentsPositive >= 101) {
               this.currencyUnitStr = " dollars";
-              this.monentaryConversion = differenceInCentsPositive / 100;
+              this.cents = diffInCentsPositive / 100;
           }
         }
-
     };
 
+    var currentVal;
     var $errorMsgEl = $("#errorMsgEl");
     var errorMsg = {
         outOfRange: function() {
@@ -108,7 +106,7 @@ var main = function() {
             cashOrCreditStr = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73)
             //Therefore change to positive value, to prevent user confusion:
-            differenceInCentsPositive = Math.abs(differenceInCents);
+            diffInCentsPositive = Math.abs(differenceInCents);
 
             displayMsg.pluralize();
 
