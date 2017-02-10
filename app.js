@@ -4,13 +4,12 @@ var main = function() {
     "use strict";
     var differenceInCentsPositive;
     var cashOrCreditStr;
-    var currencyUnitStr;
-    var monentaryConversion;
+
+
     var currentVal;
 
-    var $cashEl = $("#cashTableData");
-    var $creditEl = $("#creditTableData");
-    var $creditWDiscEl = $("#creditDiscTableData");
+    var currencyUnitStr;
+    var monentaryConversion;
 
     function pluralize() {
         if (differenceInCentsPositive <= 1) {
@@ -29,48 +28,42 @@ var main = function() {
     }
 
     var displayMsg = {
-      $calcResultEl: $(".calculationResultContainer"),
-      $finalMsgEl: $("<p>"),
+        $calcResultEl: $(".calculationResultContainer"),
+        $finalMsgEl: $("<p>"),
 
-      amtSaved: function() {
-        //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
-        var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
-        if (monentaryConversion > 0) {
-          this.$finalMsgEl.css("color", "black");
-          this.$calcResultEl.append(this.$finalMsgEl.text(msgArray.join("")));
-        } else {
-          this.$finalMsgEl.css("color", "black");
-          this.$calcResultEl.append(this.$finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
-        }
-      },
+        amtSaved: function() {
+            //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
+            var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less asdf if you use ', cashOrCreditStr];
+            if (monentaryConversion > 0) {
+                this.$finalMsgEl.css("color", "black");
+                this.$calcResultEl.append(this.$finalMsgEl.text(msgArray.join("")));
+            } else {
+                this.$finalMsgEl.css("color", "black");
+                this.$calcResultEl.append(this.$finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
+            }
+        },
         formIncomplete: function() {
-          this.$calcResultEl.append(this.$finalMsgEl.text("Please complete form for calculations to auto start."));
-          this.$finalMsgEl.css("color", "tomato");
-      },
-      clearFinalMsg: function() {
-        this.$finalMsgEl.text("");
-      }
+            this.$calcResultEl.append(this.$finalMsgEl.text("Please complete form for calculations to auto start."));
+            this.$finalMsgEl.css("color", "tomato");
+        },
+        clearFinalMsg: function() {
+            this.$finalMsgEl.text("");
+        }
 
     };
 
     var $errorMsgEl = $("#errorMsgEl");
     var errorMsg = {
-      outOfRange: function () {
-        return 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
-      },
-      negNumInvalid: function () {
-        return 'Negative numbers not valid';
-      },
-      clear: function () {
-        $errorMsgEl.text('');
-      }
+        outOfRange: function() {
+            return 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
+        },
+        negNumInvalid: function() {
+            return 'Negative numbers not valid';
+        },
+        clear: function() {
+            $errorMsgEl.text('');
+        }
     };
-
-    function clearTable() {
-        $cashEl.text("");
-        $creditEl.text("");
-        $creditWDiscEl.text("");
-    }
 
     function limitInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
@@ -94,6 +87,7 @@ var main = function() {
             }
         }
     }
+
 
     var elementVal;
     var $inputFieldsEl = $(".formFields li input");
@@ -121,19 +115,35 @@ var main = function() {
 
             pluralize();
 
+            var resultTable = {
+                $cashEl: $("#cashTableData"),
+                $creditEl: $("#creditTableData"),
+                $creditWDiscEl: $("#creditDiscTableData"),
+
+                addToTable: function() {
+                    this.$cashEl.text(totalCostInCash.toFixed(2));
+                    this.$creditEl.text(totalCostInCredit.toFixed(2));
+                    this.$creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                },
+
+                clearTable: function() {
+                    this.$cashEl.text("");
+                    this.$creditEl.text("");
+                    this.$creditWDiscEl.text("");
+                }
+            };
+
             if (inputElement.value === "") {
                 inputElement.style.border = "1px solid tomato";
                 displayMsg.formIncomplete();
-                clearTable();
+                resultTable.clearTable();
                 errorMsg.clear();
             } else {
                 inputElement.style.border = "1px solid #ccc";
             }
             //display final msg and table results ONLY if all elements NOT empty
             if (cashPriceEl.value !== "" && creditPriceEl.value !== "" && bankDiscountEl.value !== "" && gallonsEl.value !== "") {
-                $cashEl.text(totalCostInCash.toFixed(2));
-                $creditEl.text(totalCostInCredit.toFixed(2));
-                $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                resultTable.addToTable();
                 displayMsg.amtSaved();
             }
             limitInput();
