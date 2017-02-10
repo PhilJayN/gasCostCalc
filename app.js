@@ -32,26 +32,29 @@ var main = function() {
         }
     }
 
-    function amtSavedFinalMsg() {
+    var displayMsg = {
+      amtSaved: function() {
         //IMPORTANT: To keep results consistent, msg shown to users will favor any form of payment that is LESS!
         var msgArray = ['You will pay ', monentaryConversion, currencyUnitStr, ' less if you use ', cashOrCreditStr];
         if (monentaryConversion > 0) {
-            $finalMsgEl.css("color", "black");
-            $calcResultEl.append($finalMsgEl.text(msgArray.join("")));
+          $finalMsgEl.css("color", "black");
+          $calcResultEl.append($finalMsgEl.text(msgArray.join("")));
         } else {
-            $finalMsgEl.css("color", "black");
-            $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
+          $finalMsgEl.css("color", "black");
+          $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
         }
-    }
-
-    function formIncompleteMsg() {
+      },
+      formIncomplete: function() {
         $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
         $finalMsgEl.css("color", "tomato");
-    }
+      }
+    };
 
-    function clearErrorMsg() {
+    var clear = {
+      errorMsg: function () {
         $errorMsgEl.text('');
-    }
+      }
+    };
 
     function clearTable() {
         $cashEl.text("");
@@ -89,7 +92,7 @@ var main = function() {
             elementVal = inputElement.value;
         });
         $(inputElement).on("input", function() {
-            clearErrorMsg();
+            clear.errorMsg();
             var cashPriceEl = document.getElementById("cashPrice");
             var creditPriceEl = document.getElementById("creditPrice");
             var bankDiscountEl = document.getElementById("bankDiscount");
@@ -110,9 +113,9 @@ var main = function() {
 
             if (inputElement.value === "") {
                 inputElement.style.border = "1px solid tomato";
-                formIncompleteMsg();
+                displayMsg.formIncomplete();
                 clearTable();
-                clearErrorMsg();
+                clear.errorMsg();
             } else {
                 inputElement.style.border = "1px solid #ccc";
             }
@@ -121,7 +124,7 @@ var main = function() {
                 $cashEl.text(totalCostInCash.toFixed(2));
                 $creditEl.text(totalCostInCredit.toFixed(2));
                 $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
-                amtSavedFinalMsg();
+                displayMsg.amtSaved();
             }
             limitInput();
         });
