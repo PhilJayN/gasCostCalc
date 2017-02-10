@@ -7,6 +7,7 @@ var main = function() {
     var cashOrCreditStr;
     var currencyUnitStr;
     var monentaryConversion;
+    var currentVal;
 
     var $calcResultEl = $(".calculationResultContainer");
     var $errorMsgEl = $("#errorMsgEl");
@@ -44,14 +45,20 @@ var main = function() {
           $calcResultEl.append($finalMsgEl.text("At this point, you will pay the same amount using cash or credit."));
         }
       },
-      formIncomplete: function() {
-        $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
-        $finalMsgEl.css("color", "tomato");
+        formIncomplete: function() {
+          $calcResultEl.append($finalMsgEl.text("Please complete form for calculations to auto start."));
+          $finalMsgEl.css("color", "tomato");
       }
     };
 
-    var clear = {
-      errorMsg: function () {
+    var errorMsg = {
+      outOfRange: function () {
+        return 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
+      },
+      negNumInvalid: function () {
+        return 'Negative numbers not valid';
+      },
+      clear: function () {
         $errorMsgEl.text('');
       }
     };
@@ -65,10 +72,9 @@ var main = function() {
     function limitInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
         for (var i = 0; i < mainFormEls.length; i++) {
-            var currentVal = parseFloat(mainFormEls[i].value);
-            var outOfRangeMsg = 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
+            currentVal = parseFloat(mainFormEls[i].value);
             if (currentVal > 40) {
-                $errorMsgEl.text(outOfRangeMsg);
+                $errorMsgEl.text(errorMsg.outOfRange());
             }
             if (parseFloat(mainFormEls[i].value) > 40) {
                 mainFormEls[i].value = elementVal;
@@ -77,10 +83,10 @@ var main = function() {
             //prevent user from typing negative #:
             else if (parseFloat(mainFormEls[i].value) < 0) {
                 mainFormEls[i].value = '';
-                $errorMsgEl.text("Negative numbers not valid");
+                $errorMsgEl.text(errorMsg.negNumInvalid());
                 $finalMsgEl.text("");
             } else if (parseFloat(mainFormEls[i].value) === 0) {
-                $errorMsgEl.text(outOfRangeMsg);
+                $errorMsgEl.text(errorMsg.outOfRange());
                 $finalMsgEl.text("");
             }
         }
@@ -92,7 +98,7 @@ var main = function() {
             elementVal = inputElement.value;
         });
         $(inputElement).on("input", function() {
-            clear.errorMsg();
+            errorMsg.clear();
             var cashPriceEl = document.getElementById("cashPrice");
             var creditPriceEl = document.getElementById("creditPrice");
             var bankDiscountEl = document.getElementById("bankDiscount");
@@ -115,7 +121,7 @@ var main = function() {
                 inputElement.style.border = "1px solid tomato";
                 displayMsg.formIncomplete();
                 clearTable();
-                clear.errorMsg();
+                errorMsg.clear();
             } else {
                 inputElement.style.border = "1px solid #ccc";
             }
