@@ -1,282 +1,161 @@
+/*------------------------------------------------------------------------------
+TABLE OF CONTENTS
+-----------------
+Color Guide
+Section Styles:
+  Jumbo Container
+  Main Input Field Container
+  Headers
+  Misc
+------------------------------------------------------------------------------*/
 
+/*------------------------------------------------------------------------------
+COLOR GUIDE
+-----------
+#Main background: #E3E3E3
+#Tomato (Danger border) : tomato
+#Pastel green (header 4):  rgb(110, 180, 49)
+#Pastel lime green (table):
+  #c2dfae
+  color: #214109
+  background: #8eb870
+------------------------------------------------------------------------------*/
 
+/*Jumbo container-------------------------------------------------------------*/
 body {
-  background-color: #E3E3E3;
-  font-size: 18px;
+    background-color: #E3E3E3;
+    font-size: 18px;
 }
 
 article {
-  width:530px;
-/*allows article to be centered*/
-  margin: auto;
+    width: 530px;
+    margin: auto;
 }
 
+/*Main input field container--------------------------------------------------*/
 #mainForm, #resultContainerDiv {
- margin: 3px 3px;
-  padding: 0 0px;
-  width:250px;
-  /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
-  height:420px;
-  background-color: #ffffff;
-   border-radius: 5px;
-   box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
-     text-align: center;
+    margin: 3px 3px;
+    width: 250px;
+    /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
+    height: 420px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
+    text-align: center;
 }
 
-  #mainForm {
+#mainForm {
     float: left;
-  }
-
-  #resultContainerDiv {
-    float: left;
-  }
-
-
-h4 {
-  /*original pastel green for header:*/
-  color: #356115;
-  color: rgb(110, 180, 49);
-color: #79c822;
-  font-weight: 800;
-  text-align: center;
 }
 
-h5 {
-  color: tomato;
+#resultContainerDiv {
+    float: left;
 }
 
 .formFields li {
-  list-style-type:none;
-/*this li element has 2 floated children. this prevents the header under from jumping around:*/
-  overflow: auto;
-
+    list-style-type: none;
+    /*li element has 2 floated children. This prevents header jumping*/
 }
 
-.formFields label{
-  width: 120px;
-  /*float both input and label elements left so they are closer together, less space in middle:*/
+.formFields label {
+    width: 120px;
     float: left;
-    margin-right:6px;
-  /*border: 1px solid blue;*/
-  padding: 3px;
+    margin-right: 6px;
+    padding: 3px;
 }
 
 input {
-width: 71px;
-font-size:15px;
-border-radius:5px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-background: #fff;
-background: #F9F9F9;
-border: 1px solid #ccc;
-padding: 3px;
-margin-bottom: 5px;
-outline: none;
-/*float both input and label elements left so they are closer together, less space in middle*/
-float:left;
+    width: 71px;
+    font-size: 15px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: #F9F9F9;
+    border: 1px solid #ccc;
+    padding: 3px;
+    margin-bottom: 5px;
+    outline: none;
+    /*float both input and label left so they are closer together*/
+    float: left;
 }
 
 #bankDiscount {
-  width: 73px;
+    width: 73px;
 }
 
 #gallonsNeeded {
-  width: 73px;
-  margin-left: 1px;
+    width: 73px;
+    margin-left: 1px;
 }
 
-/*Disable huge blue border that shows in in Chrome when selecting on input fields*/
+/*Disable huge blue border that shows in Chrome when selecting input fields*/
 input:focus {
-    /*outline-color:red;*/
-    /*Twitter blue border:*/
-    /*border: 1px solid #56b4ef;*/
     border: 1px solid #79c822;
-
     box-shadow: 0px 0px 3px 1px #c8def0;
-    /*border: 1px solid red;*/
-
 }
-
-/*.fa {
-  border: 1px solid green;
-}*/
 
 ul {
-  padding:0;
-text-align:right;
-/*margin: auto;*/
-  /*border: 1px solid cyan;*/
-/*margin: auto;*/
+    padding: 0;
+    text-align: right;
 }
-
 
 span {
-  float: left;
-  padding: 3px
-}
-/*
-table {
-  border-collapse: collapse;
+    float: left;
+    padding: 3px
 }
 
-table, th, tr, td{
-  text-align:right;
-  border: 1px solid black;
-  text-align: right;
-
-}*/
-
-
 table {
-  margin: auto;
-  width: 210px;
-  max-width: 220px;
-  background-color: #c2dfae;
-  /*background-color: #a6cd8a;*/
-
-  /*border-collapse:collapse;*/
+    margin: auto;
+    width: 210px;
+    max-width: 220px;
+    background-color: #c2dfae;
 }
 
 th, td {
-  border-bottom: 1px solid white;
-  /*background: tomato;*/
-  /*prevents table from doing chicken chance on td start gettigng bigger #*/
-  width: 110px;
-  /*max-width: 100px;*/
-  /*text-align: right;*/
+    border-bottom: 1px solid white;
+    /*prevents table from doing chicken chance as td start getting bigger #*/
+    width: 110px;
 }
 
 th {
-  /*text-align: right;*/
-  color: #214109;
-  /*color: #315625;*/
-  background: #8eb870;
+    color: #214109;
+    background: #8eb870;
 }
 
+/*Headers------------------------------------------------------------- */
+h3 {
+  color: #444;
+  text-align: center;
+  margin-bottom: 100px;
+  line-height: 150%;
+}
+
+h4 {
+    color: #79c822;
+    font-weight: 800;
+    text-align: center;
+}
+
+h5 {
+    color: tomato;
+}
+
+/*Misc------------------------------------------------------------- */
 p {
-  /*background: red;*/
-  margin-left: 10px;
-  margin-right: 10px;
-
-
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #errorMsgEl {
-  color: tomato;
+    color: tomato;
 }
-
 
 .footerContent {
-  clear: both;
-  margin: auto;
-  width: 490px;
-  color: #444;
-  font-size: 8px;
-  padding-top: 23px;
-  text-align: center;
-  /*border: 1px solid red;*/
+    clear: both;
+    margin: auto;
+    width: 490px;
+    color: #444;
+    font-size: 7px;
+    padding-top: 23px;
+    text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.calculateBtn {
-  box-sizing: border-box;
-  background: rgb(110, 180, 49);
-  color: #fafafa;
-  padding: 7px;
-  margin-left: 3px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: 500;
-    box-shadow: 1px 3px rgba(0, 0, 0, 0.5);
-
-}
-
-.calculateBtn:hover {
-  background-color: #7ED321;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.calculationResultContainer {
-  border: 1px dashed blue;
-}
-
-.one, .two {
-  border: 1px solid red;
-  display: inline;
-}
-
-table {
-   border: 1px solid red;
-}
-
-td {
-   border: 1px solid green;
-}
-
-.calculationResultContainer {
-   border: 1px solid red;
-}
-
-.userInput {
-  min-width: 400px;
-
-}*/
