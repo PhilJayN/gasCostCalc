@@ -5,7 +5,7 @@ var main = function() {
     var diffInCentsPositive;
     var cashOrCreditStr;
 
-    var displayMsg = {
+    var msg = {
         $calcResultEl: $(".calculationResultContainer"),
         $finalMsgEl: $("<p>"),
         currencyUnitStr: undefined,
@@ -30,66 +30,60 @@ var main = function() {
             this.$finalMsgEl.text("");
         },
         pluralize: function() {
-          if (diffInCentsPositive <= 1) {
-              this.currencyUnitStr = " cent";
-              this.cents = diffInCentsPositive;
-          } else if (diffInCentsPositive <= 99) {
-              this.currencyUnitStr = " cents";
-              this.cents = diffInCentsPositive;
-          } else if (diffInCentsPositive === 100) {
-              this.currencyUnitStr = " dollar";
-              this.cents = diffInCentsPositive / 100;
-          } else if (diffInCentsPositive >= 101) {
-              this.currencyUnitStr = " dollars";
-              this.cents = diffInCentsPositive / 100;
-          }
-        }
-    };
-
-    var currentVal;
-    var $errorMsgEl = $("#errorMsgEl");
-    var errorMsg = {
+            if (diffInCentsPositive <= 1) {
+                this.currencyUnitStr = " cent";
+                this.cents = diffInCentsPositive;
+            } else if (diffInCentsPositive <= 99) {
+                this.currencyUnitStr = " cents";
+                this.cents = diffInCentsPositive;
+            } else if (diffInCentsPositive === 100) {
+                this.currencyUnitStr = " dollar";
+                this.cents = diffInCentsPositive / 100;
+            } else if (diffInCentsPositive >= 101) {
+                this.currencyUnitStr = " dollars";
+                this.cents = diffInCentsPositive / 100;
+            }
+        },
+        $errorMsgEl: $("#errorMsgEl"),
         outOfRange: function() {
-            return 'Number entered: ' + currentVal + ' is out of range. Valid numbers are .1 - 40 ';
+            return 'Number entered is out of range. Valid numbers are .1 - 40 ';
         },
         negNumInvalid: function() {
             return 'Negative numbers not valid';
         },
         clear: function() {
-            $errorMsgEl.text('');
+            this.$errorMsgEl.text('');
         },
-        maxLimit: function() {
-          return 'Max limit reached';
-        }
     };
 
-    function checkInput() {
+    var checkInput = function() {
+        var currentVal;
         var mainFormEls = document.getElementById("mainForm").elements;
         var formLength = mainFormEls.length;
         for (var i = 0; i < formLength; i++) {
             currentVal = parseFloat(mainFormEls[i].value);
             if (currentVal > 40 || currentVal === 0) {
-                $errorMsgEl.text(errorMsg.outOfRange());
-                displayMsg.clearFinalMsg();
+                msg.$errorMsgEl.text(msg.outOfRange());
+                msg.clearFinalMsg();
             }
             //prevent user from typing negative #:
             //do NOT auto clear when input field is 0. User will be annoyed.
             else if (currentVal < 0) {
                 mainFormEls[i].value = '';
-                $errorMsgEl.text(errorMsg.negNumInvalid());
-                displayMsg.clearFinalMsg();
+                msg.$errorMsgEl.text(msg.negNumInvalid());
+                msg.clearFinalMsg();
+            }
         }
-      }
-    }
+    };
 
-    var elementVal;
     var $inputFieldsEl = $(".formFields li input");
     $inputFieldsEl.toArray().forEach(function(inputElement) {
+      var elementVal;
         $(inputElement).on("keydown", function() {
             elementVal = inputElement.value;
         });
         $(inputElement).on("input", function() {
-            errorMsg.clear();
+            msg.clear();
             var cashPriceEl = document.getElementById("cashPrice");
             var creditPriceEl = document.getElementById("creditPrice");
             var bankDiscountEl = document.getElementById("bankDiscount");
@@ -105,7 +99,7 @@ var main = function() {
             //Therefore change to positive value, to prevent user confusion:
             diffInCentsPositive = Math.abs(differenceInCents);
 
-            displayMsg.pluralize();
+            msg.pluralize();
 
             var resultTable = {
                 $cashEl: $("#cashTableData"),
@@ -127,16 +121,16 @@ var main = function() {
 
             if (inputElement.value === "") {
                 inputElement.style.border = "1px solid tomato";
-                displayMsg.formIncomplete();
+                msg.formIncomplete();
                 resultTable.clearTable();
-                errorMsg.clear();
+                msg.clear();
             } else {
                 inputElement.style.border = "1px solid #ccc";
             }
             //display final msg and table results ONLY if all elements NOT empty
             if (cashPriceEl.value !== "" && creditPriceEl.value !== "" && bankDiscountEl.value !== "" && gallonsEl.value !== "") {
                 resultTable.addToTable();
-                displayMsg.amtSaved();
+                msg.amtSaved();
             }
             checkInput();
         });
