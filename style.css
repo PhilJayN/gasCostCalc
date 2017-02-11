@@ -111,6 +111,7 @@ table {
     background-color: #c2dfae;
 }
 
+
 th, td {
     border-bottom: 1px solid white;
     /*prevents table from doing chicken chance as td start getting bigger #*/
@@ -136,6 +137,11 @@ h4 {
     text-align: center;
 }
 
+.additInfo {
+   clear: both;
+   padding-top: 25px;
+}
+
 h5 {
     color: tomato;
 }
@@ -148,6 +154,7 @@ p {
 
 #errorMsgEl {
     color: tomato;
+    margin-top: 110px;
 }
 
 .footerContent {

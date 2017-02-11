@@ -14,7 +14,7 @@ to pay with cash or pay with credit that has a reward for buying gas. -->
 <body>
   <h3>
 Have you ever wonder whether it's cheaper to pay for gas with cash
-<br>or pay with a credit card that has cashback? Find out!
+or pay with a credit card that has cashback? Find out!
 </h3>
     <article class="example">
         <form action="index.html" method="post" id="mainForm">
@@ -22,27 +22,20 @@ Have you ever wonder whether it's cheaper to pay for gas with cash
                 <h4>Gas Station Price</h4>
                 <li>
                     <label for="cashPrice">Cash</label>
-
                     <!--The dollar sign takes up more pixel space, so need to use &nbsp; for whitespace-->
                     <span>&nbsp;&nbsp;$</span>
                     <input type="number" step="0.01" min="0.01" id="cashPrice" value="2.65" maxlength="3" required/>
-                    <!-- <input type="number" step="0.01" min="0.01" id="cashPrice" /> -->
-
                 </li>
 
                 <li>
-                    <!-- <i class="fa fa-credit-card"></i> -->
-
                     <label for="creditPrice">Credit</label>
                     <span>&nbsp;&nbsp;$</span>
 
                     <input type="number" step="0.01" min=".3" id="creditPrice" value="2.75" />
                 </li>
 
-                <!-- <hr> -->
-                <h4>
-                          Additional Info
-                        </h4>
+                <h4 class="additInfo">Addditional Info</h4>
+
                 <li>
                     <!-- most banks give 1-5% cashback-->
                     <!--you CAN put discount to be 0. it just means discount isn't considered at all in calc-->
@@ -83,7 +76,7 @@ Have you ever wonder whether it's cheaper to pay for gas with cash
                     <td id="creditTableData"></td>
                 </tr>
                 <tr class="discountInc">
-                    <td>Credit with <br> Discount </br></td>
+                    <td>Credit with Discount</td>
                     <td id="creditDiscTableData"></td>
                 </tr>
             </table>
