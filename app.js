@@ -97,10 +97,9 @@ var main = function() {
 
             var totalCostInCash = parseFloat(gallonsEl.value) * parseFloat(cashPriceEl.value);
             var totalCostInCredit = parseFloat(gallonsEl.value) * parseFloat(creditPriceEl.value);
-            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100; //result should be less than totalCostInCredit due to discount
-            //leave rounding until the VERY last step!
-            var differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0); //rounds your .14540000000000042 to nearest cent, so you get .15, which is .15 of a dollar...
-            //if totalCostInCreditWDiscount result is GREATER than totalCostInCash, you are paying more by using credit! Paying by cash saves more $$!
+            var totalCostInCreditWDiscount = totalCostInCredit - totalCostInCredit * bankDiscountEl.value / 100;
+            //if totalCostInCreditWDiscount result is GREATER than totalCostInCash, you are paying more by using credit! Paying by cash saves more $!
+            var differenceInCents = ((totalCostInCreditWDiscount - totalCostInCash) * 100).toFixed(0);
             cashOrCreditStr = (totalCostInCreditWDiscount > totalCostInCash) ? "cash." : "credit card.";
             //differenceInCents will sometimes give a NEGATIVE #, ex: when totalCostInCreditWDiscount(3.23)-totalCostInCash(4.73)
             //Therefore change to positive value, to prevent user confusion:
@@ -144,8 +143,3 @@ var main = function() {
     });
 };
 $(document).ready(main);
-
-
-// if (currentVal.toString().length > 3) {
-//   $errorMsgEl.text(errorMsg.maxLimit());
-// }
