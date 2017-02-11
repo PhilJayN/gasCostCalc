@@ -57,32 +57,30 @@ var main = function() {
         },
         clear: function() {
             $errorMsgEl.text('');
+        },
+        maxLimit: function() {
+          return 'Max limit reached';
         }
     };
 
-    function limitInput() {
+    function checkInput() {
         var mainFormEls = document.getElementById("mainForm").elements;
-        for (var i = 0; i < mainFormEls.length; i++) {
+        var formLength = mainFormEls.length;
+        for (var i = 0; i < formLength; i++) {
             currentVal = parseFloat(mainFormEls[i].value);
-            if (currentVal > 40) {
+            if (currentVal > 40 || currentVal === 0) {
                 $errorMsgEl.text(errorMsg.outOfRange());
-            }
-            if (parseFloat(mainFormEls[i].value) > 40) {
-                mainFormEls[i].value = elementVal;
                 displayMsg.clearFinalMsg();
             }
             //prevent user from typing negative #:
-            else if (parseFloat(mainFormEls[i].value) < 0) {
+            //do NOT auto clear when input field is 0. User will be annoyed.
+            else if (currentVal < 0) {
                 mainFormEls[i].value = '';
                 $errorMsgEl.text(errorMsg.negNumInvalid());
                 displayMsg.clearFinalMsg();
-            } else if (parseFloat(mainFormEls[i].value) === 0) {
-                $errorMsgEl.text(errorMsg.outOfRange());
-                displayMsg.clearFinalMsg();
-            }
         }
+      }
     }
-
 
     var elementVal;
     var $inputFieldsEl = $(".formFields li input");
@@ -141,8 +139,13 @@ var main = function() {
                 resultTable.addToTable();
                 displayMsg.amtSaved();
             }
-            limitInput();
+            checkInput();
         });
     });
 };
 $(document).ready(main);
+
+
+// if (currentVal.toString().length > 3) {
+//   $errorMsgEl.text(errorMsg.maxLimit());
+// }

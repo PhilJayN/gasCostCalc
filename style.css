@@ -38,6 +38,7 @@ article {
 
   #mainForm {
     float: left;
+
     /*margin-left: 3px;*/
     /*border: 1px solid red;*/
   }
@@ -100,11 +101,11 @@ float:left;
 }
 
 #bankDiscount {
-  width: 57px;
+  width: 75px;
 }
 
 #gallonsNeeded {
-  width: 57px;
+  width: 75px;
   margin-left: 1px;
 }
 
