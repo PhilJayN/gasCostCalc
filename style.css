@@ -2,35 +2,22 @@
 
 body {
   background-color: #E3E3E3;
-  /*border: 1px solid tomato;*/
-  /*overflow: auto;*/
-  /*width: 500px;*/
   font-size: 18px;
 }
 
 article {
-    /*display: flex;
-    flex-wrap: wrap;*/
-  /*width: 900px;*/
   width:530px;
-  /*border: 4px solid blue;*/
 /*allows article to be centered*/
   margin: auto;
 }
 
 #mainForm, #resultContainerDiv {
-  /*allows form and div, to position themselves in middle:*/
  margin: 3px 3px;
   padding: 0 0px;
   width:250px;
   /*prevent container from doing the funky chicken dance (getting bigger) when calculation shows up*/
   height:420px;
-  /*min-width:200px;
-  max-width:540px;
-  min-height: 385px;
-  max-height: 390px;*/
   background-color: #ffffff;
-   /*border: 23px solid green;*/
    border-radius: 5px;
    box-shadow: 0 4px 9px -3px rgba(0, 0, 0, 0.67);
      text-align: center;
@@ -38,14 +25,10 @@ article {
 
   #mainForm {
     float: left;
-
-    /*margin-left: 3px;*/
-    /*border: 1px solid red;*/
   }
 
   #resultContainerDiv {
     float: left;
-    /*border: 1px solid blue;*/
   }
 
 
@@ -54,12 +37,8 @@ h4 {
   color: #356115;
   color: rgb(110, 180, 49);
 color: #79c822;
-  /*color: #7ED321;*/
   font-weight: 800;
   text-align: center;
-  /*nice orange*/
-  /*color: #FFCC00;
-  color: #F3A51B;*/
 }
 
 h5 {
@@ -67,7 +46,6 @@ h5 {
 }
 
 .formFields li {
-  /*border: 1px solid goldenrod;*/
   list-style-type:none;
 /*this li element has 2 floated children. this prevents the header under from jumping around:*/
   overflow: auto;
@@ -75,7 +53,6 @@ h5 {
 }
 
 .formFields label{
-  /*background-color:red;*/
   width: 120px;
   /*float both input and label elements left so they are closer together, less space in middle:*/
     float: left;
