@@ -63,8 +63,13 @@ var main = function() {
         for (var i = 0; i < formLength; i++) {
             currentVal = parseFloat(mainFormEls[i].value);
             if (currentVal > 40 || currentVal === 0) {
+              mainFormEls[i].style.border = "1px solid tomato";
                 msg.$errorMsgEl.text(msg.outOfRange());
                 msg.clearFinalMsg();
+                
+                $cashEl.text("");
+                $creditEl.text("");
+                $creditWDiscEl.text("");
             }
             //prevent user from typing negative #:
             //do NOT auto clear when input field is 0. User will be annoyed.
@@ -76,12 +81,11 @@ var main = function() {
         }
     };
 
+    var $cashEl = $("#cashTableData");
+    var $creditEl = $("#creditTableData");
+    var $creditWDiscEl = $("#creditDiscTableData");
     var $inputFieldsEl = $(".formFields li input");
     $inputFieldsEl.toArray().forEach(function(inputElement) {
-      var elementVal;
-        $(inputElement).on("keydown", function() {
-            elementVal = inputElement.value;
-        });
         $(inputElement).on("input", function() {
             msg.clear();
             var cashPriceEl = document.getElementById("cashPrice");
@@ -102,20 +106,17 @@ var main = function() {
             msg.pluralize();
 
             var resultTable = {
-                $cashEl: $("#cashTableData"),
-                $creditEl: $("#creditTableData"),
-                $creditWDiscEl: $("#creditDiscTableData"),
 
                 addToTable: function() {
-                    this.$cashEl.text(totalCostInCash.toFixed(2));
-                    this.$creditEl.text(totalCostInCredit.toFixed(2));
-                    this.$creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
+                    $cashEl.text(totalCostInCash.toFixed(2));
+                    $creditEl.text(totalCostInCredit.toFixed(2));
+                    $creditWDiscEl.text(totalCostInCreditWDiscount.toFixed(2));
                 },
 
                 clearTable: function() {
-                    this.$cashEl.text("");
-                    this.$creditEl.text("");
-                    this.$creditWDiscEl.text("");
+                    $cashEl.text("");
+                    $creditEl.text("");
+                    $creditWDiscEl.text("");
                 }
             };
 

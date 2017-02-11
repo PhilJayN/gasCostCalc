@@ -85,7 +85,7 @@ h5 {
 }
 
 input {
-width: 55px;
+width: 71px;
 font-size:15px;
 border-radius:5px;
 -webkit-border-radius: 5px;
@@ -101,11 +101,11 @@ float:left;
 }
 
 #bankDiscount {
-  width: 75px;
+  width: 73px;
 }
 
 #gallonsNeeded {
-  width: 75px;
+  width: 73px;
   margin-left: 1px;
 }
 
@@ -186,13 +186,20 @@ p {
 }
 
 #errorMsgEl {
-  color: blue;
+  color: tomato;
 }
 
 
-
-
-
+.footerContent {
+  clear: both;
+  margin: auto;
+  width: 490px;
+  color: #444;
+  font-size: 8px;
+  padding-top: 23px;
+  text-align: center;
+  /*border: 1px solid red;*/
+}
 
 
 
